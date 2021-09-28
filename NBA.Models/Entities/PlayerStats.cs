@@ -4,9 +4,10 @@
     public class PlayerStats
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public int GameNo { get; set; }
         public Players Player { get; set; }
+        public Team Team { get; set; }
         public int Minutes { get; set; }
         public int Seconds { get; set; }
         public double PlayerPoints { get; set; }

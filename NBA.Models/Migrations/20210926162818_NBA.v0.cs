@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NBA.Models.Migrations
 {
-    public partial class v0 : Migration
+    public partial class NBAv0 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,6 +60,48 @@ namespace NBA.Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FullSeasonQuarters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GameNo = table.Column<int>(type: "int", nullable: false),
+                    QuarterNo = table.Column<int>(type: "int", nullable: false),
+                    HomeTeam = table.Column<int>(type: "int", nullable: false),
+                    AwayTeam = table.Column<int>(type: "int", nullable: false),
+                    HomePoints = table.Column<double>(type: "float", nullable: false),
+                    AwayPoints = table.Column<double>(type: "float", nullable: false),
+                    HomeAssists = table.Column<double>(type: "float", nullable: false),
+                    HomeDefensiveRebounds = table.Column<double>(type: "float", nullable: false),
+                    HomeOffensiveRebounds = table.Column<double>(type: "float", nullable: false),
+                    HomeBlocks = table.Column<double>(type: "float", nullable: false),
+                    HomeSteals = table.Column<double>(type: "float", nullable: false),
+                    HomeTurnovers = table.Column<double>(type: "float", nullable: false),
+                    HomeFGA = table.Column<double>(type: "float", nullable: false),
+                    HomeFGM = table.Column<double>(type: "float", nullable: false),
+                    Home3PA = table.Column<double>(type: "float", nullable: false),
+                    Home3PM = table.Column<double>(type: "float", nullable: false),
+                    HomeFTA = table.Column<double>(type: "float", nullable: false),
+                    HomeFTM = table.Column<double>(type: "float", nullable: false),
+                    AwayAssists = table.Column<double>(type: "float", nullable: false),
+                    AwayDefensiveRebounds = table.Column<double>(type: "float", nullable: false),
+                    AwayOffensiveRebounds = table.Column<double>(type: "float", nullable: false),
+                    AwayBlocks = table.Column<double>(type: "float", nullable: false),
+                    AwaySteals = table.Column<double>(type: "float", nullable: false),
+                    AwayTurnovers = table.Column<double>(type: "float", nullable: false),
+                    AwayFGA = table.Column<double>(type: "float", nullable: false),
+                    AwayFGM = table.Column<double>(type: "float", nullable: false),
+                    Away3PA = table.Column<double>(type: "float", nullable: false),
+                    Away3PM = table.Column<double>(type: "float", nullable: false),
+                    AwayFTA = table.Column<double>(type: "float", nullable: false),
+                    AwayFTM = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FullSeasonQuarters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GameTime",
                 columns: table => new
                 {
@@ -108,6 +150,49 @@ namespace NBA.Models.Migrations
                 {
                     table.PrimaryKey("PK_Teams", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "PlayerStats",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GameNo = table.Column<int>(type: "int", nullable: false),
+                    PlayerId = table.Column<int>(type: "int", nullable: true),
+                    Team = table.Column<int>(type: "int", nullable: false),
+                    Minutes = table.Column<int>(type: "int", nullable: false),
+                    Seconds = table.Column<int>(type: "int", nullable: false),
+                    PlayerPoints = table.Column<double>(type: "float", nullable: false),
+                    PlayerAssists = table.Column<double>(type: "float", nullable: false),
+                    PlayerDefensiveRebounds = table.Column<double>(type: "float", nullable: false),
+                    PlayerOffensiveRebounds = table.Column<double>(type: "float", nullable: false),
+                    PlayerBlocks = table.Column<double>(type: "float", nullable: false),
+                    PlayerSteals = table.Column<double>(type: "float", nullable: false),
+                    PlayerTurnovers = table.Column<double>(type: "float", nullable: false),
+                    PlayerFGA = table.Column<double>(type: "float", nullable: false),
+                    PlayerFGM = table.Column<double>(type: "float", nullable: false),
+                    Player3PA = table.Column<double>(type: "float", nullable: false),
+                    Player3PM = table.Column<double>(type: "float", nullable: false),
+                    PlayerFTA = table.Column<double>(type: "float", nullable: false),
+                    PlayerFTM = table.Column<double>(type: "float", nullable: false),
+                    PlayerFouls = table.Column<double>(type: "float", nullable: false),
+                    PlayerPlusMinus = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerStats", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_PlayerStats_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerStats_PlayerId",
+                table: "PlayerStats",
+                column: "PlayerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -116,13 +201,19 @@ namespace NBA.Models.Migrations
                 name: "FullSeason");
 
             migrationBuilder.DropTable(
+                name: "FullSeasonQuarters");
+
+            migrationBuilder.DropTable(
                 name: "GameTime");
 
             migrationBuilder.DropTable(
-                name: "Players");
+                name: "PlayerStats");
 
             migrationBuilder.DropTable(
                 name: "Teams");
+
+            migrationBuilder.DropTable(
+                name: "Players");
         }
     }
 }

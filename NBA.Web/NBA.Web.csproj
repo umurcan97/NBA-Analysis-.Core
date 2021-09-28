@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NBA.API\NBA.API.csproj" />
+    <ProjectReference Include="..\NBA.Models\NBA.Models.csproj" />
+    <ProjectReference Include="..\NBA.Services\NBA.Services.csproj" />
+    <ProjectReference Include="..\NBA.StatScraper\NBA.StatScraper.csproj" />
   </ItemGroup>
 
 </Project>

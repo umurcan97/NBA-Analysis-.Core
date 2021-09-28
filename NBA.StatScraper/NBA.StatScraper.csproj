@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Selenium.Firefox.WebDriver" Version="0.27.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="94.0.4606.4101" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NBA.Models\NBA.Models.csproj" />
     <ProjectReference Include="..\NBA.Services\NBA.Services.csproj" />
   </ItemGroup>

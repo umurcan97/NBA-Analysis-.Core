@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NBA.Models.DataContext;
 
 namespace NBA.Models.Migrations
 {
     [DbContext(typeof(NBAContext))]
-    partial class NBAContextModelSnapshot : ModelSnapshot
+    [Migration("20210928000338_NBA.v01")]
+    partial class NBAv01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,8 +85,8 @@ namespace NBA.Models.Migrations
                     b.Property<double>("AwayTurnovers")
                         .HasColumnType("float");
 
-                    b.Property<int?>("GameDateId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("GameDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("GameNo")
                         .HasColumnType("int");
@@ -147,8 +149,6 @@ namespace NBA.Models.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameDateId");
 
                     b.ToTable("FullSeason");
                 });
@@ -217,9 +217,6 @@ namespace NBA.Models.Migrations
                     b.Property<double>("AwayTurnovers")
                         .HasColumnType("float");
 
-                    b.Property<int?>("GameDateId")
-                        .HasColumnType("int");
-
                     b.Property<int>("GameNo")
                         .HasColumnType("int");
 
@@ -281,8 +278,6 @@ namespace NBA.Models.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameDateId");
 
                     b.ToTable("FullSeason19_20");
                 });
@@ -351,9 +346,6 @@ namespace NBA.Models.Migrations
                     b.Property<double>("AwayTurnovers")
                         .HasColumnType("float");
 
-                    b.Property<int?>("GameDateId")
-                        .HasColumnType("int");
-
                     b.Property<int>("GameNo")
                         .HasColumnType("int");
 
@@ -415,8 +407,6 @@ namespace NBA.Models.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameDateId");
 
                     b.ToTable("FullSeason20_21");
                 });
@@ -853,54 +843,6 @@ namespace NBA.Models.Migrations
                     b.ToTable("GameTime");
                 });
 
-            modelBuilder.Entity("NBA.Models.Entities.GameTime19_20", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AwayTeam")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("GameDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GameNo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HomeTeam")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GameTime19_20");
-                });
-
-            modelBuilder.Entity("NBA.Models.Entities.GameTime20_21", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AwayTeam")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("GameDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GameNo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HomeTeam")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GameTime20_21");
-                });
-
             modelBuilder.Entity("NBA.Models.Entities.PlayerStats", b =>
                 {
                     b.Property<int>("Id")
@@ -1132,33 +1074,6 @@ namespace NBA.Models.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Teams");
-                });
-
-            modelBuilder.Entity("NBA.Models.Entities.FullSeason", b =>
-                {
-                    b.HasOne("NBA.Models.Entities.GameTime", "GameDate")
-                        .WithMany()
-                        .HasForeignKey("GameDateId");
-
-                    b.Navigation("GameDate");
-                });
-
-            modelBuilder.Entity("NBA.Models.Entities.FullSeason19_20", b =>
-                {
-                    b.HasOne("NBA.Models.Entities.GameTime19_20", "GameDate")
-                        .WithMany()
-                        .HasForeignKey("GameDateId");
-
-                    b.Navigation("GameDate");
-                });
-
-            modelBuilder.Entity("NBA.Models.Entities.FullSeason20_21", b =>
-                {
-                    b.HasOne("NBA.Models.Entities.GameTime20_21", "GameDate")
-                        .WithMany()
-                        .HasForeignKey("GameDateId");
-
-                    b.Navigation("GameDate");
                 });
 
             modelBuilder.Entity("NBA.Models.Entities.PlayerStats", b =>

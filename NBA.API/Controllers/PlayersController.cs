@@ -5,7 +5,7 @@
     using NBA.Models;
     using NBA.Models.DataContext;
     using NBA.Services.Abstraction;
-    using NBA.Services.Abstraction.Interfaces;
+    using NBA.Services.Interfaces;
     using System.Collections.Generic;
     using System.Web.Http.Description;
 
@@ -34,20 +34,28 @@
             ServiceResult<List<Players>> serviceResult = _playerRepository.GetAllPlayers();
             return serviceResult;
         }
+        [ResponseType(typeof(ServiceResult<Players>))]
+        [HttpGet]
+        [Route("getplayer/{id}")]
+        public ServiceResult<Players> GetPlayer(int id)
+        {
+            ServiceResult<Players> serviceResult = _playerRepository.GetPlayerWithId(id);
+            return serviceResult;
+        }
         [ResponseType(typeof(ServiceResult))]
         [HttpPost]
         [Route("addplayer")]
-        public ServiceResult AddPlayer(AddPlayerModel model)
+        public ServiceResult AddPlayer(Players player)
         {
-            ServiceResult serviceResult = _playerRepository.AddPlayer(model.Name,model.Team,model.Number,model.Position,model.Height,model.Weight,model.Country);
+            ServiceResult serviceResult = _playerRepository.AddPlayer(player);
             return serviceResult;
         }
         [ResponseType(typeof(ServiceResult))]
         [HttpPut]
         [Route("updateplayer")]
-        public ServiceResult UpdatePlayer(int id,UpdatePlayerModel model)
+        public ServiceResult UpdatePlayer(Players player)
         {
-            ServiceResult serviceResult = _playerRepository.UpdatePlayerWithId(id, model.Name, model.Team, model.Number, model.Position, model.Height, model.Weight, model.Country);
+            ServiceResult serviceResult = _playerRepository.UpdatePlayer(player);
             return serviceResult;
         }
         [ResponseType(typeof(ServiceResult))]
@@ -55,7 +63,7 @@
         [Route("deleteplayer")]
         public ServiceResult DeletePlayer (int id)
         {
-            ServiceResult serviceResult = _playerRepository.DeletePlayerWithId(id);
+            ServiceResult serviceResult = _playerRepository.DeletePlayer(id);
             return serviceResult;
         }
     }

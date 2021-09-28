@@ -8,6 +8,7 @@
     public interface IFullSeasonRepository
     {
         ServiceResult AddGame(FullSeason stats);
+        ServiceResult UpdateGame(FullSeason stats);
         ServiceResult<FullSeason> GetGameWithGameNo(int GameNo);
         ServiceResult<List<FullSeason>> GetFullSeason();
         ServiceResult<List<FullSeason>> GetGamesSinceDate(DateTime date);

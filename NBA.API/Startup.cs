@@ -11,7 +11,7 @@ namespace NBA.API
     using Microsoft.Extensions.Logging;
     using Microsoft.OpenApi.Models;
     using NBA.Models.DataContext;
-    using NBA.Services.Abstraction.Interfaces;
+    using NBA.Services.Interfaces;
     using NBA.Services.Abstraction.Repositories;
     using System;
     using System.Collections.Generic;

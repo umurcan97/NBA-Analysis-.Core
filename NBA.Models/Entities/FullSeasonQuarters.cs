@@ -4,7 +4,7 @@
     public class FullSeasonQuarters : QuarterModel
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public int GameNo { get; set; }
         public int QuarterNo { get; set; }
         public Team HomeTeam { get; set; }

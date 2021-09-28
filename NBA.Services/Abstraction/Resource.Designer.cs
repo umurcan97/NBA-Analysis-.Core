@@ -156,7 +156,34 @@ namespace NBA.Services.Abstraction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pin entered is invalid..
+        ///   Looks up a localized string similar to Maç istatistikleri bulunamadı!.
+        /// </summary>
+        internal static string FullSeasonNotFound {
+            get {
+                return ResourceManager.GetString("FullSeasonNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeyrek istatistikleri bulunamadı!.
+        /// </summary>
+        internal static string FullSeasonQuarterNotFound {
+            get {
+                return ResourceManager.GetString("FullSeasonQuarterNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maç tarihi bilgileri bulunamadı!.
+        /// </summary>
+        internal static string GameTimeNotFound {
+            get {
+                return ResourceManager.GetString("GameTimeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin kodu geçerli değil.
         /// </summary>
         internal static string InvalidPin {
             get {
@@ -197,6 +224,24 @@ namespace NBA.Services.Abstraction {
         internal static string NotFound {
             get {
                 return ResourceManager.GetString("NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oyuncu bulunamadı!.
+        /// </summary>
+        internal static string PlayerNotFound {
+            get {
+                return ResourceManager.GetString("PlayerNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oyuncu istatistikleri bulunamadı!.
+        /// </summary>
+        internal static string PlayerStatNotFound {
+            get {
+                return ResourceManager.GetString("PlayerStatNotFound", resourceCulture);
             }
         }
         

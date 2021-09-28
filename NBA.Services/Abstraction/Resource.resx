@@ -159,8 +159,17 @@
   <data name="ForbiddenError" xml:space="preserve">
     <value>Bu işlemi gerçekleştirmek için yetkiniz yok. Lütfen destek birimi ile iletişime geçin.</value>
   </data>
+  <data name="FullSeasonNotFound" xml:space="preserve">
+    <value>Maç istatistikleri bulunamadı!</value>
+  </data>
+  <data name="FullSeasonQuarterNotFound" xml:space="preserve">
+    <value>Çeyrek istatistikleri bulunamadı!</value>
+  </data>
+  <data name="GameTimeNotFound" xml:space="preserve">
+    <value>Maç tarihi bilgileri bulunamadı!</value>
+  </data>
   <data name="InvalidPin" xml:space="preserve">
-    <value>Pin entered is invalid.</value>
+    <value>Pin kodu geçerli değil</value>
   </data>
   <data name="Menu_Account" xml:space="preserve">
     <value>Hesabım</value>
@@ -173,6 +182,12 @@
   </data>
   <data name="NotFound" xml:space="preserve">
     <value>Bulunamadı</value>
+  </data>
+  <data name="PlayerNotFound" xml:space="preserve">
+    <value>Oyuncu bulunamadı!</value>
+  </data>
+  <data name="PlayerStatNotFound" xml:space="preserve">
+    <value>Oyuncu istatistikleri bulunamadı!</value>
   </data>
   <data name="PreviouslyUsedPin" xml:space="preserve">
     <value>You can not use a Pin that you used previously</value>

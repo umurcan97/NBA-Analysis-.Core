@@ -1,15 +1,18 @@
-﻿namespace NBA.Services.Abstraction.Interfaces
+﻿namespace NBA.Services.Interfaces
 {
     using NBA.Models;
     using System.Collections.Generic;
+    using NBA.Services.Abstraction;
 
     public interface IPlayerRepository
     {
         ServiceResult<List<Players>> GetAllPlayers();
         ServiceResult<Players> GetPlayerWithId(int Id);
+        ServiceResult<Players> GetPlayerWithName(string name);
         ServiceResult<List<Players>> GetPlayersWithTeam(Team team);
-        ServiceResult AddPlayer(string name, Team team, int number, string Position, int height, int weight, string country);
-        ServiceResult UpdatePlayerWithId(int id, string name, Team team, int number, string Position, int height, int weight, string country);
-        ServiceResult DeletePlayerWithId(int id);
+        ServiceResult AddPlayer(Players player);
+        ServiceResult AddPlayerList(List<Players> players);
+        ServiceResult UpdatePlayer(Players player);
+        ServiceResult DeletePlayer(int id);
     }
 }

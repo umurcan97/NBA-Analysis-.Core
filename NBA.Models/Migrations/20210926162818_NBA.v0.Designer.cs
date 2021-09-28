@@ -10,15 +10,15 @@ using NBA.Models.DataContext;
 namespace NBA.Models.Migrations
 {
     [DbContext(typeof(NBAContext))]
-    [Migration("20210903010108_v0")]
-    partial class v0
+    [Migration("20210926162818_NBA.v0")]
+    partial class NBAv0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.9")
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("NBA.Models.Entities.FullSeason", b =>
@@ -153,6 +153,108 @@ namespace NBA.Models.Migrations
                     b.ToTable("FullSeason");
                 });
 
+            modelBuilder.Entity("NBA.Models.Entities.FullSeasonQuarters", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Away3PA")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Away3PM")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayAssists")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayBlocks")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayDefensiveRebounds")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayFGA")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayFGM")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayFTA")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayFTM")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayOffensiveRebounds")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayPoints")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwaySteals")
+                        .HasColumnType("float");
+
+                    b.Property<int>("AwayTeam")
+                        .HasColumnType("int");
+
+                    b.Property<double>("AwayTurnovers")
+                        .HasColumnType("float");
+
+                    b.Property<int>("GameNo")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Home3PA")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Home3PM")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeAssists")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeBlocks")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeDefensiveRebounds")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeFGA")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeFGM")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeFTA")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeFTM")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeOffensiveRebounds")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomePoints")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeSteals")
+                        .HasColumnType("float");
+
+                    b.Property<int>("HomeTeam")
+                        .HasColumnType("int");
+
+                    b.Property<double>("HomeTurnovers")
+                        .HasColumnType("float");
+
+                    b.Property<int>("QuarterNo")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FullSeasonQuarters");
+                });
+
             modelBuilder.Entity("NBA.Models.Entities.GameTime", b =>
                 {
                     b.Property<int>("Id")
@@ -175,6 +277,80 @@ namespace NBA.Models.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GameTime");
+                });
+
+            modelBuilder.Entity("NBA.Models.Entities.PlayerStats", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GameNo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Minutes")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Player3PA")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Player3PM")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerAssists")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerBlocks")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerDefensiveRebounds")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerFGA")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerFGM")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerFTA")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerFTM")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerFouls")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("PlayerOffensiveRebounds")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerPlusMinus")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerPoints")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerSteals")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlayerTurnovers")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Seconds")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Team")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("PlayerStats");
                 });
 
             modelBuilder.Entity("NBA.Models.Players", b =>
@@ -229,6 +405,15 @@ namespace NBA.Models.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("NBA.Models.Entities.PlayerStats", b =>
+                {
+                    b.HasOne("NBA.Models.Players", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId");
+
+                    b.Navigation("Player");
                 });
 #pragma warning restore 612, 618
         }
