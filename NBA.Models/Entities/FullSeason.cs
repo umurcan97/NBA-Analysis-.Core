@@ -11,5 +11,6 @@
         public int GameNo { get; set; }
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }
+        public bool OverTime { get; set; }
     }
 }

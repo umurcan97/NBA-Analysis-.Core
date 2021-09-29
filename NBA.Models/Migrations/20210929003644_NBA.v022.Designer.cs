@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NBA.Models.DataContext;
 
 namespace NBA.Models.Migrations
 {
     [DbContext(typeof(NBAContext))]
-    partial class NBAContextModelSnapshot : ModelSnapshot
+    [Migration("20210929003644_NBA.v022")]
+    partial class NBAv022
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

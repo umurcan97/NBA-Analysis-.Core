@@ -10,6 +10,7 @@
         ServiceResult<List<PlayerStats>> GetAllPlayerStats();
         ServiceResult<PlayerStats> GetPlayerStatWithId(int Id);
         ServiceResult<PlayerStats> GetPlayerStatsWithPlayerIdAndGameNo(int playerId, int gameNo);
+        ServiceResult<List<PlayerStats>> GetPlayerStatsWithGameNo(int gameNo);
         ServiceResult<List<PlayerStats>> GetPlayerStatsWithPlayerId(int playerId);
         ServiceResult<List<PlayerStats>> GetPlayerStatsWithTeam(Team team);
         ServiceResult AddPlayerStat(PlayerStats stats);

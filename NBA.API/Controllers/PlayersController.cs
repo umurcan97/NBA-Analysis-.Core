@@ -31,7 +31,7 @@
         [Route("getall")]
         public ServiceResult<List<Players>> GetAll()
         {
-            ServiceResult<List<Players>> serviceResult = _playerRepository.GetAllPlayers();
+            var serviceResult = _playerRepository.GetAllPlayers();
             return serviceResult;
         }
         [ResponseType(typeof(ServiceResult<Players>))]
@@ -47,7 +47,7 @@
         [Route("addplayer")]
         public ServiceResult AddPlayer(Players player)
         {
-            ServiceResult serviceResult = _playerRepository.AddPlayer(player);
+            var serviceResult = _playerRepository.AddPlayer(player);
             return serviceResult;
         }
         [ResponseType(typeof(ServiceResult))]
@@ -55,7 +55,7 @@
         [Route("updateplayer")]
         public ServiceResult UpdatePlayer(Players player)
         {
-            ServiceResult serviceResult = _playerRepository.UpdatePlayer(player);
+            var serviceResult = _playerRepository.UpdatePlayer(player);
             return serviceResult;
         }
         [ResponseType(typeof(ServiceResult))]
@@ -63,7 +63,7 @@
         [Route("deleteplayer")]
         public ServiceResult DeletePlayer (int id)
         {
-            ServiceResult serviceResult = _playerRepository.DeletePlayer(id);
+            var serviceResult = _playerRepository.DeletePlayer(id);
             return serviceResult;
         }
     }

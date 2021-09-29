@@ -12,11 +12,13 @@ namespace NBA.API
     using Microsoft.OpenApi.Models;
     using NBA.Models.DataContext;
     using NBA.Services.Interfaces;
-    using NBA.Services.Abstraction.Repositories;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using NBA.Services.Repositories;
+    using NBA.Services.Helpers;
+
     public class Startup
     {
         public Startup(
@@ -39,6 +41,11 @@ namespace NBA.API
             services.Add(new ServiceDescriptor(typeof(INBAContext), new NBAContext()));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IGameTimesRepository, GameTimesRepository>();
+            services.AddScoped<IFullSeasonRepository, FullSeasonRepository>();
+            services.AddScoped<IFullSeasonQuartersRepository, FullSeasonQuartersRepository>();
+            services.AddScoped<IPlayerStatRepository, PlayerStatRepository>();
+            services.AddScoped<IHelpers, Helpers>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

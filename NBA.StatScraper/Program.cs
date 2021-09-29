@@ -6,7 +6,7 @@ namespace NBA.StatScraper
 {
     using NBA.Models;
     using NBA.Models.DataContext;
-    using NBA.Services.Abstraction.Repositories;
+    using NBA.Services.Abstraction;
     using NBA.Services.Interfaces;
     using System;
     using OpenQA.Selenium.Chrome;
@@ -22,14 +22,15 @@ namespace NBA.StatScraper
             IUnitOfWork _uw = new UnitOfWork(_db);
             IPlayerRepository playerRepository = new PlayerRepository(_db, _uw);
             IHelpers _helpers = new Helpers(_db);
-            IStatScraper _statScraper = new StatScraper(_helpers);
             IGameTimesRepository _gameTimesRepository = new GameTimesRepository(_db, _uw);
+            IFullSeasonRepository _fullSeasonRepository = new FullSeasonRepository(_db, _uw, _gameTimesRepository);
             IPlayerRepository _playerRepository = new PlayerRepository(_db, _uw);
+            IStatScraper _statScraper = new StatScraper(_helpers, _gameTimesRepository);
 
 
 
             ////PlayerInfoScraper
-            //using (var driver = new FirefoxDriver())
+            //using (var driver = new ChromeDriver())
             //{
             //    driver.Manage().Window.Maximize();
             //    List<Players> players = _statScraper.PlayerInfoScraper(driver, 1);
@@ -41,7 +42,7 @@ namespace NBA.StatScraper
             //int k = 1;
             //for (; i < 14; i++)
             //{
-            //    using (var driver = new FirefoxDriver())
+            //    using (var driver = new ChromeDriver())
             //    {
             //        driver.Manage().Window.Maximize();
             //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
@@ -90,7 +91,7 @@ namespace NBA.StatScraper
 
             //for (; i < 11; i++)
             //{
-            //    using (var driver = new FirefoxDriver())
+            //    using (var driver = new ChromeDriver())
             //    {
             //        driver.Manage().Window.Maximize();
             //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
@@ -139,7 +140,7 @@ namespace NBA.StatScraper
             //}
             //for (; i < 10; i++)
             //{
-            //    using (var driver = new FirefoxDriver())
+            //    using (var driver = new ChromeDriver())
             //    {
             //        driver.Manage().Window.Maximize();
             //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
@@ -185,6 +186,114 @@ namespace NBA.StatScraper
             //    }
             //}
 
+
+
+            //FullSeason19_20 Scraper
+
+            int i = 0;
+            int j = 1;
+            try
+            {
+                int lastgame = _db.FullSeason19_20.OrderByDescending(x => x.GameNo).First().GameNo;
+                i = (lastgame + 1) / 100;
+                j = (lastgame + 1) % 100;
+            }
+            catch (Exception)
+            {
+
+            }
+
+            for (; i < 10; i++)
+            {
+                using (var driver = new ChromeDriver())
+                {
+                    driver.Manage().Window.Maximize();
+                    Thread.Sleep(3000);
+                    driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+                    Thread.Sleep(3000);
+                    driver.FindElementById("onetrust-accept-btn-handler").Click();
+                    Thread.Sleep(3000);
+                    for (; j < 100; j++)
+                    {
+                        switch (i * 100 + j)
+                        {
+                            case 974:
+                                return;
+                            case 0:
+                            case 707:
+                            case 972:
+                                continue;
+                        }
+
+                        try
+                        {
+                            var game = _statScraper.GameScraper19_20(driver, 100 * i + j,
+                                "https://www.nba.com/game/002190" + (i * 100 + j).ToString("0000"));
+                            _fullSeasonRepository.AddGame19_20(game);
+                            Thread.Sleep(3000);
+                        }
+                        catch (Exception)
+                        {
+                            j--;
+                        }
+                    }
+                }
+
+                j = 0;
+            }
+
+            //FullSeason20_21 Scraper
+
+            int k = 0;
+            int l = 1;
+            try
+            {
+                int lastgame = _db.FullSeason20_21.OrderByDescending(x => x.GameNo).First().GameNo;
+                k = (lastgame + 1) / 100;
+                l = (lastgame + 1) % 100;
+            }
+            catch (Exception)
+            {
+
+            }
+
+            for (; k < 10; k++)
+            {
+                using (var driver = new ChromeDriver())
+                {
+                    driver.Manage().Window.Maximize();
+                    Thread.Sleep(3000);
+                    driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+                    Thread.Sleep(3000);
+                    driver.FindElementById("onetrust-accept-btn-handler").Click();
+                    Thread.Sleep(3000);
+                    for (; l < 100; l++)
+                    {
+                        switch (k * 100 + l)
+                        {
+                            case 974:
+                                return;
+                            case 0:
+                            case 707:
+                            case 972:
+                                continue;
+                        }
+
+                        try
+                        {
+                            var game = _statScraper.GameScraper20_21(driver, 100 * k + l,
+                                "https://www.nba.com/game/002190" + (k * 100 + l).ToString("0000"));
+                            _fullSeasonRepository.AddGame20_21(game);
+                        }
+                        catch (Exception)
+                        {
+                            l--;
+                        }
+                    }
+                }
+
+                l = 0;
+            }
 
         }
     }

@@ -1,10 +1,11 @@
-﻿namespace NBA.Services.Abstraction.Repositories
+﻿namespace NBA.Services.Repositories
 {
     using NBA.Models;
     using NBA.Models.DataContext;
     using System.Collections.Generic;
     using System.Linq;
     using NBA.Services.Interfaces;
+    using NBA.Services.Abstraction;
 
     public class PlayerRepository : IPlayerRepository
     {

@@ -58,6 +58,14 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(stats);
         }
 
+        public ServiceResult<List<PlayerStats>> GetPlayerStatsWithGameNo(int gameNo)
+        {
+            var playerStats = _db.PlayerStats.Where(x=>x.GameNo==gameNo).ToList();
+            if (playerStats.Count == 0)
+                return (ServiceResult<List<PlayerStats>>)ServiceResult.Failed(ServiceError.PlayerNotFound);
+            return ServiceResult.Success(playerStats);
+        }
+
         public ServiceResult<PlayerStats> GetPlayerStatsWithPlayerIdAndGameNo(int playerId, int gameNo)
         {
             var player = _db.Players.Find(playerId);
