@@ -89,5 +89,149 @@
             var serviceResult = _playerStatRepository.GetPlayerStatsWithTeam(team);
             return serviceResult;
         }
+
+        [ResponseType(typeof(ServiceResult))]
+        [HttpPost]
+        [Route("addplayerstats20_21")]
+        public ServiceResult AddPlayerStats20_21(PlayerStats20_21 stats)
+        {
+            var serviceResult = _playerStatRepository.AddPlayerStat20_21(stats);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult))]
+        [HttpPut]
+        [Route("updateplayerstats20_21")]
+        public ServiceResult UpdatePlayerStats20_21(PlayerStats20_21 stats)
+        {
+            var serviceResult = _playerStatRepository.UpdatePlayerStat20_21(stats);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult))]
+        [HttpDelete]
+        [Route("deleteplayerstats20_21")]
+        public ServiceResult DeletePlayerStats20_21(int id)
+        {
+            var serviceResult = _playerStatRepository.DeletePlayerStat20_21(id);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<List<PlayerStats20_21>>))]
+        [HttpGet]
+        [Route("getall20_21")]
+        public ServiceResult<List<PlayerStats20_21>> GetAll20_21()
+        {
+            var serviceResult = _playerStatRepository.GetAllPlayerStats20_21();
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<List<PlayerStats20_21>>))]
+        [HttpGet]
+        [Route("getplayerstatswithplayerid20_21/{playerId}")]
+        public ServiceResult<List<PlayerStats20_21>> GetPlayerStatsWithPlayerId20_21(int playerId)
+        {
+            var serviceResult = _playerStatRepository.GetPlayerStatsWithPlayerId20_21(playerId);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<List<PlayerStats20_21>>))]
+        [HttpGet]
+        [Route("getplayerstatswithgameno20_21/{gameNo}")]
+        public ServiceResult<List<PlayerStats20_21>> GetPlayerStatsWithGameNo20_21(int gameNo)
+        {
+            var serviceResult = _playerStatRepository.GetPlayerStatsWithGameNo20_21(gameNo);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<PlayerStats20_21>))]
+        [HttpGet]
+        [Route("getplayerstatswithplayeridandgameno20_21/{playerId}&&{gameNo}")]
+        public ServiceResult<PlayerStats20_21> GetPlayerStatsWithPlayerIdandGameNo20_21(int playerId, int gameNo)
+        {
+            var serviceResult = _playerStatRepository.GetPlayerStatsWithPlayerIdAndGameNo20_21(playerId, gameNo);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<List<PlayerStats20_21>>))]
+        [HttpGet]
+        [Route("getplayerstatswithteam20_21")]
+        public ServiceResult<List<PlayerStats20_21>> GetPlayerStatsWithTeam20_21(Team team)
+        {
+            var serviceResult = _playerStatRepository.GetPlayerStatsWithTeam20_21(team);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult))]
+        [HttpPost]
+        [Route("addplayerstats19_20")]
+        public ServiceResult AddPlayerStats19_20(PlayerStats19_20 stats)
+        {
+            var serviceResult = _playerStatRepository.AddPlayerStat19_20(stats);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult))]
+        [HttpPut]
+        [Route("updateplayerstats19_20")]
+        public ServiceResult UpdatePlayerStats19_20(PlayerStats19_20 stats)
+        {
+            var serviceResult = _playerStatRepository.UpdatePlayerStat19_20(stats);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult))]
+        [HttpDelete]
+        [Route("deleteplayerstats19_20")]
+        public ServiceResult DeletePlayerStats19_20(int id)
+        {
+            var serviceResult = _playerStatRepository.DeletePlayerStat19_20(id);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<List<PlayerStats19_20>>))]
+        [HttpGet]
+        [Route("getall19_20")]
+        public ServiceResult<List<PlayerStats19_20>> GetAll19_20()
+        {
+            var serviceResult = _playerStatRepository.GetAllPlayerStats19_20();
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<List<PlayerStats19_20>>))]
+        [HttpGet]
+        [Route("getplayerstatswithplayerid19_20/{playerId}")]
+        public ServiceResult<List<PlayerStats19_20>> GetPlayerStatsWithPlayerId19_20(int playerId)
+        {
+            var serviceResult = _playerStatRepository.GetPlayerStatsWithPlayerId19_20(playerId);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<List<PlayerStats19_20>>))]
+        [HttpGet]
+        [Route("getplayerstatswithgameno19_20/{gameNo}")]
+        public ServiceResult<List<PlayerStats19_20>> GetPlayerStatsWithGameNo19_20(int gameNo)
+        {
+            var serviceResult = _playerStatRepository.GetPlayerStatsWithGameNo19_20(gameNo);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<PlayerStats19_20>))]
+        [HttpGet]
+        [Route("getplayerstatswithplayeridandgameno19_20/{playerId}&&{gameNo}")]
+        public ServiceResult<PlayerStats19_20> GetPlayerStatsWithPlayerIdandGameNo19_20(int playerId, int gameNo)
+        {
+            var serviceResult = _playerStatRepository.GetPlayerStatsWithPlayerIdAndGameNo19_20(playerId, gameNo);
+            return serviceResult;
+        }
+
+        [ResponseType(typeof(ServiceResult<List<PlayerStats19_20>>))]
+        [HttpGet]
+        [Route("getplayerstatswithteam19_20")]
+        public ServiceResult<List<PlayerStats19_20>> GetPlayerStatsWithTeam19_20(Team team)
+        {
+            var serviceResult = _playerStatRepository.GetPlayerStatsWithTeam19_20(team);
+            return serviceResult;
+        }
     }
 }

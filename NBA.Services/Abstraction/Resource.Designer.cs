@@ -246,6 +246,15 @@ namespace NBA.Services.Abstraction {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oyuncun çeyrek istatistikleri bulunamadı!.
+        /// </summary>
+        internal static string PlayerStatsQuarterNotFound {
+            get {
+                return ResourceManager.GetString("PlayerStatsQuarterNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can not use a Pin that you used previously.
         /// </summary>
         internal static string PreviouslyUsedPin {

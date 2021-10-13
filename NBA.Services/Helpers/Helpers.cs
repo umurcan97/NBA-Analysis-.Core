@@ -164,6 +164,10 @@
                 default: return Team.Error;
             }
         }
+        public Players GetPlayerWithName(string name)
+        {
+            return this._db.Players.First(x => x.Name == name);
+        }
         public bool DoesGameExist(int GameNo)
         {
             bool GameExists = true;
@@ -191,6 +195,64 @@
         public bool DoesPlayerStatGameExist(int GameNo)
         {
             List<PlayerStats> stats = this._db.PlayerStats.Where(x => x.GameNo == GameNo).ToList();
+            return stats.Count != 0;
+        }
+        public bool DoesGameExist20_21(int GameNo)
+        {
+            bool GameExists = true;
+            FullSeason20_21 game = _db.FullSeason20_21.FirstOrDefault(x => x.GameNo == GameNo);
+            if (game == null)
+                GameExists = false;
+            return GameExists;
+        }
+        public bool DoesQuarterExist20_21(int GameNo, int QuarterNo)
+        {
+            bool QuarterExists = true;
+            FullSeasonQuarters20_21 game = _db.FullSeasonQuarters20_21.FirstOrDefault(x => x.GameNo == GameNo && x.QuarterNo == QuarterNo);
+            if (game == null)
+                QuarterExists = false;
+            return QuarterExists;
+        }
+        public bool DoesQuarterExist20_21(int GameNo)
+        {
+            bool QuarterExists = true;
+            FullSeasonQuarters20_21 game = _db.FullSeasonQuarters20_21.FirstOrDefault(x => x.GameNo == GameNo);
+            if (game == null)
+                QuarterExists = false;
+            return QuarterExists;
+        }
+        public bool DoesPlayerStatGameExist20_21(int GameNo)
+        {
+            List<PlayerStats20_21> stats = this._db.PlayerStats20_21.Where(x => x.GameNo == GameNo).ToList();
+            return stats.Count != 0;
+        }
+        public bool DoesGameExist19_20(int GameNo)
+        {
+            bool GameExists = true;
+            FullSeason19_20 game = _db.FullSeason19_20.FirstOrDefault(x => x.GameNo == GameNo);
+            if (game == null)
+                GameExists = false;
+            return GameExists;
+        }
+        public bool DoesQuarterExist19_20(int GameNo, int QuarterNo)
+        {
+            bool QuarterExists = true;
+            FullSeasonQuarters19_20 game = _db.FullSeasonQuarters19_20.FirstOrDefault(x => x.GameNo == GameNo && x.QuarterNo == QuarterNo);
+            if (game == null)
+                QuarterExists = false;
+            return QuarterExists;
+        }
+        public bool DoesQuarterExist19_20(int GameNo)
+        {
+            bool QuarterExists = true;
+            FullSeasonQuarters19_20 game = _db.FullSeasonQuarters19_20.FirstOrDefault(x => x.GameNo == GameNo);
+            if (game == null)
+                QuarterExists = false;
+            return QuarterExists;
+        }
+        public bool DoesPlayerStatGameExist19_20(int GameNo)
+        {
+            List<PlayerStats19_20> stats = this._db.PlayerStats19_20.Where(x => x.GameNo == GameNo).ToList();
             return stats.Count != 0;
         }
         public DateTime DateTimeConverter(string date)

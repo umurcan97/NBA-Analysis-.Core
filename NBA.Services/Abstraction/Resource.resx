@@ -189,6 +189,9 @@
   <data name="PlayerStatNotFound" xml:space="preserve">
     <value>Oyuncu istatistikleri bulunamadı!</value>
   </data>
+  <data name="PlayerStatsQuarterNotFound" xml:space="preserve">
+    <value>Oyuncun çeyrek istatistikleri bulunamadı!</value>
+  </data>
   <data name="PreviouslyUsedPin" xml:space="preserve">
     <value>You can not use a Pin that you used previously</value>
   </data>

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NBA.Services.Repositories;
+﻿using System.Threading.Tasks;
 
 namespace NBA.StatScraper
 {
@@ -13,7 +11,11 @@ namespace NBA.StatScraper
     using NBA.Services.Helpers;
     using System.Threading;
     using NBA.Models.Entities;
-    using OpenQA.Selenium.Firefox;
+    using System.Collections.Generic;
+    using System.Linq;
+    using NBA.Services.Repositories;
+    using System.Net.Http;
+
     public class Program
     {
         static void Main(string[] args)
@@ -24,7 +26,11 @@ namespace NBA.StatScraper
             IHelpers _helpers = new Helpers(_db);
             IGameTimesRepository _gameTimesRepository = new GameTimesRepository(_db, _uw);
             IFullSeasonRepository _fullSeasonRepository = new FullSeasonRepository(_db, _uw, _gameTimesRepository);
+            IFullSeasonQuartersRepository _fullSeasonQuartersRepository =
+                new FullSeasonQuartersRepository(_db, _uw, _gameTimesRepository);
             IPlayerRepository _playerRepository = new PlayerRepository(_db, _uw);
+            IPlayerStatRepository _playerStatRepository = new PlayerStatRepository(_db, _uw, _gameTimesRepository);
+            IPlayerStatQuarterRepository _playerStatQuarterRepository = new PlayerStatQuarterRepository(_db, _uw);
             IStatScraper _statScraper = new StatScraper(_helpers, _gameTimesRepository);
 
 
@@ -37,7 +43,7 @@ namespace NBA.StatScraper
             //    _playerRepository.AddPlayerList(players);
             //}
 
-            ////FullGame Date Scraper
+            ////GameTime Scraper
             //int i = 0;
             //int k = 1;
             //for (; i < 14; i++)
@@ -188,113 +194,962 @@ namespace NBA.StatScraper
 
 
 
-            //FullSeason19_20 Scraper
 
-            int i = 0;
-            int j = 1;
-            try
-            {
-                int lastgame = _db.FullSeason19_20.OrderByDescending(x => x.GameNo).First().GameNo;
-                i = (lastgame + 1) / 100;
-                j = (lastgame + 1) % 100;
-            }
-            catch (Exception)
-            {
 
-            }
+            ////FullSeason20_21 Scraper
 
-            for (; i < 10; i++)
-            {
-                using (var driver = new ChromeDriver())
-                {
-                    driver.Manage().Window.Maximize();
-                    Thread.Sleep(3000);
-                    driver.Navigate().GoToUrl("https://www.nba.com/schedule");
-                    Thread.Sleep(3000);
-                    driver.FindElementById("onetrust-accept-btn-handler").Click();
-                    Thread.Sleep(3000);
-                    for (; j < 100; j++)
-                    {
-                        switch (i * 100 + j)
-                        {
-                            case 974:
-                                return;
-                            case 0:
-                            case 707:
-                            case 972:
-                                continue;
-                        }
+            //int k = 0;
+            //int l = 1;
+            //try
+            //{
+            //    int lastgame = _db.FullSeason20_21.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    k = (lastgame + 1) / 100;
+            //    l = (lastgame + 1) % 100;
+            //}
+            //catch (Exception)
+            //{
 
-                        try
-                        {
-                            var game = _statScraper.GameScraper19_20(driver, 100 * i + j,
-                                "https://www.nba.com/game/002190" + (i * 100 + j).ToString("0000"));
-                            _fullSeasonRepository.AddGame19_20(game);
-                            Thread.Sleep(3000);
-                        }
-                        catch (Exception)
-                        {
-                            j--;
-                        }
-                    }
-                }
+            //}
 
-                j = 0;
-            }
+            //for (; k < 11; k++)
+            //{
+            //    using (var driver = new ChromeDriver())
+            //    {
+            //        driver.Manage().Window.Maximize();
+            //        Thread.Sleep(3000);
+            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        Thread.Sleep(3000);
+            //        driver.FindElementById("onetrust-accept-btn-handler").Click();
+            //        Thread.Sleep(3000);
+            //        for (; l < 100; l++)
+            //        {
+            //            if (k * 100 + l == 1078)
+            //                return;
+            //            try
+            //            {
+            //                var game = _statScraper.GameScraper20_21(driver, 100 * k + l,
+            //                    "https://www.nba.com/game/002200" + (k * 100 + l).ToString("0000"));
+            //                _fullSeasonRepository.AddGame20_21(game);
+            //            }
+            //            catch (Exception)
+            //            {
+            //                l--;
+            //            }
+            //        }
+            //    }
 
-            //FullSeason20_21 Scraper
+            //    l = 0;
+            //}
 
-            int k = 0;
-            int l = 1;
-            try
-            {
-                int lastgame = _db.FullSeason20_21.OrderByDescending(x => x.GameNo).First().GameNo;
-                k = (lastgame + 1) / 100;
-                l = (lastgame + 1) % 100;
-            }
-            catch (Exception)
-            {
+            ////FullSeason19_20 Scraper
 
-            }
+            //int i = 0;
+            //int j = 1;
+            //try
+            //{
+            //    int lastgame = _db.FullSeason19_20.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    i = (lastgame + 1) / 100;
+            //    j = (lastgame + 1) % 100;
+            //}
+            //catch (Exception)
+            //{
 
-            for (; k < 10; k++)
-            {
-                using (var driver = new ChromeDriver())
-                {
-                    driver.Manage().Window.Maximize();
-                    Thread.Sleep(3000);
-                    driver.Navigate().GoToUrl("https://www.nba.com/schedule");
-                    Thread.Sleep(3000);
-                    driver.FindElementById("onetrust-accept-btn-handler").Click();
-                    Thread.Sleep(3000);
-                    for (; l < 100; l++)
-                    {
-                        switch (k * 100 + l)
-                        {
-                            case 974:
-                                return;
-                            case 0:
-                            case 707:
-                            case 972:
-                                continue;
-                        }
+            //}
 
-                        try
-                        {
-                            var game = _statScraper.GameScraper20_21(driver, 100 * k + l,
-                                "https://www.nba.com/game/002190" + (k * 100 + l).ToString("0000"));
-                            _fullSeasonRepository.AddGame20_21(game);
-                        }
-                        catch (Exception)
-                        {
-                            l--;
-                        }
-                    }
-                }
+            //for (; i < 10; i++)
+            //{
+            //    using (var driver = new ChromeDriver())
+            //    {
+            //        driver.Manage().Window.Maximize();
+            //        Thread.Sleep(3000);
+            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        Thread.Sleep(3000);
+            //        driver.FindElementById("onetrust-accept-btn-handler").Click();
+            //        Thread.Sleep(3000);
+            //        for (; j < 100; j++)
+            //        {
+            //            switch (i * 100 + j)
+            //            {
+            //                case 974:
+            //                    return;
+            //                case 0:
+            //                case 707:
+            //                case 972:
+            //                    continue;
+            //            }
 
-                l = 0;
-            }
+            //            try
+            //            {
+            //                var game = _statScraper.GameScraper19_20(driver, 100 * i + j,
+            //                    "https://www.nba.com/game/002190" + (i * 100 + j).ToString("0000"));
+            //                _fullSeasonRepository.AddGame19_20(game);
+            //                Thread.Sleep(3000);
+            //            }
+            //            catch (Exception)
+            //            {
+            //                j--;
+            //            }
+            //        }
+            //    }
 
+            //    j = 0;
+            //}
+
+
+
+
+            ////FullSeasonQuarters Scraper
+
+            //int i = 0;
+            //int j = 1;
+            //try
+            //{
+            //    int lastgame = _db.FullSeasonQuarters.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    i = (lastgame + 1) / 25;
+            //    j = (lastgame + 1) % 25;
+            //}
+            //catch (Exception)
+            //{
+            //    for (; i < 50; i++)
+            //    {
+
+            //    }
+            //}
+
+            ////FullSeasonQuarters20_21 Scraper
+
+            //int i = 0;
+            //int j = 1;
+            //try
+            //{
+            //    int lastgame = _db.FullSeasonQuarters20_21.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    i = (lastgame + 1) / 25;
+            //    j = (lastgame + 1) % 25;
+            //}
+            //catch (Exception)
+            //{
+
+            //}
+            //for (; i < 44; i++)
+            //{
+            //    using (var driver = new ChromeDriver())
+            //    {
+            //        driver.Manage().Window.Maximize();
+            //        Thread.Sleep(3000);
+            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        Thread.Sleep(3000);
+            //        driver.FindElementById("onetrust-accept-btn-handler").Click();
+            //        Thread.Sleep(3000);
+            //        for (; j < 25; j++)
+            //        {
+            //            if (i * 25 + j > 1077)
+            //                continue;
+            //            int TotalQuarters = 0;
+            //            for (int k = 0; k < 1; k++)
+            //            {
+            //                try
+            //                {
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002200" +
+            //                                              (i * 25 + j).ToString("0000") + "/box-score");
+            //                    string period = driver.FindElementByXPath(
+            //                        "/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select").Text;
+            //                    switch (period.Length)
+            //                    {
+            //                        case 47:
+            //                            TotalQuarters = 4;
+            //                            break;
+            //                        case 52:
+            //                            TotalQuarters = 5;
+            //                            break;
+            //                        default:
+            //                            TotalQuarters = (period.Length - 55) / 5 + 4;
+            //                            break;
+            //                    }
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    k--;
+            //                }
+            //            }
+            //            for (int k = 1; k < TotalQuarters + 1; k++)
+            //            {
+            //                try
+            //                {
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002200" +
+            //                                              (i * 25 + j).ToString("0000") + GetTimeSpan(k));
+            //                    Thread.Sleep(3000);
+            //                    FullSeasonQuarters20_21 quarter =
+            //                        _statScraper.QuarterScraper20_21(driver, i * 25 + j, k);
+            //                    _fullSeasonQuartersRepository.AddQuarter20_21(quarter);
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    k--;
+            //                }
+            //            }
+            //        }
+            //    }
+            //    j = 0;
+            //}
+
+            ////FullSeasonQuarters19_20 Scraper
+
+            //int l = 0;
+            //int m = 1;
+            //try
+            //{
+            //    int lastgame = _db.FullSeasonQuarters19_20.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    l = (lastgame + 1) / 25;
+            //    m = (lastgame + 1) % 25;
+            //}
+            //catch (Exception)
+            //{
+
+            //}
+            //for (; l < 39; l++)
+            //{
+            //    using (var driver = new ChromeDriver())
+            //    {
+            //        driver.Manage().Window.Maximize();
+            //        Thread.Sleep(3000);
+            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        Thread.Sleep(3000);
+            //        driver.FindElementById("onetrust-accept-btn-handler").Click();
+            //        Thread.Sleep(3000);
+            //        for (; m < 25; m++)
+            //        {
+            //            if (l * 25 + m > 973)
+            //                continue;
+            //            switch (l * 25 + m)
+            //            {
+            //                case 0:
+            //                case 707:
+            //                case 972:
+            //                    continue;
+            //            }
+            //            int TotalQuarters = 0;
+            //            for (int k = 0; k < 1; k++)
+            //            {
+            //                try
+            //                {
+            //                    if (m == 0)
+            //                    {
+            //                        Thread.Sleep(3000);
+            //                    }
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002190" +
+            //                                              (l * 25 + m).ToString("0000") + "/box-score");
+            //                    string period = driver.FindElementByXPath(
+            //                        "/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select").Text;
+            //                    switch (period.Length)
+            //                    {
+            //                        case 47:
+            //                            TotalQuarters = 4;
+            //                            break;
+            //                        case 52:
+            //                            TotalQuarters = 5;
+            //                            break;
+            //                        default:
+            //                            TotalQuarters = (period.Length - 55) / 5 + 4;
+            //                            break;
+            //                    }
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    k--;
+            //                }
+            //            }
+            //            for (int n = 1; n < TotalQuarters + 1; n++)
+            //            {
+            //                try
+            //                {
+            //                    if (m == 0)
+            //                    {
+            //                        Thread.Sleep(3000);
+            //                    }
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002190" +
+            //                                              (l * 25 + m).ToString("0000") + GetTimeSpan(n));
+            //                    Thread.Sleep(3000);
+            //                    FullSeasonQuarters19_20 quarter =
+            //                        _statScraper.QuarterScraper19_20(driver, l * 25 + m, n);
+            //                    _fullSeasonQuartersRepository.AddQuarter19_20(quarter);
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    n--;
+            //                }
+            //            }
+            //        }
+            //    }
+            //    m = 0;
+            //}
+
+
+
+            //PlayerStatScraper
+
+            ////PlayerStatScraper20_21
+
+            //int i = 0;
+            //int j = 1;
+            //try
+            //{
+            //    int gameNo = _db.PlayerStats20_21.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    i = (gameNo + 1) / 100;
+            //    j = (gameNo + 1) % 100;
+            //}
+            //catch (Exception)
+            //{
+
+            //}
+
+            //for (; i < 11; i++)
+            //{
+            //    using (var driver = new ChromeDriver())
+            //    {
+            //        driver.Manage().Window.Maximize();
+            //        Thread.Sleep(3000);
+            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        Thread.Sleep(3000);
+            //        driver.FindElementById("onetrust-accept-btn-handler").Click();
+            //        Thread.Sleep(3000);
+            //        for (; j < 100; j++)
+            //        {
+            //            if (i * 100 + j > 1077)
+            //                continue;
+            //            try
+            //            {
+            //                driver.Navigate().GoToUrl("https://www.nba.com/game/002200" +
+            //                                          (i * 100 + j).ToString("0000" + "/box-score"));
+            //                Thread.Sleep(3000);
+            //                List<PlayerStats20_21> stats= _statScraper.PlayerStatScraper20_21(driver, i * 100 + j);
+            //                foreach (var VARIABLE in stats)
+            //                {
+            //                    _db.PlayerStats20_21.Add(VARIABLE);
+            //                }
+            //                _uw.Commit();
+            //            }
+            //            catch (Exception)
+            //            {
+            //                j--;
+            //            }
+            //        }
+            //    }
+            //}
+
+            ////PlayerStatScraper19_20
+
+            //int k = 0;
+            //int l = 1;
+            //try
+            //{
+            //    int gameNo = _db.PlayerStats19_20.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    k = (gameNo + 1) / 100;
+            //    l = (gameNo + 1) % 100;
+            //}
+            //catch (Exception)
+            //{
+
+            //}
+
+            //for (; k < 11; k++)
+            //{
+            //    using (var driver = new ChromeDriver())
+            //    {
+            //        driver.Manage().Window.Maximize();
+            //        Thread.Sleep(3000);
+            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        Thread.Sleep(3000);
+            //        driver.FindElementById("onetrust-accept-btn-handler").Click();
+            //        Thread.Sleep(3000);
+            //        for (; l < 100; l++)
+            //        {
+            //            if (k * 100 + l > 1077)
+            //                continue;
+            //            try
+            //            {
+            //                driver.Navigate().GoToUrl("https://www.nba.com/game/002190" +
+            //                                          (k * 100 + l).ToString("0000" + "/box-score"));
+            //                driver.Navigate().GoToUrl("https://www.nba.com/game/002190" +
+            //                                          (k * 100 + l).ToString("0000" + "/box-score?range=0-28800"));
+            //                Thread.Sleep(3000);
+            //                List<PlayerStats19_20> stats = _statScraper.PlayerStatScraper19_20(driver, k * 100 + l);
+            //                foreach (var VARIABLE in stats)
+            //                {
+            //                    _db.PlayerStats19_20.Add(VARIABLE);
+            //                }
+            //                _uw.Commit();
+            //            }
+            //            catch (Exception)
+            //            {
+            //                l--;
+            //            }
+            //        }
+            //    }
+            //}
+
+
+
+            //PlayerstatQuartersScaper
+
+            ////FullSeasonQuarters20_21 Scraper
+
+            //int i = 0;
+            //int j = 1;
+            //try
+            //{
+            //    int lastgame = _db.FullSeasonQuarters20_21.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    i = (lastgame + 1) / 25;
+            //    j = (lastgame + 1) % 25;
+            //}
+            //catch (Exception)
+            //{
+
+            //}
+            //for (; i < 44; i++)
+            //{
+            //    using (var driver = new ChromeDriver())
+            //    {
+            //        driver.Manage().Window.Maximize();
+            //        Thread.Sleep(3000);
+            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        Thread.Sleep(3000);
+            //        driver.FindElementById("onetrust-accept-btn-handler").Click();
+            //        Thread.Sleep(3000);
+            //        for (; j < 25; j++)
+            //        {
+            //            if (i * 25 + j > 1077)
+            //                continue;
+            //            int TotalQuarters = 0;
+            //            for (int k = 0; k < 1; k++)
+            //            {
+            //                try
+            //                {
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002200" +
+            //                                              (i * 25 + j).ToString("0000") + "/box-score");
+            //                    string period = driver.FindElementByXPath(
+            //                        "/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select").Text;
+            //                    switch (period.Length)
+            //                    {
+            //                        case 47:
+            //                            TotalQuarters = 4;
+            //                            break;
+            //                        case 52:
+            //                            TotalQuarters = 5;
+            //                            break;
+            //                        default:
+            //                            TotalQuarters = (period.Length - 55) / 5 + 4;
+            //                            break;
+            //                    }
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    k--;
+            //                }
+            //            }
+            //            for (int k = 1; k < TotalQuarters + 1; k++)
+            //            {
+            //                try
+            //                {
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002200" +
+            //                                              (i * 25 + j).ToString("0000") + GetTimeSpan(k));
+            //                    Thread.Sleep(3000);
+            //                    FullSeasonQuarters20_21 quarter =
+            //                        _statScraper.QuarterScraper20_21(driver, i * 25 + j, k);
+            //                    _fullSeasonQuartersRepository.AddQuarter20_21(quarter);
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    k--;
+            //                }
+            //            }
+            //        }
+            //    }
+            //    j = 0;
+            //}
+
+            ////PlayerstatQuarters20_21 Scraper
+
+            //int i = 0;
+            //int j = 1;
+            //try
+            //{
+            //    int lastgame = _db.PlayerStatsQuarter20_21.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    i = (lastgame + 1) / 25;
+            //    j = (lastgame + 1) % 25;
+            //}
+            //catch (Exception)
+            //{
+
+            //}
+            //for (; i < 44; i++)
+            //{
+            //    using (var driver = new ChromeDriver())
+            //    {
+            //        driver.Manage().Window.Maximize();
+            //        Thread.Sleep(3000);
+            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        Thread.Sleep(3000);
+            //        driver.FindElementById("onetrust-accept-btn-handler").Click();
+            //        Thread.Sleep(3000);
+            //        for (; j < 25; j++)
+            //        {
+            //            if (i * 25 + j > 1077)
+            //                continue;
+            //            int TotalQuarters = 0;
+            //            for (int k = 0; k < 1; k++)
+            //            {
+            //                try
+            //                {
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002200" +
+            //                                              (i * 25 + j).ToString("0000") + "/box-score");
+            //                    string period = driver.FindElementByXPath(
+            //                        "/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select").Text;
+            //                    switch (period.Length)
+            //                    {
+            //                        case 47:
+            //                            TotalQuarters = 4;
+            //                            break;
+            //                        case 52:
+            //                            TotalQuarters = 5;
+            //                            break;
+            //                        default:
+            //                            TotalQuarters = (period.Length - 55) / 5 + 4;
+            //                            break;
+            //                    }
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    k--;
+            //                }
+            //            }
+            //            for (int k = 1; k < TotalQuarters + 1; k++)
+            //            {
+            //                try
+            //                {
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002200" +
+            //                                              (i * 25 + j).ToString("0000") + GetTimeSpan(k));
+            //                    //Thread.Sleep(3000);
+            //                    var quarterstats =
+            //                        _statScraper.PlayerStatQuarterScraper20_21(driver, i * 25 + j, k);
+            //                    foreach (var VARIABLE in quarterstats)
+            //                    {
+            //                        _playerStatQuarterRepository.AddPlayerStatsQuarter20_21(VARIABLE);
+            //                    }
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    k--;
+            //                }
+            //            }
+            //        }
+            //    }
+            //    j = 0;
+            //}
+
+            ////PlayerstatQuarters19_20 Scraper
+
+            //int l = 0;
+            //int m = 1;
+            //try
+            //{
+            //    int lastgame = _db.PlayerStatsQuarter19_20.OrderByDescending(x => x.GameNo).First().GameNo;
+            //    l = (lastgame + 1) / 25;
+            //    m = (lastgame + 1) % 25;
+            //}
+            //catch (Exception)
+            //{
+
+            //}
+            //for (; l < 39; l++)
+            //{
+            //    using (var driver = new ChromeDriver())
+            //    {
+            //        driver.Manage().Window.Maximize();
+            //        Thread.Sleep(3000);
+            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        Thread.Sleep(3000);
+            //        driver.FindElementById("onetrust-accept-btn-handler").Click();
+            //        Thread.Sleep(3000);
+            //        for (; m < 25; m++)
+            //        {
+            //            if (l * 25 + m > 973)
+            //                continue;
+            //            switch (l * 25 + m)
+            //            {
+            //                case 0:
+            //                case 707:
+            //                case 972:
+            //                    continue;
+            //            }
+            //            int TotalQuarters = 0;
+            //            for (int k = 0; k < 1; k++)
+            //            {
+            //                try
+            //                {
+            //                    if (m == 0)
+            //                    {
+            //                        Thread.Sleep(3000);
+            //                    }
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002190" +
+            //                                              (l * 25 + m).ToString("0000") + "/box-score");
+            //                    string period = driver.FindElementByXPath(
+            //                        "/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select").Text;
+            //                    switch (period.Length)
+            //                    {
+            //                        case 47:
+            //                            TotalQuarters = 4;
+            //                            break;
+            //                        case 52:
+            //                            TotalQuarters = 5;
+            //                            break;
+            //                        default:
+            //                            TotalQuarters = (period.Length - 55) / 5 + 4;
+            //                            break;
+            //                    }
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    k--;
+            //                }
+            //            }
+            //            for (int n = 1; n < TotalQuarters + 1; n++)
+            //            {
+            //                try
+            //                {
+            //                    if (m == 0)
+            //                    {
+            //                        Thread.Sleep(3000);
+            //                    }
+            //                    driver.Navigate().GoToUrl("https://www.nba.com/game/002190" +
+            //                                              (l * 25 + m).ToString("0000") + GetTimeSpan(n));
+            //                    //Thread.Sleep(3000);
+            //                    var quarterstats =
+            //                        _statScraper.PlayerStatQuarterScraper19_20(driver, l * 25 + m, n);
+            //                    foreach (var VARIABLE in quarterstats)
+            //                    {
+            //                        _playerStatQuarterRepository.AddPlayerStatsQuarter19_20(VARIABLE);
+            //                    }
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    Thread.Sleep(3000);
+            //                    n--;
+            //                }
+            //            }
+            //        }
+            //    }
+            //    m = 0;
+            //}
+
+            //var players = _db.Players.ToList();
+            //foreach (var player in players)
+            //{
+            //    var playerstats = _db.PlayerStatsQuarter19_20.Where(x => x.Player == player).ToList();
+            //    if (playerstats.Count == 0)
+            //        continue;
+            //    List<int> games = new List<int>();
+            //    foreach (var stat in playerstats)
+            //    {
+            //        games.Add(stat.GameNo);
+            //    }
+            //    games = games.Distinct().ToList();
+            //    foreach (int game in games)
+            //    {
+            //        List<PlayerStatsQuarter19_20> quarters = playerstats.Where(x => x.GameNo == game).ToList();
+            //        PlayerStats19_20 stats = new PlayerStats19_20();
+            //        stats.GameNo = game;
+            //        stats.Player = player;
+            //        foreach (var quarter in quarters)
+            //        {
+            //            stats.Team = quarter.Team;
+            //            stats.Minutes += quarter.Minutes;
+            //            stats.Seconds += quarter.Seconds;
+            //            stats.PlayerPoints += quarter.PlayerPoints;
+            //            stats.PlayerFGA += quarter.PlayerFGA;
+            //            stats.PlayerFGM += quarter.PlayerFGM;
+            //            stats.Player3PA += quarter.Player3PA;
+            //            stats.Player3PM += quarter.Player3PM;
+            //            stats.PlayerFTA += quarter.PlayerFTA;
+            //            stats.PlayerFTM += quarter.PlayerFTM;
+            //            stats.PlayerAssists += quarter.PlayerAssists;
+            //            stats.PlayerDefensiveRebounds += quarter.PlayerDefensiveRebounds;
+            //            stats.PlayerOffensiveRebounds += quarter.PlayerOffensiveRebounds;
+            //            stats.PlayerBlocks += quarter.PlayerBlocks;
+            //            stats.PlayerSteals += quarter.PlayerSteals;
+            //            stats.PlayerTurnovers += quarter.PlayerTurnovers;
+            //            stats.PlayerFouls += quarter.PlayerFouls;
+            //            stats.PlayerPlusMinus += quarter.PlayerPlusMinus;
+            //        }
+
+            //        stats.Minutes += stats.Seconds / 60;
+            //        stats.Seconds = stats.Seconds % 60;
+            //        _db.PlayerStats19_20.Add(stats);
+            //    }
+            //}
+
+
+
+
+
+            //////// playerstatsquarter team column fix method
+
+            //////var players = _playerRepository.GetAllPlayers().Data;
+            //////var playerStatsQuarter20 = _playerStatQuarterRepository.GetAllPlayerStatsQuarter20_21().Data;
+            //////var gametimes20 = _gameTimesRepository.GetFullSeason20_21().Data;
+            //////var fullSeason = _fullSeasonRepository.GetFullSeason20_21().Data.OrderBy(x=>x.GameDate.GameDate);
+            //////foreach (var player in players)
+            //////{
+            //////    var stats = playerStatsQuarter20.Where(x => x.Player == player).ToList();
+            //////    if (stats.Count == 0)
+            //////        continue;
+            //////    List<MyClass> teams = new List<MyClass>();
+            //////    MyClass AtlantaHawks = new MyClass()
+            //////    {
+            //////        team = Team.AtlantaHawks,
+            //////        count = 0
+            //////    };
+            //////    MyClass BostonCeltics = new MyClass()
+            //////    {
+            //////        team = Team.BostonCeltics,
+            //////        count = 0
+            //////    };
+            //////    MyClass BrooklynNets = new MyClass()
+            //////    {
+            //////        team = Team.BrooklynNets,
+            //////        count = 0
+            //////    };
+            //////    MyClass CharlotteHornets = new MyClass()
+            //////    {
+            //////        team = Team.CharlotteHornets,
+            //////        count = 0
+            //////    };
+            //////    MyClass ChicagoBulls = new MyClass()
+            //////    {
+            //////        team = Team.ChicagoBulls,
+            //////        count = 0
+            //////    };
+            //////    MyClass ClevelandCavaliers = new MyClass()
+            //////    {
+            //////        team = Team.ClevelandCavaliers,
+            //////        count = 0
+            //////    };
+            //////    MyClass DallasMavericks = new MyClass()
+            //////    {
+            //////        team = Team.DallasMavericks,
+            //////        count = 0
+            //////    };
+            //////    MyClass DenverNuggets = new MyClass()
+            //////    {
+            //////        team = Team.DenverNuggets,
+            //////        count = 0
+            //////    };
+            //////    MyClass DetroitPistons = new MyClass()
+            //////    {
+            //////        team = Team.DetroitPistons,
+            //////        count = 0
+            //////    };
+            //////    MyClass GoldenStateWarriors = new MyClass()
+            //////    {
+            //////        team = Team.GoldenStateWarriors,
+            //////        count = 0
+            //////    };
+            //////    MyClass HoustonRockets = new MyClass()
+            //////    {
+            //////        team = Team.HoustonRockets,
+            //////        count = 0
+            //////    };
+            //////    MyClass IndianaPacers = new MyClass()
+            //////    {
+            //////        team = Team.IndianaPacers,
+            //////        count = 0
+            //////    };
+            //////    MyClass LosAngelesClippers = new MyClass()
+            //////    {
+            //////        team = Team.LosAngelesClippers,
+            //////        count = 0
+            //////    };
+            //////    MyClass LosAngelesLakers = new MyClass()
+            //////    {
+            //////        team = Team.LosAngelesLakers,
+            //////        count = 0
+            //////    };
+            //////    MyClass MemphisGrizzlies = new MyClass()
+            //////    {
+            //////        team = Team.MemphisGrizzlies,
+            //////        count = 0
+            //////    };
+            //////    MyClass MiamiHeat = new MyClass()
+            //////    {
+            //////        team = Team.MiamiHeat,
+            //////        count = 0
+            //////    };
+            //////    MyClass MilwaukeeBucks = new MyClass()
+            //////    {
+            //////        team = Team.MilwaukeeBucks,
+            //////        count = 0
+            //////    };
+            //////    MyClass MinnesotaTimberwolves = new MyClass()
+            //////    {
+            //////        team = Team.MinnesotaTimberwolves,
+            //////        count = 0
+            //////    };
+            //////    MyClass NewOrleansPelicans = new MyClass()
+            //////    {
+            //////        team = Team.NewOrleansPelicans,
+            //////        count = 0
+            //////    };
+            //////    MyClass NewYorkKnicks = new MyClass()
+            //////    {
+            //////        team = Team.NewYorkKnicks,
+            //////        count = 0
+            //////    };
+            //////    MyClass OklahomaCityThunder = new MyClass()
+            //////    {
+            //////        team = Team.OklahomaCityThunder,
+            //////        count = 0
+            //////    };
+            //////    MyClass OrlandoMagic = new MyClass()
+            //////    {
+            //////        team = Team.OrlandoMagic,
+            //////        count = 0
+            //////    };
+            //////    MyClass Philadelphia76ers = new MyClass()
+            //////    {
+            //////        team = Team.Philadelphia76ers,
+            //////        count = 0
+            //////    };
+            //////    MyClass PhoenixSuns = new MyClass()
+            //////    {
+            //////        team = Team.PhoenixSuns,
+            //////        count = 0
+            //////    };
+            //////    MyClass PortlandTrailBlazers = new MyClass()
+            //////    {
+            //////        team = Team.PortlandTrailBlazers,
+            //////        count = 0
+            //////    };
+            //////    MyClass SacramentoKings = new MyClass()
+            //////    {
+            //////        team = Team.SacramentoKings,
+            //////        count = 0
+            //////    };
+            //////    MyClass SanAntonioSpurs = new MyClass()
+            //////    {
+            //////        team = Team.SanAntonioSpurs,
+            //////        count = 0
+            //////    };
+            //////    MyClass TorontoRaptors = new MyClass()
+            //////    {
+            //////        team = Team.TorontoRaptors,
+            //////        count = 0
+            //////    };
+            //////    MyClass UtahJazz = new MyClass()
+            //////    {
+            //////        team = Team.UtahJazz,
+            //////        count = 0
+            //////    };
+            //////    MyClass WashingtonWizards = new MyClass()
+            //////    {
+            //////        team = Team.WashingtonWizards,
+            //////        count = 0
+            //////    };
+            //////    teams.Add(AtlantaHawks);
+            //////    teams.Add(BostonCeltics);
+            //////    teams.Add(BrooklynNets);
+            //////    teams.Add(CharlotteHornets);
+            //////    teams.Add(ChicagoBulls);
+            //////    teams.Add(ClevelandCavaliers);
+            //////    teams.Add(DallasMavericks);
+            //////    teams.Add(DenverNuggets);
+            //////    teams.Add(DetroitPistons);
+            //////    teams.Add(GoldenStateWarriors);
+            //////    teams.Add(HoustonRockets);
+            //////    teams.Add(IndianaPacers);
+            //////    teams.Add(LosAngelesClippers);
+            //////    teams.Add(LosAngelesLakers);
+            //////    teams.Add(MemphisGrizzlies);
+            //////    teams.Add(MiamiHeat);
+            //////    teams.Add(MilwaukeeBucks);
+            //////    teams.Add(MinnesotaTimberwolves);
+            //////    teams.Add(NewOrleansPelicans);
+            //////    teams.Add(NewYorkKnicks);
+            //////    teams.Add(OklahomaCityThunder);
+            //////    teams.Add(OrlandoMagic);
+            //////    teams.Add(Philadelphia76ers);
+            //////    teams.Add(PhoenixSuns);
+            //////    teams.Add(PortlandTrailBlazers);
+            //////    teams.Add(SacramentoKings);
+            //////    teams.Add(SanAntonioSpurs);
+            //////    teams.Add(TorontoRaptors);
+            //////    teams.Add(UtahJazz);
+            //////    teams.Add(WashingtonWizards);
+            //////    List<int> games = new List<int>();
+            //////    List<GameTime20_21> gametimes = new List<GameTime20_21>();
+            //////    foreach (var stat in stats)
+            //////    {
+            //////        gametimes.Add(_gameTimesRepository.GetGameTime20_21(stat.GameNo).Data);
+            //////    }
+
+            //////    gametimes = gametimes.OrderBy(x => x.GameDate).ToList();
+            //////    foreach (var gametime in gametimes)
+            //////    {
+            //////        games.Add(gametime.GameNo);
+            //////    }
+            //////    games = games.Distinct().ToList();
+            //////    foreach (var game in games)
+            //////    {
+            //////        Team home = fullSeason.First(x => x.GameNo == game).HomeTeam;
+            //////        MyClass first = teams.First(x => x.team == home);
+            //////        first.count++;
+            //////        Team away = fullSeason.First(x => x.GameNo == game).AwayTeam;
+            //////        first = teams.First(x => x.team == away);
+            //////        first.count++;
+            //////    }
+
+            //////    teams = teams.OrderByDescending(x => x.count).ToList();
+            //////    if (teams[0].count == games.Count)
+            //////    {
+            //////        foreach (var stat in stats)
+            //////        {
+            //////            stat.Team = teams.First().team;
+            //////        }
+            //////        _uw.Commit();
+            //////    }
+            //////    else
+            //////    {
+            //////        stats = playerStatsQuarter20.Where(x => x.Player == player).ToList();
+            //////        stats = stats.Where(x => x.GameNo > 658 || x.GameNo == 434 || x.GameNo == 160).ToList();
+            //////        foreach (var stat in stats)
+            //////        {
+            //////            stat.Team = teams.First(x=>x.team==Team.ChicagoBulls).team;
+            //////        }
+            //////        _uw.Commit();
+            //////    }
+            //////}
+            
+
+        }
+
+        public class MyClass
+        {
+            public Team team { get; set; }
+            public int count { get; set; }
+        }
+
+        static string GetTimeSpan(int quarterNo)
+        {
+            if (quarterNo > 4)
+                return "/box-score?range=" + ((quarterNo - 5) * 3000 + 28800) + "-" + ((quarterNo - 4) * 3000 + 28800);
+            return "/box-score?range=" + (quarterNo - 1) * 7200 + "-" + quarterNo * 7200;
         }
     }
 }

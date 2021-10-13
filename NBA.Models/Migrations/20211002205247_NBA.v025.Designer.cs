@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NBA.Models.DataContext;
 
 namespace NBA.Models.Migrations
 {
     [DbContext(typeof(NBAContext))]
-    partial class NBAContextModelSnapshot : ModelSnapshot
+    [Migration("20211002205247_NBA.v025")]
+    partial class NBAv025
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1270,9 +1272,6 @@ namespace NBA.Models.Migrations
                     b.Property<double>("PlayerTurnovers")
                         .HasColumnType("float");
 
-                    b.Property<int>("QuarterNo")
-                        .HasColumnType("int");
-
                     b.Property<int>("Seconds")
                         .HasColumnType("int");
 
@@ -1346,9 +1345,6 @@ namespace NBA.Models.Migrations
 
                     b.Property<double>("PlayerTurnovers")
                         .HasColumnType("float");
-
-                    b.Property<int>("QuarterNo")
-                        .HasColumnType("int");
 
                     b.Property<int>("Seconds")
                         .HasColumnType("int");

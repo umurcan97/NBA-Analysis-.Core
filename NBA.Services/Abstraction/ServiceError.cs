@@ -30,11 +30,18 @@
         public static ServiceError DefaultError => new ServiceError(Resource.DefaultErrorMessage, 999);
 
         public static ServiceError UserNotFound => new ServiceError(Resource.UserNotFound, 100);
+
         public static ServiceError FullSeasonNotFound => new ServiceError(Resource.FullSeasonNotFound, 101);
+
         public static ServiceError FullSeasonQuarterNotFound => new ServiceError(Resource.FullSeasonQuarterNotFound, 102);
+
         public static ServiceError GameTimeNotFound => new ServiceError(Resource.GameTimeNotFound, 103);
+
         public static ServiceError PlayerNotFound => new ServiceError(Resource.PlayerNotFound, 104);
+
         public static ServiceError PlayerStatNotFound => new ServiceError(Resource.PlayerStatNotFound, 105);
+
+        public static ServiceError PlayerStatsQuarterNotFound => new ServiceError(Resource.PlayerStatsQuarterNotFound, 106);
 
         public static ServiceError RequestNotFound => new ServiceError(Resource.RequestNotFound, 121);
 
