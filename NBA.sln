@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBA.Web", "NBA.Web\NBA.Web.csproj", "{868AF506-0BE4-49C5-8477-4F7C2DDDDC95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA.API", "NBA.API\NBA.API.csproj", "{58DAC902-8BB6-43ED-83EA-BB724114D595}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBA.API", "NBA.API\NBA.API.csproj", "{58DAC902-8BB6-43ED-83EA-BB724114D595}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA.Models", "NBA.Models\NBA.Models.csproj", "{C9D18E0E-DD92-4D76-ADF4-189C9FF76A8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBA.Models", "NBA.Models\NBA.Models.csproj", "{C9D18E0E-DD92-4D76-ADF4-189C9FF76A8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA.Services", "NBA.Services\NBA.Services.csproj", "{ABE8A11F-476F-409F-B43E-D9E752E7BD3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBA.Services", "NBA.Services\NBA.Services.csproj", "{ABE8A11F-476F-409F-B43E-D9E752E7BD3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA.StatScraper", "NBA.StatScraper\NBA.StatScraper.csproj", "{7CC2727F-942D-464A-8121-5868647797D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBA.StatScraper", "NBA.StatScraper\NBA.StatScraper.csproj", "{7CC2727F-942D-464A-8121-5868647797D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBA.Web", "NBA.Web\NBA.Web.csproj", "{44401F8F-2478-42D7-8AAB-B7449739B28E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{868AF506-0BE4-49C5-8477-4F7C2DDDDC95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{868AF506-0BE4-49C5-8477-4F7C2DDDDC95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{868AF506-0BE4-49C5-8477-4F7C2DDDDC95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{868AF506-0BE4-49C5-8477-4F7C2DDDDC95}.Release|Any CPU.Build.0 = Release|Any CPU
 		{58DAC902-8BB6-43ED-83EA-BB724114D595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58DAC902-8BB6-43ED-83EA-BB724114D595}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58DAC902-8BB6-43ED-83EA-BB724114D595}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{7CC2727F-942D-464A-8121-5868647797D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CC2727F-942D-464A-8121-5868647797D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CC2727F-942D-464A-8121-5868647797D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44401F8F-2478-42D7-8AAB-B7449739B28E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44401F8F-2478-42D7-8AAB-B7449739B28E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44401F8F-2478-42D7-8AAB-B7449739B28E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44401F8F-2478-42D7-8AAB-B7449739B28E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
