@@ -34,13 +34,90 @@ namespace NBA.StatScraper
             IStatScraper _statScraper = new StatScraper(_helpers, _gameTimesRepository);
 
 
+            //FullScraper
+
+            using (var driver = new ChromeDriver())
+            {
+                driver.Manage().Window.Maximize();
+                Thread.Sleep(3000);
+                driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+                Thread.Sleep(3000);
+                driver.Navigate().Refresh();
+                Thread.Sleep(3000);
+                driver.FindElementByXPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button").Click();
+                var gamesplayed = _gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8)).Data;
+                foreach (var game in gamesplayed)
+                {
+                    var stats = _db.FullSeason.FirstOrDefault(x => x.GameNo == game.GameNo);
+                    if (stats != null)
+                        continue;
+                    var fullseason = _statScraper.GameScraper(driver, game.GameNo,
+                        "https://www.nba.com/game/002210" + game.GameNo.ToString("0000"));
+                    Thread.Sleep(3000);
+                    var playerstats = _statScraper.PlayerStatScraper(driver, game.GameNo);
+                    var quarterstats = new List<FullSeasonQuarters>();
+                    var playerstatsquarter = new List<PlayerStatsQuarter>();
+                    int TotalQuarters = 0;
+                    string period = driver.FindElementByXPath(
+                        "/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select").Text;
+                    switch (period.Length)
+                    {
+                        case 47:
+                            TotalQuarters = 4;
+                            break;
+                        case 52:
+                            TotalQuarters = 5;
+                            break;
+                        default:
+                            TotalQuarters = (period.Length - 55) / 5 + 4;
+                            break;
+                    }
+                    for (int i = 1; i <= TotalQuarters; i++)
+                    {
+                        driver.Navigate().GoToUrl("https://www.nba.com/game/002210" +
+                                                  (game.GameNo).ToString("0000") + GetTimeSpan(i));
+                        quarterstats.Add(_statScraper.QuarterScraper(driver, game.GameNo, i));
+                       Thread.Sleep(3000);
+                        playerstatsquarter.AddRange(_statScraper.PlayerStatQuarterScraper(driver, game.GameNo, i));
+                    }
+
+                    _fullSeasonRepository.AddGame(fullseason);
+                    foreach (var stat in playerstats)
+                    {
+                        _playerStatRepository.AddPlayerStat(stat);
+                    }
+
+                    foreach (var stat in quarterstats)
+                    {
+                        _fullSeasonQuartersRepository.AddQuarter(stat);
+                    }
+
+                    foreach (var stat in playerstatsquarter)
+                    {
+                        _playerStatQuarterRepository.AddPlayerStatsQuarter(stat);
+                    }
+                }
+            }
+
 
             ////PlayerInfoScraper
             //using (var driver = new ChromeDriver())
             //{
             //    driver.Manage().Window.Maximize();
             //    List<Players> players = _statScraper.PlayerInfoScraper(driver, 1);
-            //    _playerRepository.AddPlayerList(players);
+            //    foreach (var player in players)
+            //    {
+            //        try
+            //        {
+            //            var asd = _playerRepository.GetPlayerWithName(player.Name);
+            //            if (asd.Data.Number != player.Number || asd.Data.Team == player.Team)
+            //                _playerRepository.UpdatePlayer(player);
+            //        }
+            //        catch (Exception)
+            //        {
+            //            _playerRepository.AddPlayer(player);
+            //        }
+            //    }
             //}
 
             ////GameTime Scraper
@@ -1135,7 +1212,7 @@ namespace NBA.StatScraper
             //////        _uw.Commit();
             //////    }
             //////}
-            
+
 
         }
 

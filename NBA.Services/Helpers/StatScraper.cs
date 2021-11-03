@@ -139,7 +139,7 @@
             stat.HomePointsofTO = int.Parse(driver.FindElementByXPath(HomePointsofTO).Text);
             driver.Navigate().GoToUrl(url + "/box-score?range=0-28800");
             Thread.Sleep(3000);
-            int line = 16;
+            int line = 20;
             for (; line >= 5; line--)
             {
                 try
@@ -181,7 +181,7 @@
                 "/html/body/div[1]/div[2]/div[4]/section[2]/div[2]/div[2]/div/table/tbody/tr[" + line + "]/td[17]";
             string AwayTurnovers =
                 "/html/body/div[1]/div[2]/div[4]/section[2]/div[2]/div[2]/div/table/tbody/tr[" + line + "]/td[18]";
-            line = 16;
+            line = 20;
             for (; line >= 5; line--)
             {
                 try
