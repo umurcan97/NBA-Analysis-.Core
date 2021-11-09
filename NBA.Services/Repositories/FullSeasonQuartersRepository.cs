@@ -147,6 +147,18 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(stats);
         }
 
+        public ServiceResult<FullSeasonQuarters> GetQuartersWithGameNoAndQuarterNo(int GameNo, int QuarterNo)
+        {
+            var stats = _db.FullSeasonQuarters.Where(x => x.GameNo == GameNo && x.QuarterNo == QuarterNo)
+                .FirstOrDefault();
+            if (stats == null)
+            {
+                return (ServiceResult<FullSeasonQuarters>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+            }
+
+            return ServiceResult.Success(stats);
+        }
+
 
 
         public ServiceResult AddQuarter20_21(FullSeasonQuarters20_21 stats)
@@ -271,6 +283,18 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(stats);
         }
 
+        public ServiceResult<FullSeasonQuarters20_21> GetQuartersWithGameNoAndQuarterNo20_21(int GameNo, int QuarterNo)
+        {
+            var stats = _db.FullSeasonQuarters20_21.Where(x => x.GameNo == GameNo && x.QuarterNo == QuarterNo)
+                .FirstOrDefault();
+            if (stats == null)
+            {
+                return (ServiceResult<FullSeasonQuarters20_21>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+            }
+
+            return ServiceResult.Success(stats);
+        }
+
 
 
         public ServiceResult AddQuarter19_20(FullSeasonQuarters19_20 stats)
@@ -390,6 +414,18 @@ namespace NBA.Services.Repositories
             if (stats.Count != 4)
             {
                 return (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+            }
+
+            return ServiceResult.Success(stats);
+        }
+
+        public ServiceResult<FullSeasonQuarters19_20> GetQuartersWithGameNoAndQuarterNo19_20(int GameNo, int QuarterNo)
+        {
+            var stats = _db.FullSeasonQuarters19_20.Where(x => x.GameNo == GameNo && x.QuarterNo == QuarterNo)
+                .FirstOrDefault();
+            if (stats == null)
+            {
+                return (ServiceResult<FullSeasonQuarters19_20>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             }
 
             return ServiceResult.Success(stats);

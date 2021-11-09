@@ -12,6 +12,7 @@
         ServiceResult DeleteQuarter(int gameNo, int quarterNo);
         ServiceResult DeleteQuarter(int id);
         ServiceResult<List<FullSeasonQuarters>> GetQuartersWithGameNo(int GameNo);
+        ServiceResult<FullSeasonQuarters> GetQuartersWithGameNoAndQuarterNo(int GameNo, int QuarterNo);
         ServiceResult<List<FullSeasonQuarters>> GetFullSeasonQuarters();
         ServiceResult<List<FullSeasonQuarters>> GetQuartersSinceDate(DateTime date);
         ServiceResult<List<FullSeasonQuarters>> GetQuartersTillDate(DateTime date);
@@ -22,6 +23,7 @@
         ServiceResult DeleteQuarter20_21(int gameNo, int quarterNo);
         ServiceResult DeleteQuarter20_21(int id);
         ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersWithGameNo20_21(int GameNo);
+        ServiceResult<FullSeasonQuarters20_21> GetQuartersWithGameNoAndQuarterNo20_21(int GameNo, int QuarterNo);
         ServiceResult<List<FullSeasonQuarters20_21>> GetFullSeasonQuarters20_21();
         ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersSinceDate20_21(DateTime date);
         ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersTillDate20_21(DateTime date);
@@ -32,6 +34,7 @@
         ServiceResult DeleteQuarter19_20(int gameNo, int quarterNo);
         ServiceResult DeleteQuarter19_20(int id);
         ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersWithGameNo19_20(int GameNo);
+        ServiceResult<FullSeasonQuarters19_20> GetQuartersWithGameNoAndQuarterNo19_20(int GameNo, int QuarterNo);
         ServiceResult<List<FullSeasonQuarters19_20>> GetFullSeasonQuarters19_20();
         ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersSinceDate19_20(DateTime date);
         ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersTillDate19_20(DateTime date);

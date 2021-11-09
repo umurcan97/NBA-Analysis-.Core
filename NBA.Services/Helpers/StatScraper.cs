@@ -98,7 +98,6 @@
         {
             driver.Navigate().GoToUrl(url);
             Thread.Sleep(3000);
-            driver.Navigate().Refresh();
             FullSeason stat = new FullSeason();
             stat.GameDate = _gameTimesRepository.GetGameTime(GameNo).Data;
             string AwayPITP =

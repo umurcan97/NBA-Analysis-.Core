@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using NBA.Services.Calculations;
 
 namespace NBA.StatScraper
 {
@@ -32,6 +33,9 @@ namespace NBA.StatScraper
             IPlayerStatRepository _playerStatRepository = new PlayerStatRepository(_db, _uw, _gameTimesRepository);
             IPlayerStatQuarterRepository _playerStatQuarterRepository = new PlayerStatQuarterRepository(_db, _uw);
             IStatScraper _statScraper = new StatScraper(_helpers, _gameTimesRepository);
+            IMathOperations _mathOperations = new MathOperations();
+            ISimulator _simulator = new Simulator(_mathOperations, _gameTimesRepository, _fullSeasonRepository,
+                _fullSeasonQuartersRepository);
 
 
             //FullScraper
@@ -77,7 +81,7 @@ namespace NBA.StatScraper
                         driver.Navigate().GoToUrl("https://www.nba.com/game/002210" +
                                                   (game.GameNo).ToString("0000") + GetTimeSpan(i));
                         quarterstats.Add(_statScraper.QuarterScraper(driver, game.GameNo, i));
-                       Thread.Sleep(3000);
+                        Thread.Sleep(3000);
                         playerstatsquarter.AddRange(_statScraper.PlayerStatQuarterScraper(driver, game.GameNo, i));
                     }
 
@@ -97,6 +101,26 @@ namespace NBA.StatScraper
                         _playerStatQuarterRepository.AddPlayerStatsQuarter(stat);
                     }
                 }
+            }
+
+
+
+            //Predictions
+
+            var gamesToBePlayed = _gameTimesRepository.GetGamesToBePlayedToday().Data;
+            foreach (var game in gamesToBePlayed)
+            {
+                if (_db.GamePredictions.FirstOrDefault(x => x.GameNo == game.GameNo) != null)
+                    continue;
+                GamePredictions prediction = _simulator.FullMatchSimulator(game.HomeTeam, game.AwayTeam, game.GameNo);
+                List<QuarterPredictions> predictions = new List<QuarterPredictions>();
+                for (int i = 1; i <= 4; i++)
+                {
+                    predictions.Add(_simulator.QuarterSimulator(game.HomeTeam, game.AwayTeam, i, game.GameNo));
+                }
+                _db.GamePredictions.Add(prediction);
+                _db.QuarterPredictions.AddRange(predictions);
+                _uw.Commit();
             }
 
 

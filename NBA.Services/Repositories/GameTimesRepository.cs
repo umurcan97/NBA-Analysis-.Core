@@ -49,9 +49,17 @@
 
         public ServiceResult<List<GameTime>> GetFullSeason()
         {
-            List<GameTime> season = _db.GameTime.Where(x => x.GameDate <= DateTime.Now.AddHours(-8)).ToList();
+            List<GameTime> season = _db.GameTime.ToList();
             if (season.Count == 0)
                 return (ServiceResult<List<GameTime>>) ServiceResult.Failed(ServiceError.GameTimeNotFound);
+            return ServiceResult.Success(season);
+        }
+
+        public ServiceResult<List<GameTime>> GetFullSeasonPlayed()
+        {
+            List<GameTime> season = _db.GameTime.Where(x => x.GameDate <= DateTime.Now.AddHours(-8)).ToList();
+            if (season.Count == 0)
+                return (ServiceResult<List<GameTime>>)ServiceResult.Failed(ServiceError.GameTimeNotFound);
             return ServiceResult.Success(season);
         }
 
@@ -101,6 +109,18 @@
                 return (ServiceResult<List<GameTime>>)ServiceResult.Failed(ServiceError.GameTimeNotFound);
             return ServiceResult.Success(gameTimes);
         }
+
+        public ServiceResult<List<GameTime>> GetFullSeasonForTeamPlayed(Team team)
+        {
+            var gameTimes = _db.GameTime.Where(x =>
+                (x.HomeTeam == team || x.AwayTeam == team) && x.GameDate < DateTime.Now.AddHours(-8)).ToList();
+            if (gameTimes.Count == 0)
+                return (ServiceResult<List<GameTime>>)ServiceResult.Failed(ServiceError.GameTimeNotFound);
+            return ServiceResult.Success(gameTimes);
+        }
+
+
+
         public ServiceResult AddGameTime19_20(GameTime19_20 gameTime)
         {
             _db.GameTime19_20.Add(gameTime);
@@ -132,9 +152,17 @@
 
         public ServiceResult<List<GameTime19_20>> GetFullSeason19_20()
         {
-            List<GameTime19_20> season = _db.GameTime19_20.Where(x => x.GameDate <= DateTime.Now.AddHours(-8)).ToList();
+            List<GameTime19_20> season = _db.GameTime19_20.ToList();
             if (season.Count == 0)
                 return (ServiceResult<List<GameTime19_20>>) ServiceResult.Failed(ServiceError.GameTimeNotFound);
+            return ServiceResult.Success(season);
+        }
+
+        public ServiceResult<List<GameTime19_20>> GetFullSeasonPlayed19_20()
+        {
+            List<GameTime19_20> season = _db.GameTime19_20.Where(x => x.GameDate <= DateTime.Now.AddHours(-8)).ToList();
+            if (season.Count == 0)
+                return (ServiceResult<List<GameTime19_20>>)ServiceResult.Failed(ServiceError.GameTimeNotFound);
             return ServiceResult.Success(season);
         }
 
@@ -177,6 +205,18 @@
                 return (ServiceResult<List<GameTime19_20>>)ServiceResult.Failed(ServiceError.GameTimeNotFound);
             return ServiceResult.Success(gameTimes);
         }
+
+        public ServiceResult<List<GameTime19_20>> GetFullSeasonForTeamPlayed19_20(Team team)
+        {
+            var gameTimes = _db.GameTime19_20.Where(x =>
+                (x.HomeTeam == team || x.AwayTeam == team) && x.GameDate < DateTime.Now.AddHours(-8)).ToList();
+            if (gameTimes.Count == 0)
+                return (ServiceResult<List<GameTime19_20>>)ServiceResult.Failed(ServiceError.GameTimeNotFound);
+            return ServiceResult.Success(gameTimes);
+        }
+
+
+
         public ServiceResult AddGameTime20_21(GameTime20_21 gameTime)
         {
             _db.GameTime20_21.Add(gameTime);
@@ -207,6 +247,14 @@
         }
 
         public ServiceResult<List<GameTime20_21>> GetFullSeason20_21()
+        {
+            List<GameTime20_21> season = _db.GameTime20_21.ToList();
+            if (season.Count == 0)
+                return (ServiceResult<List<GameTime20_21>>)ServiceResult.Failed(ServiceError.GameTimeNotFound);
+            return ServiceResult.Success(season);
+        }
+
+        public ServiceResult<List<GameTime20_21>> GetFullSeasonPlayed20_21()
         {
             List<GameTime20_21> season = _db.GameTime20_21.Where(x => x.GameDate <= DateTime.Now.AddHours(-8)).ToList();
             if (season.Count == 0)
@@ -249,6 +297,15 @@
         public ServiceResult<List<GameTime20_21>> GetFullSeasonForTeam20_21(Team team)
         {
             var gameTimes = _db.GameTime20_21.Where(x => x.HomeTeam == team || x.AwayTeam == team).ToList();
+            if (gameTimes.Count == 0)
+                return (ServiceResult<List<GameTime20_21>>)ServiceResult.Failed(ServiceError.GameTimeNotFound);
+            return ServiceResult.Success(gameTimes);
+        }
+
+        public ServiceResult<List<GameTime20_21>> GetFullSeasonForTeamPlayed20_21(Team team)
+        {
+            var gameTimes = _db.GameTime20_21.Where(x =>
+                (x.HomeTeam == team || x.AwayTeam == team) && x.GameDate < DateTime.Now.AddHours(-8)).ToList();
             if (gameTimes.Count == 0)
                 return (ServiceResult<List<GameTime20_21>>)ServiceResult.Failed(ServiceError.GameTimeNotFound);
             return ServiceResult.Success(gameTimes);
