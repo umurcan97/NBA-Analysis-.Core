@@ -46,9 +46,8 @@ namespace NBA.StatScraper
                 Thread.Sleep(3000);
                 driver.Navigate().GoToUrl("https://www.nba.com/schedule");
                 Thread.Sleep(3000);
-                driver.Navigate().Refresh();
+                driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
                 Thread.Sleep(3000);
-                driver.FindElementByXPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button").Click();
                 var gamesplayed = _gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8)).Data;
                 foreach (var game in gamesplayed)
                 {
@@ -62,8 +61,7 @@ namespace NBA.StatScraper
                     var quarterstats = new List<FullSeasonQuarters>();
                     var playerstatsquarter = new List<PlayerStatsQuarter>();
                     int TotalQuarters = 0;
-                    string period = driver.FindElementByXPath(
-                        "/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select").Text;
+                    string period = driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select")).Text;
                     switch (period.Length)
                     {
                         case 47:

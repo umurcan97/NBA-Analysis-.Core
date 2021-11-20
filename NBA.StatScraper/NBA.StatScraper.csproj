@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Selenium.Firefox.WebDriver" Version="0.27.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="94.0.4606.4101" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="96.0.4664.4500" />
   </ItemGroup>
 
   <ItemGroup>

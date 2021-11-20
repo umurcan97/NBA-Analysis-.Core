@@ -37,8 +37,8 @@
 
         public double PaceofPlayCalculator(QuarterModel Stats)
         {
-            return Stats.HomeFGA + Stats.AwayFGA + Stats.HomeFTA / 2.5 + Stats.AwayFTA / 2.5 + Stats.HomeTurnovers * 0.7 +
-                Stats.AwayTurnovers * 0.7 - Stats.HomeOffensiveRebounds - Stats.AwayOffensiveRebounds;
+            return Stats.HomeFGA + Stats.AwayFGA + Stats.HomeFTA / 2.5 + Stats.AwayFTA / 2.5 + Stats.HomeTurnovers +
+                Stats.AwayTurnovers - Stats.HomeOffensiveRebounds - Stats.AwayOffensiveRebounds;
         }
 
         public QuarterPredictions QuarterCalculator(QuarterModel Stats, QuarterModel HomeAverages, QuarterModel AwayAverages, QuarterModel HomeDeviation, QuarterModel AwayDeviation)
@@ -54,13 +54,13 @@
             int HomeTurnovers = DeviationApplication(Stats.HomeTurnovers, HomeDeviation.HomeTurnovers, HomeAverages.HomeTurnovers);
             int HomeOffensiveRebounds = DeviationApplication(Stats.HomeOffensiveRebounds, HomeDeviation.HomeOffensiveRebounds, HomeAverages.HomeOffensiveRebounds);
             int HomeFTA = DeviationApplication(Stats.HomeFTA, HomeDeviation.HomeFTA, HomeAverages.HomeFTA);
-            int Home2PA = Convert.ToInt16(Math.Round(paceofplay / 2 - HomeFTA / 2.5 - HomeTurnovers * 0.7 - Home3PA + HomeOffensiveRebounds));
+            int Home2PA = Convert.ToInt16(Math.Round(paceofplay / 2 - HomeFTA / 2.5 - HomeTurnovers - Home3PA + HomeOffensiveRebounds));
             int Home2PM = DeviationApplication(Home2PA * home2PP, HomeDeviation.HomeFGM - HomeDeviation.Home3PM, HomeAverages.HomeFGM - HomeAverages.Home3PM);
             int Away3PA = DeviationApplication(Stats.Away3PA, AwayDeviation.Away3PA, AwayAverages.Away3PA);
             int AwayTurnovers = DeviationApplication(Stats.AwayTurnovers, AwayDeviation.AwayTurnovers, AwayAverages.AwayTurnovers);
             int AwayOffensiveRebounds = DeviationApplication(Stats.AwayOffensiveRebounds, AwayDeviation.AwayOffensiveRebounds, AwayAverages.AwayOffensiveRebounds);
             int AwayFTA = DeviationApplication(Stats.AwayFTA, AwayDeviation.AwayFTA, AwayAverages.AwayFTA);
-            int Away2PA = Convert.ToInt16(Math.Round(paceofplay / 2 - AwayFTA / 2.5 - AwayTurnovers * 0.7 - Away3PA + AwayOffensiveRebounds));
+            int Away2PA = Convert.ToInt16(Math.Round(paceofplay / 2 - AwayFTA / 2.5 - AwayTurnovers - Away3PA + AwayOffensiveRebounds));
             int Away2PM = DeviationApplication(Away2PA * away2PP, AwayDeviation.AwayFGM - AwayDeviation.Away3PM, AwayAverages.AwayFGM - AwayAverages.Away3PM);
             QuarterPredictions quarter = new QuarterPredictions
             {
@@ -97,10 +97,10 @@
         public QuarterPredictions QuarterSimulator(Team HomeTeam, Team AwayTeam, int QuarterNo, int GameNo)
         {
             //FullSeason Lists
-            List<GameTime> homeGT = _gameTimesRepository.GetFullSeasonForTeamPlayed(HomeTeam).Data;
-            List<GameTime> awayGT = _gameTimesRepository.GetFullSeasonForTeamPlayed(AwayTeam).Data;
-            List<FullSeasonQuarters> homeFullSeasonQuarters = new List<FullSeasonQuarters>();
-            List<FullSeasonQuarters> awayFullSeasonQuarters = new List<FullSeasonQuarters>();
+            List<GameTime> homeGT = _gameTimesRepository.GetFullSeasonForTeamPlayed(HomeTeam).Data.OrderByDescending(x => x.GameDate).ToList();
+            List<GameTime> awayGT = _gameTimesRepository.GetFullSeasonForTeamPlayed(AwayTeam).Data.OrderByDescending(x => x.GameDate).ToList();
+            List<FullSeasonQuarters> homeFullSeasonQuarters = new();
+            List<FullSeasonQuarters> awayFullSeasonQuarters = new();
             foreach (var game in homeGT)
             {
                 try
@@ -126,7 +126,7 @@
             }
 
             //Standard Deviations
-            QuarterModel TotalDeviation = new QuarterModel();
+            QuarterModel TotalDeviation = new();
             QuarterModel HomeDeviation = _mathOperations.DeviationCalculator(homeFullSeasonQuarters, HomeTeam);
             _mathOperations.QuarterModelAddition(TotalDeviation, HomeDeviation);
             QuarterModel AwayDeviation = _mathOperations.DeviationCalculator(awayFullSeasonQuarters, AwayTeam);
@@ -134,10 +134,9 @@
             _mathOperations.QuarterModelAddition(TotalDeviation, AwayDeviation);
             //Season Averages with Coefficients
 
-            var firstGame = true;
-            QuarterModel HomeQuarters = new QuarterModel();
-            QuarterModel AwayQuarters = new QuarterModel();
-            List<Team> homePlayedAgainst = new List<Team>();
+            QuarterModel HomeQuarters = new();
+            QuarterModel AwayQuarters = new();
+            List<Team> homePlayedAgainst = new();
             foreach (var game in homeFullSeasonQuarters)
             {
                 if (HomeTeam == game.HomeTeam && !homePlayedAgainst.Contains(game.AwayTeam))
@@ -149,7 +148,7 @@
                     homePlayedAgainst.Add(game.HomeTeam);
                 }
             }
-            List<Team> awayPlayedAgainst = new List<Team>();
+            List<Team> awayPlayedAgainst = new();
             foreach (var game in awayFullSeasonQuarters)
             {
                 if (AwayTeam == game.HomeTeam && !awayPlayedAgainst.Contains(game.AwayTeam))
@@ -161,7 +160,7 @@
                     awayPlayedAgainst.Add(game.HomeTeam);
                 }
             }
-            List<Team> commonTeams = new List<Team>();
+            List<Team> commonTeams = new();
             foreach (var team1 in homePlayedAgainst)
             {
                 foreach (var team2 in awayPlayedAgainst)
@@ -172,17 +171,83 @@
                     }
                 }
             }
-            List<FullSeasonQuarters> homePlayedCommon = new List<FullSeasonQuarters>();
-            List<FullSeasonQuarters> awayPlayedCommon = new List<FullSeasonQuarters>();
+            List<FullSeasonQuarters> homePlayedCommon = new();
+            List<FullSeasonQuarters> awayPlayedCommon = new();
             foreach (var team in commonTeams)
             {
                 homePlayedCommon.Add(homeFullSeasonQuarters.FirstOrDefault(x => x.HomeTeam == team || x.AwayTeam == team));
                 awayPlayedCommon.Add(awayFullSeasonQuarters.FirstOrDefault(x => x.HomeTeam == team || x.AwayTeam == team));
             }
-            if (homeFullSeasonQuarters.FirstOrDefault(x => (x.HomeTeam == HomeTeam && x.AwayTeam == AwayTeam) ||
-                                            (x.HomeTeam == AwayTeam && x.AwayTeam == HomeTeam)) != null)
+            bool isCommonNull = commonTeams.Count == 0;
+            bool isFirstGame = homeFullSeasonQuarters.FirstOrDefault(x => x.HomeTeam == HomeTeam && x.AwayTeam == AwayTeam ||
+                                                                x.HomeTeam == AwayTeam && x.AwayTeam == HomeTeam) == null;
+
+            if (isFirstGame && isCommonNull)
             {
-                firstGame = false;
+                QuarterModel homelast5gamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Take(5).ToList(), HomeTeam);
+                _mathOperations.QuarterModelDivision(homelast5gamesQuarters, 2);
+                QuarterModel homeathomegamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
+                _mathOperations.QuarterModelDivision(homeathomegamesQuarters, 2);
+                QuarterModel awaylast5gamesQuarters = _mathOperations.AverageCalculator(awayFullSeasonQuarters.Take(5).ToList(), AwayTeam);
+                _mathOperations.QuarterModelDivision(awaylast5gamesQuarters, 2);
+                QuarterModel awayatawaygamesQuarters = _mathOperations.AverageCalculator(awayFullSeasonQuarters.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
+                _mathOperations.QuarterModelDivision(awayatawaygamesQuarters, 2);
+
+                _mathOperations.QuarterModelAddition(HomeQuarters, homelast5gamesQuarters);
+                _mathOperations.QuarterModelAddition(HomeQuarters, homeathomegamesQuarters);
+                _mathOperations.QuarterModelAddition(AwayQuarters, awaylast5gamesQuarters);
+                _mathOperations.QuarterModelAddition(AwayQuarters, awayatawaygamesQuarters);
+                _mathOperations.QuarterModelSwitch(AwayQuarters);
+            }
+
+            else if (isFirstGame && !isCommonNull)
+            {
+                QuarterModel homelast5gamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Take(5).ToList(), HomeTeam);
+                _mathOperations.QuarterModelDivision(homelast5gamesQuarters, 3.166);
+                QuarterModel homeathomegamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
+                _mathOperations.QuarterModelDivision(homeathomegamesQuarters, 2.375);
+                QuarterModel homecommon = _mathOperations.AverageCalculator(homePlayedCommon, HomeTeam);
+                _mathOperations.QuarterModelDivision(homecommon, 3.8);
+                QuarterModel awaylast5gamesQuarters = _mathOperations.AverageCalculator(awayFullSeasonQuarters.Take(5).ToList(), AwayTeam);
+                _mathOperations.QuarterModelDivision(awaylast5gamesQuarters, 3.166);
+                QuarterModel awayatawaygamesQuarters = _mathOperations.AverageCalculator(awayFullSeasonQuarters.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
+                _mathOperations.QuarterModelDivision(awayatawaygamesQuarters, 2.375);
+                QuarterModel awaycommon = _mathOperations.AverageCalculator(awayPlayedCommon, AwayTeam);
+                _mathOperations.QuarterModelDivision(awaycommon, 3.8);
+
+                _mathOperations.QuarterModelAddition(HomeQuarters, homelast5gamesQuarters);
+                _mathOperations.QuarterModelAddition(HomeQuarters, homeathomegamesQuarters);
+                _mathOperations.QuarterModelAddition(HomeQuarters, homecommon);
+                _mathOperations.QuarterModelAddition(AwayQuarters, awaylast5gamesQuarters);
+                _mathOperations.QuarterModelAddition(AwayQuarters, awayatawaygamesQuarters);
+                _mathOperations.QuarterModelAddition(AwayQuarters, awaycommon);
+                _mathOperations.QuarterModelSwitch(AwayQuarters);
+            }
+
+            else if (!isFirstGame && isCommonNull)
+            {
+                QuarterModel homelast5gamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Take(5).ToList(), HomeTeam);
+                _mathOperations.QuarterModelDivision(homelast5gamesQuarters, 2.25);
+                QuarterModel homeathomegamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
+                _mathOperations.QuarterModelDivision(homeathomegamesQuarters, 2.25);
+                QuarterModel awaylast5gamesQuarters = _mathOperations.AverageCalculator(awayFullSeasonQuarters.Take(5).ToList(), AwayTeam);
+                _mathOperations.QuarterModelDivision(awaylast5gamesQuarters, 2.25);
+                QuarterModel awayatawaygamesQuarters = _mathOperations.AverageCalculator(awayFullSeasonQuarters.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
+                _mathOperations.QuarterModelDivision(awayatawaygamesQuarters, 2.25);
+                QuarterModel seasonmatchupsQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Where(x => (x.HomeTeam == HomeTeam && x.AwayTeam == AwayTeam) || (x.HomeTeam == AwayTeam && x.AwayTeam == HomeTeam)).ToList(), HomeTeam);
+                _mathOperations.QuarterModelDivision(seasonmatchupsQuarters, 9);
+
+                _mathOperations.QuarterModelAddition(HomeQuarters, homelast5gamesQuarters);
+                _mathOperations.QuarterModelAddition(HomeQuarters, homeathomegamesQuarters);
+                _mathOperations.QuarterModelAddition(HomeQuarters, seasonmatchupsQuarters);
+                _mathOperations.QuarterModelAddition(AwayQuarters, awaylast5gamesQuarters);
+                _mathOperations.QuarterModelAddition(AwayQuarters, awayatawaygamesQuarters);
+                _mathOperations.QuarterModelAdditionSwitch(AwayQuarters, seasonmatchupsQuarters);
+                _mathOperations.QuarterModelSwitch(AwayQuarters);
+            }
+
+            else
+            {
                 QuarterModel homelast5gamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Take(5).ToList(), HomeTeam);
                 _mathOperations.QuarterModelDivision(homelast5gamesQuarters, 3);
                 QuarterModel homeathomegamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
@@ -208,29 +273,7 @@
                 _mathOperations.QuarterModelAdditionSwitch(AwayQuarters, seasonmatchupsQuarters);
                 _mathOperations.QuarterModelSwitch(AwayQuarters);
             }
-            else
-            {
-                QuarterModel homelast5gamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Take(5).ToList(), HomeTeam);
-                _mathOperations.QuarterModelDivision(homelast5gamesQuarters, 3.166);
-                QuarterModel homeathomegamesQuarters = _mathOperations.AverageCalculator(homeFullSeasonQuarters.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
-                _mathOperations.QuarterModelDivision(homeathomegamesQuarters, 2.375);
-                QuarterModel homecommon = _mathOperations.AverageCalculator(homePlayedCommon, HomeTeam);
-                _mathOperations.QuarterModelDivision(homecommon, 3.8);
-                QuarterModel awaylast5gamesQuarters = _mathOperations.AverageCalculator(awayFullSeasonQuarters.Take(5).ToList(), AwayTeam);
-                _mathOperations.QuarterModelDivision(awaylast5gamesQuarters, 3.166);
-                QuarterModel awayatawaygamesQuarters = _mathOperations.AverageCalculator(awayFullSeasonQuarters.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
-                _mathOperations.QuarterModelDivision(awayatawaygamesQuarters, 2.375);
-                QuarterModel awaycommon = _mathOperations.AverageCalculator(awayPlayedCommon, AwayTeam);
-                _mathOperations.QuarterModelDivision(awaycommon, 3.8);
 
-                _mathOperations.QuarterModelAddition(HomeQuarters, homelast5gamesQuarters);
-                _mathOperations.QuarterModelAddition(HomeQuarters, homeathomegamesQuarters);
-                _mathOperations.QuarterModelAddition(HomeQuarters, homecommon);
-                _mathOperations.QuarterModelAddition(AwayQuarters, awaylast5gamesQuarters);
-                _mathOperations.QuarterModelAddition(AwayQuarters, awayatawaygamesQuarters);
-                _mathOperations.QuarterModelAddition(AwayQuarters, awaycommon);
-                _mathOperations.QuarterModelSwitch(AwayQuarters);
-            }
             _mathOperations.QuarterModelMultiplication(HomeQuarters, AwayDeviation);
             _mathOperations.QuarterModelMultiplication(AwayQuarters, HomeDeviation);
             _mathOperations.QuarterModelAddition(HomeQuarters, AwayQuarters);
@@ -243,7 +286,7 @@
             Quarter.AwayTeam = AwayTeam;
             Quarter.QuarterNo = QuarterNo;
             Quarter.GameNo = GameNo;
-            Quarter.FirstGame = firstGame;
+            Quarter.FirstGame = isFirstGame;
             return Quarter;
         }
 
@@ -260,13 +303,13 @@
             int HomeTurnovers = DeviationApplication(Stats.HomeTurnovers, HomeDeviation.HomeTurnovers, HomeAverages.HomeTurnovers);
             int HomeOffensiveRebounds = DeviationApplication(Stats.HomeOffensiveRebounds, HomeDeviation.HomeOffensiveRebounds, HomeAverages.HomeOffensiveRebounds);
             int HomeFTA = DeviationApplication(Stats.HomeFTA, HomeDeviation.HomeFTA, HomeAverages.HomeFTA);
-            int Home2PA = Convert.ToInt16(Math.Round(paceofplay / 2 - HomeFTA / 2.5 - HomeTurnovers * 0.7 - Home3PA + HomeOffensiveRebounds));
+            int Home2PA = Convert.ToInt16(Math.Round(paceofplay / 2 - HomeFTA / 2.5 - HomeTurnovers - Home3PA + HomeOffensiveRebounds));
             int Home2PM = DeviationApplication(Home2PA * home2PP, HomeDeviation.HomeFGM - HomeDeviation.Home3PM, HomeAverages.HomeFGM - HomeAverages.Home3PM);
             int Away3PA = DeviationApplication(Stats.Away3PA, AwayDeviation.Away3PA, AwayAverages.Away3PA);
             int AwayTurnovers = DeviationApplication(Stats.AwayTurnovers, AwayDeviation.AwayTurnovers, AwayAverages.AwayTurnovers);
             int AwayOffensiveRebounds = DeviationApplication(Stats.AwayOffensiveRebounds, AwayDeviation.AwayOffensiveRebounds, AwayAverages.AwayOffensiveRebounds);
             int AwayFTA = DeviationApplication(Stats.AwayFTA, AwayDeviation.AwayFTA, AwayAverages.AwayFTA);
-            int Away2PA = Convert.ToInt16(Math.Round(paceofplay / 2 - AwayFTA / 2.5 - AwayTurnovers * 0.7 - Away3PA + AwayOffensiveRebounds));
+            int Away2PA = Convert.ToInt16(Math.Round(paceofplay / 2 - AwayFTA / 2.5 - AwayTurnovers - Away3PA + AwayOffensiveRebounds));
             int Away2PM = DeviationApplication(Away2PA * away2PP, AwayDeviation.AwayFGM - AwayDeviation.Away3PM, AwayAverages.AwayFGM - AwayAverages.Away3PM);
             GamePredictions game = new GamePredictions
             {
@@ -307,7 +350,7 @@
             List<FullSeason> awayFullSeason = _fullSeasonRepository.GetFullSeasonForTeam(AwayTeam).Data;
 
             //Standard Deviations
-            GameModel TotalDeviation = new GameModel();
+            GameModel TotalDeviation = new();
             GameModel HomeDeviation = _mathOperations.DeviationCalculator(homeFullSeason, HomeTeam);
             _mathOperations.GameModelAddition(TotalDeviation, HomeDeviation);
             GameModel AwayDeviation = _mathOperations.DeviationCalculator(awayFullSeason, AwayTeam);
@@ -315,11 +358,10 @@
             _mathOperations.GameModelAddition(TotalDeviation, AwayDeviation);
             //Season Averages with Coefficients
 
-            var firstGame = true;
-            GameModel HomeGames = new GameModel();
-            GameModel AwayGames = new GameModel();
+            GameModel HomeGames = new();
+            GameModel AwayGames = new();
 
-            List<Team> homePlayedAgainst = new List<Team>();
+            List<Team> homePlayedAgainst = new();
             foreach (var game in homeFullSeason)
             {
                 if (HomeTeam == game.HomeTeam && !homePlayedAgainst.Contains(game.AwayTeam))
@@ -331,7 +373,7 @@
                     homePlayedAgainst.Add(game.HomeTeam);
                 }
             }
-            List<Team> awayPlayedAgainst = new List<Team>();
+            List<Team> awayPlayedAgainst = new();
             foreach (var game in awayFullSeason)
             {
                 if (AwayTeam == game.HomeTeam && !awayPlayedAgainst.Contains(game.AwayTeam))
@@ -343,7 +385,7 @@
                     awayPlayedAgainst.Add(game.HomeTeam);
                 }
             }
-            List<Team> commonTeams = new List<Team>();
+            List<Team> commonTeams = new();
             foreach (var team1 in homePlayedAgainst)
             {
                 foreach (var team2 in awayPlayedAgainst)
@@ -354,24 +396,91 @@
                     }
                 }
             }
-            List<FullSeason> homePlayedCommon = new List<FullSeason>();
-            List<FullSeason> awayPlayedCommon = new List<FullSeason>();
+            List<FullSeason> homePlayedCommon = new();
+            List<FullSeason> awayPlayedCommon = new();
             foreach (var team in commonTeams)
             {
                 homePlayedCommon.Add(homeFullSeason.FirstOrDefault(x => x.HomeTeam == team || x.AwayTeam == team));
                 awayPlayedCommon.Add(awayFullSeason.FirstOrDefault(x => x.HomeTeam == team || x.AwayTeam == team));
             }
-            if (homeFullSeason.FirstOrDefault(x => (x.HomeTeam == HomeTeam && x.AwayTeam == AwayTeam) ||
-                                            (x.HomeTeam == AwayTeam && x.AwayTeam == HomeTeam)) != null)
+
+            bool isCommonNull = commonTeams.Count == 0;
+            bool isFirstGame = homeFullSeason.FirstOrDefault(x => x.HomeTeam == HomeTeam && x.AwayTeam == AwayTeam ||
+                                                                x.HomeTeam == AwayTeam && x.AwayTeam == HomeTeam) == null;
+
+            if ( isFirstGame && isCommonNull)
             {
-                firstGame = false;
-                GameModel homelast5games = _mathOperations.AverageCalculator(homeFullSeason.OrderByDescending(x => x.GameDate).Take(5).ToList(), HomeTeam);
+                GameModel homelast5games = _mathOperations.AverageCalculator(homeFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), HomeTeam);
+                _mathOperations.GameModelDivision(homelast5games, 2.5);
+                GameModel homeathomegames = _mathOperations.AverageCalculator(homeFullSeason.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
+                _mathOperations.GameModelDivision(homeathomegames, 1.667);
+                GameModel awaylast5games = _mathOperations.AverageCalculator(awayFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), AwayTeam);
+                _mathOperations.GameModelDivision(awaylast5games, 2.5);
+                GameModel awayatawaygames = _mathOperations.AverageCalculator(awayFullSeason.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
+                _mathOperations.GameModelDivision(awayatawaygames, 1.667);
+
+                _mathOperations.GameModelAddition(HomeGames, homelast5games);
+                _mathOperations.GameModelAddition(HomeGames, homeathomegames);
+                _mathOperations.GameModelAddition(AwayGames, awaylast5games);
+                _mathOperations.GameModelAddition(AwayGames, awayatawaygames);
+                _mathOperations.GameModelSwitch(AwayGames);
+            }
+
+            else if ( isFirstGame && !isCommonNull)
+            {
+                GameModel homelast5games = _mathOperations.AverageCalculator(homeFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), HomeTeam);
                 _mathOperations.GameModelDivision(homelast5games, 5.25);
                 GameModel homeathomegames = _mathOperations.AverageCalculator(homeFullSeason.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
                 _mathOperations.GameModelDivision(homeathomegames, 2.625);
                 GameModel homeCommon = _mathOperations.AverageCalculator(homePlayedCommon, HomeTeam);
                 _mathOperations.GameModelDivision(homeCommon, 3);
-                GameModel awaylast5games = _mathOperations.AverageCalculator(awayFullSeason.OrderByDescending(x => x.GameDate).Take(5).ToList(), AwayTeam);
+                GameModel awaylast5games = _mathOperations.AverageCalculator(awayFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), AwayTeam);
+                _mathOperations.GameModelDivision(awaylast5games, 5.25);
+                GameModel awayatawaygames = _mathOperations.AverageCalculator(awayFullSeason.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
+                _mathOperations.GameModelDivision(awayatawaygames, 2.625);
+                GameModel awayCommon = _mathOperations.AverageCalculator(awayPlayedCommon, AwayTeam);
+                _mathOperations.GameModelDivision(awayCommon, 3);
+
+                _mathOperations.GameModelAddition(HomeGames, homelast5games);
+                _mathOperations.GameModelAddition(HomeGames, homeathomegames);
+                _mathOperations.GameModelAddition(HomeGames, homeCommon);
+                _mathOperations.GameModelAddition(AwayGames, awaylast5games);
+                _mathOperations.GameModelAddition(AwayGames, awayatawaygames);
+                _mathOperations.GameModelAddition(AwayGames, awayCommon);
+                _mathOperations.GameModelSwitch(AwayGames);
+            }
+
+            else if ( !isFirstGame && isCommonNull)
+            {
+                GameModel homelast5games = _mathOperations.AverageCalculator(homeFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), HomeTeam);
+                _mathOperations.GameModelDivision(homelast5games, 3.5);
+                GameModel homeathomegames = _mathOperations.AverageCalculator(homeFullSeason.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
+                _mathOperations.GameModelDivision(homeathomegames, 1.75);
+                GameModel awaylast5games = _mathOperations.AverageCalculator(awayFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), AwayTeam);
+                _mathOperations.GameModelDivision(awaylast5games, 3.5);
+                GameModel awayatawaygames = _mathOperations.AverageCalculator(awayFullSeason.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
+                _mathOperations.GameModelDivision(awayatawaygames, 1.75);
+                GameModel seasonmatchups = _mathOperations.AverageCalculator(homeFullSeason.Where(x => (x.HomeTeam == HomeTeam && x.AwayTeam == AwayTeam) || (x.HomeTeam == AwayTeam && x.AwayTeam == HomeTeam)).ToList(), HomeTeam);
+                _mathOperations.GameModelDivision(seasonmatchups, 7);
+
+                _mathOperations.GameModelAddition(HomeGames, homelast5games);
+                _mathOperations.GameModelAddition(HomeGames, homeathomegames);
+                _mathOperations.GameModelAddition(HomeGames, seasonmatchups);
+                _mathOperations.GameModelAddition(AwayGames, awaylast5games);
+                _mathOperations.GameModelAddition(AwayGames, awayatawaygames);
+                _mathOperations.GameModelAdditionSwitch(AwayGames, seasonmatchups);
+                _mathOperations.GameModelSwitch(AwayGames);
+            }
+
+            else
+            {
+                GameModel homelast5games = _mathOperations.AverageCalculator(homeFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), HomeTeam);
+                _mathOperations.GameModelDivision(homelast5games, 5.25);
+                GameModel homeathomegames = _mathOperations.AverageCalculator(homeFullSeason.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
+                _mathOperations.GameModelDivision(homeathomegames, 2.625);
+                GameModel homeCommon = _mathOperations.AverageCalculator(homePlayedCommon, HomeTeam);
+                _mathOperations.GameModelDivision(homeCommon, 3);
+                GameModel awaylast5games = _mathOperations.AverageCalculator(awayFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), AwayTeam);
                 _mathOperations.GameModelDivision(awaylast5games, 5.25);
                 GameModel awayatawaygames = _mathOperations.AverageCalculator(awayFullSeason.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
                 _mathOperations.GameModelDivision(awayatawaygames, 2.625);
@@ -390,29 +499,7 @@
                 _mathOperations.GameModelAdditionSwitch(AwayGames, seasonmatchups);
                 _mathOperations.GameModelSwitch(AwayGames);
             }
-            else
-            {
-                GameModel homelast5games = _mathOperations.AverageCalculator(homeFullSeason.Take(5).ToList(), HomeTeam);
-                _mathOperations.GameModelDivision(homelast5games, 3);
-                GameModel homeCommon = _mathOperations.AverageCalculator(homePlayedCommon, HomeTeam);
-                _mathOperations.GameModelDivision(homeCommon, 6);
-                GameModel homeathomegames = _mathOperations.AverageCalculator(homeFullSeason.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
-                _mathOperations.GameModelDivision(homeathomegames, 2);
-                GameModel awaylast5games = _mathOperations.AverageCalculator(awayFullSeason.Take(5).ToList(), AwayTeam);
-                _mathOperations.GameModelDivision(awaylast5games, 3);
-                GameModel awayCommon = _mathOperations.AverageCalculator(awayPlayedCommon, AwayTeam);
-                _mathOperations.GameModelDivision(awayCommon, 6);
-                GameModel awayatawaygames = _mathOperations.AverageCalculator(awayFullSeason.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
-                _mathOperations.GameModelDivision(awayatawaygames, 2);
 
-                _mathOperations.GameModelAddition(HomeGames, homelast5games);
-                _mathOperations.GameModelAddition(HomeGames, homeCommon);
-                _mathOperations.GameModelAddition(HomeGames, homeathomegames);
-                _mathOperations.GameModelAddition(AwayGames, awaylast5games);
-                _mathOperations.GameModelAddition(AwayGames, awayCommon);
-                _mathOperations.GameModelAddition(AwayGames, awayatawaygames);
-                _mathOperations.GameModelSwitch(AwayGames);
-            }
             _mathOperations.GameModelMultiplication(HomeGames, AwayDeviation);
             _mathOperations.GameModelMultiplication(AwayGames, HomeDeviation);
             _mathOperations.GameModelAddition(HomeGames, AwayGames);
@@ -424,7 +511,7 @@
             Game.HomeTeam = HomeTeam;
             Game.AwayTeam = AwayTeam;
             Game.GameNo = GameNo;
-            Game.FirstGame = firstGame;
+            Game.FirstGame = isFirstGame;
             return Game;
         }
     }
