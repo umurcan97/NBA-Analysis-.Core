@@ -51,6 +51,8 @@ namespace NBA.StatScraper
                 var gamesplayed = _gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8)).Data;
                 foreach (var game in gamesplayed)
                 {
+                    if (game.GameNo == 249)
+                        continue;
                     var stats = _db.FullSeason.FirstOrDefault(x => x.GameNo == game.GameNo);
                     if (stats != null)
                         continue;
@@ -108,7 +110,7 @@ namespace NBA.StatScraper
             var gamesToBePlayed = _gameTimesRepository.GetGamesToBePlayedToday().Data;
             foreach (var game in gamesToBePlayed)
             {
-                if (_db.GamePredictions.FirstOrDefault(x => x.GameNo == game.GameNo) != null)
+                if (_db.GamePredictions.FirstOrDefault(x => x.GameNo == game.GameNo) != null || game.HomeTeam==Team.DetroitPistons || game.HomeTeam == Team.LosAngelesLakers || game.AwayTeam == Team.DetroitPistons || game.AwayTeam == Team.LosAngelesLakers)
                     continue;
                 GamePredictions prediction = _simulator.FullMatchSimulator(game.HomeTeam, game.AwayTeam, game.GameNo);
                 List<QuarterPredictions> predictions = new List<QuarterPredictions>();
