@@ -39,57 +39,57 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success();
         }
 
-        public ServiceResult<List<PlayerStats>> GetAllPlayerStats()
+        public ServiceResult GetAllPlayerStats()
         {
             var stats = _db.PlayerStats.ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStats>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStats>> GetPlayerStatsWithPlayerId(int playerId)
+        public ServiceResult GetPlayerStatsWithPlayerId(int playerId)
         {
             var player = _db.Players.Find(playerId);
             if (player == null)
-                return (ServiceResult<List<PlayerStats>>)ServiceResult.Failed(ServiceError.PlayerNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
             var stats = _db.PlayerStats.Where(x=>x.Player==player).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStats>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStats>> GetPlayerStatsWithGameNo(int gameNo)
+        public ServiceResult GetPlayerStatsWithGameNo(int gameNo)
         {
             var playerStats = _db.PlayerStats.Where(x=>x.GameNo==gameNo).ToList();
             if (playerStats.Count == 0)
-                return (ServiceResult<List<PlayerStats>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(playerStats);
         }
 
-        public ServiceResult<PlayerStats> GetPlayerStatsWithPlayerIdAndGameNo(int playerId, int gameNo)
+        public ServiceResult GetPlayerStatsWithPlayerIdAndGameNo(int playerId, int gameNo)
         {
             var player = _db.Players.Find(playerId);
             if (player == null)
-                return (ServiceResult<PlayerStats>)ServiceResult.Failed(ServiceError.PlayerNotFound);
-            var stats = _db.PlayerStats.First(x => x.Player == player && x.GameNo == gameNo);
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
+            var stats = _db.PlayerStats.FirstOrDefault(x => x.Player == player && x.GameNo == gameNo);
             if (stats == null)
-                return (ServiceResult<PlayerStats>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStats>> GetPlayerStatsWithTeam(Team team)
+        public ServiceResult GetPlayerStatsWithTeam(Team team)
         {
             var stats = _db.PlayerStats.Where(x => x.Team == team).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStats>>) ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<PlayerStats> GetPlayerStatWithId(int Id)
+        public ServiceResult GetPlayerStatWithId(int Id)
         {
             var stat = _db.PlayerStats.Find(Id);
             if (stat == null)
-                return (ServiceResult<PlayerStats>) ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stat);
         }
 
@@ -116,57 +116,57 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success();
         }
 
-        public ServiceResult<List<PlayerStats20_21>> GetAllPlayerStats20_21()
+        public ServiceResult GetAllPlayerStats20_21()
         {
             var stats = _db.PlayerStats20_21.ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStats20_21>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStats20_21>> GetPlayerStatsWithPlayerId20_21(int playerId)
+        public ServiceResult GetPlayerStatsWithPlayerId20_21(int playerId)
         {
             var player = _db.Players.Find(playerId);
             if (player == null)
-                return (ServiceResult<List<PlayerStats20_21>>)ServiceResult.Failed(ServiceError.PlayerNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
             var stats = _db.PlayerStats20_21.Where(x => x.Player == player).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStats20_21>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStats20_21>> GetPlayerStatsWithGameNo20_21(int gameNo)
+        public ServiceResult GetPlayerStatsWithGameNo20_21(int gameNo)
         {
             var playerStats = _db.PlayerStats20_21.Where(x => x.GameNo == gameNo).ToList();
             if (playerStats.Count == 0)
-                return (ServiceResult<List<PlayerStats20_21>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(playerStats);
         }
 
-        public ServiceResult<PlayerStats20_21> GetPlayerStatsWithPlayerIdAndGameNo20_21(int playerId, int gameNo)
+        public ServiceResult GetPlayerStatsWithPlayerIdAndGameNo20_21(int playerId, int gameNo)
         {
             var player = _db.Players.Find(playerId);
             if (player == null)
-                return (ServiceResult<PlayerStats20_21>)ServiceResult.Failed(ServiceError.PlayerNotFound);
-            var stats = _db.PlayerStats20_21.First(x => x.Player == player && x.GameNo == gameNo);
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
+            var stats = _db.PlayerStats20_21.FirstOrDefault(x => x.Player == player && x.GameNo == gameNo);
             if (stats == null)
-                return (ServiceResult<PlayerStats20_21>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStats20_21>> GetPlayerStatsWithTeam20_21(Team team)
+        public ServiceResult GetPlayerStatsWithTeam20_21(Team team)
         {
             var stats = _db.PlayerStats20_21.Where(x => x.Team == team).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStats20_21>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<PlayerStats20_21> GetPlayerStatWithId20_21(int Id)
+        public ServiceResult GetPlayerStatWithId20_21(int Id)
         {
             var stat = _db.PlayerStats20_21.Find(Id);
             if (stat == null)
-                return (ServiceResult<PlayerStats20_21>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stat);
         }
 
@@ -193,57 +193,57 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success();
         }
 
-        public ServiceResult<List<PlayerStats19_20>> GetAllPlayerStats19_20()
+        public ServiceResult GetAllPlayerStats19_20()
         {
             var stats = _db.PlayerStats19_20.ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStats19_20>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStats19_20>> GetPlayerStatsWithPlayerId19_20(int playerId)
+        public ServiceResult GetPlayerStatsWithPlayerId19_20(int playerId)
         {
             var player = _db.Players.Find(playerId);
             if (player == null)
-                return (ServiceResult<List<PlayerStats19_20>>)ServiceResult.Failed(ServiceError.PlayerNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
             var stats = _db.PlayerStats19_20.Where(x => x.Player == player).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStats19_20>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStats19_20>> GetPlayerStatsWithGameNo19_20(int gameNo)
+        public ServiceResult GetPlayerStatsWithGameNo19_20(int gameNo)
         {
             var playerStats = _db.PlayerStats19_20.Where(x => x.GameNo == gameNo).ToList();
             if (playerStats.Count == 0)
-                return (ServiceResult<List<PlayerStats19_20>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(playerStats);
         }
 
-        public ServiceResult<PlayerStats19_20> GetPlayerStatsWithPlayerIdAndGameNo19_20(int playerId, int gameNo)
+        public ServiceResult GetPlayerStatsWithPlayerIdAndGameNo19_20(int playerId, int gameNo)
         {
             var player = _db.Players.Find(playerId);
             if (player == null)
-                return (ServiceResult<PlayerStats19_20>)ServiceResult.Failed(ServiceError.PlayerNotFound);
-            var stats = _db.PlayerStats19_20.First(x => x.Player == player && x.GameNo == gameNo);
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
+            var stats = _db.PlayerStats19_20.FirstOrDefault(x => x.Player == player && x.GameNo == gameNo);
             if (stats == null)
-                return (ServiceResult<PlayerStats19_20>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStats19_20>> GetPlayerStatsWithTeam19_20(Team team)
+        public ServiceResult GetPlayerStatsWithTeam19_20(Team team)
         {
             var stats = _db.PlayerStats19_20.Where(x => x.Team == team).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStats19_20>>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<PlayerStats19_20> GetPlayerStatWithId19_20(int Id)
+        public ServiceResult GetPlayerStatWithId19_20(int Id)
         {
             var stat = _db.PlayerStats19_20.Find(Id);
             if (stat == null)
-                return (ServiceResult<PlayerStats19_20>)ServiceResult.Failed(ServiceError.PlayerStatNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatNotFound);
             return ServiceResult.Success(stat);
         }
 

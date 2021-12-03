@@ -87,61 +87,55 @@ namespace NBA.Services.Repositories
             }
         }
 
-        public ServiceResult<List<PlayerStatsQuarter>> GetAllPlayerStatsQuarter()
+        public ServiceResult GetAllPlayerStatsQuarter()
         {
             var stats = _db.PlayerStatsQuarter.ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter>>) ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter19_20>> GetAllPlayerStatsQuarter19_20()
+        public ServiceResult GetAllPlayerStatsQuarter19_20()
         {
             var stats = _db.PlayerStatsQuarter19_20.ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter19_20>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter20_21>> GetAllPlayerStatsQuarter20_21()
+        public ServiceResult GetAllPlayerStatsQuarter20_21()
         {
             var stats = _db.PlayerStatsQuarter20_21.ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter20_21>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter>> GetPlayerStatsQuarterWithGameNo(int gameNo)
+        public ServiceResult GetPlayerStatsQuarterWithGameNo(int gameNo)
         {
             var stats = _db.PlayerStatsQuarter.Where(x => x.GameNo == gameNo).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter>>) ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter19_20>> GetPlayerStatsQuarterWithGameNo19_20(int gameNo)
+        public ServiceResult GetPlayerStatsQuarterWithGameNo19_20(int gameNo)
         {
             var stats = _db.PlayerStatsQuarter19_20.Where(x => x.GameNo == gameNo).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter19_20>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter20_21>> GetPlayerStatsQuarterWithGameNo20_21(int gameNo)
+        public ServiceResult GetPlayerStatsQuarterWithGameNo20_21(int gameNo)
         {
             var stats = _db.PlayerStatsQuarter20_21.Where(x => x.GameNo == gameNo).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter20_21>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<PlayerStatsQuarter> GetPlayerStatsQuarterWithId(int Id)
+        public ServiceResult GetPlayerStatsQuarterWithId(int Id)
         {
             try
             {
@@ -150,12 +144,11 @@ namespace NBA.Services.Repositories
             }
             catch (Exception)
             {
-                return (ServiceResult<PlayerStatsQuarter>) ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             }
         }
 
-        public ServiceResult<PlayerStatsQuarter19_20> GetPlayerStatsQuarterWithId19_20(int Id)
+        public ServiceResult GetPlayerStatsQuarterWithId19_20(int Id)
         {
             try
             {
@@ -164,12 +157,11 @@ namespace NBA.Services.Repositories
             }
             catch (Exception)
             {
-                return (ServiceResult<PlayerStatsQuarter19_20>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             }
         }
 
-        public ServiceResult<PlayerStatsQuarter20_21> GetPlayerStatsQuarterWithId20_21(int Id)
+        public ServiceResult GetPlayerStatsQuarterWithId20_21(int Id)
         {
             try
             {
@@ -178,116 +170,103 @@ namespace NBA.Services.Repositories
             }
             catch (Exception)
             {
-                return (ServiceResult<PlayerStatsQuarter20_21>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             }
         }
 
-        public ServiceResult<List<PlayerStatsQuarter>> GetPlayerStatsQuarterWithPlayerId(int playerId)
+        public ServiceResult GetPlayerStatsQuarterWithPlayerId(int playerId)
         {
             var stats = _db.PlayerStatsQuarter.Where(x => x.Player.Id == playerId).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter19_20>> GetPlayerStatsQuarterWithPlayerId19_20(int playerId)
+        public ServiceResult GetPlayerStatsQuarterWithPlayerId19_20(int playerId)
         {
             var stats = _db.PlayerStatsQuarter19_20.Where(x => x.Player.Id == playerId).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter19_20>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter20_21>> GetPlayerStatsQuarterWithPlayerId20_21(int playerId)
+        public ServiceResult GetPlayerStatsQuarterWithPlayerId20_21(int playerId)
         {
             var stats = _db.PlayerStatsQuarter20_21.Where(x => x.Player.Id == playerId).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter20_21>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter>> GetPlayerStatsQuarterWithPlayerIdAndGameNo(int playerId, int gameNo)
+        public ServiceResult GetPlayerStatsQuarterWithPlayerIdAndGameNo(int playerId, int gameNo)
         {
             var stats = _db.PlayerStatsQuarter.Where(x => x.Player.Id == playerId && x.GameNo == gameNo).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter19_20>> GetPlayerStatsQuarterWithPlayerIdAndGameNo19_20(int playerId, int gameNo)
+        public ServiceResult GetPlayerStatsQuarterWithPlayerIdAndGameNo19_20(int playerId, int gameNo)
         {
             var stats = _db.PlayerStatsQuarter19_20.Where(x => x.Player.Id == playerId && x.GameNo == gameNo).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter19_20>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter20_21>> GetPlayerStatsQuarterWithPlayerIdAndGameNo20_21(int playerId, int gameNo)
+        public ServiceResult GetPlayerStatsQuarterWithPlayerIdAndGameNo20_21(int playerId, int gameNo)
         {
             var stats = _db.PlayerStatsQuarter20_21.Where(x => x.Player.Id == playerId && x.GameNo == gameNo).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter20_21>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<PlayerStatsQuarter> GetPlayerStatsQuarterWithPlayerIdAndGameNoAndQuarterNo(int playerId, int gameNo, int quarterNo)
+        public ServiceResult GetPlayerStatsQuarterWithPlayerIdAndGameNoAndQuarterNo(int playerId, int gameNo, int quarterNo)
         {
             var stats = _db.PlayerStatsQuarter.FirstOrDefault(x => x.Player.Id == playerId && x.GameNo == gameNo && x.QuarterNo == quarterNo);
             if (stats == null)
-                return (ServiceResult<PlayerStatsQuarter>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<PlayerStatsQuarter19_20> GetPlayerStatsQuarterWithPlayerIdAndGameNoAndQuarterNo19_20(int playerId, int gameNo, int quarterNo)
+        public ServiceResult GetPlayerStatsQuarterWithPlayerIdAndGameNoAndQuarterNo19_20(int playerId, int gameNo, int quarterNo)
         {
             var stats = _db.PlayerStatsQuarter19_20.FirstOrDefault(x => x.Player.Id == playerId && x.GameNo == gameNo && x.QuarterNo == quarterNo);
             if (stats == null)
-                return (ServiceResult<PlayerStatsQuarter19_20>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<PlayerStatsQuarter20_21> GetPlayerStatsQuarterWithPlayerIdAndGameNoAndQuarterNo20_21(int playerId, int gameNo, int quarterNo)
+        public ServiceResult GetPlayerStatsQuarterWithPlayerIdAndGameNoAndQuarterNo20_21(int playerId, int gameNo, int quarterNo)
         {
             var stats = _db.PlayerStatsQuarter20_21.FirstOrDefault(x => x.Player.Id == playerId && x.GameNo == gameNo && x.QuarterNo == quarterNo);
             if (stats == null)
-                return (ServiceResult<PlayerStatsQuarter20_21>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter>> GetPlayerStatsQuarterWithTeam(Team team)
+        public ServiceResult GetPlayerStatsQuarterWithTeam(Team team)
         {
             var stats = _db.PlayerStatsQuarter.Where(x => x.Team == team).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter19_20>> GetPlayerStatsQuarterWithTeam19_20(Team team)
+        public ServiceResult GetPlayerStatsQuarterWithTeam19_20(Team team)
         {
             var stats = _db.PlayerStatsQuarter19_20.Where(x => x.Team == team).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter19_20>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<PlayerStatsQuarter20_21>> GetPlayerStatsQuarterWithTeam20_21(Team team)
+        public ServiceResult GetPlayerStatsQuarterWithTeam20_21(Team team)
         {
             var stats = _db.PlayerStatsQuarter20_21.Where(x => x.Player.Team == team).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<PlayerStatsQuarter20_21>>)ServiceResult.Failed(ServiceError
-                    .PlayerStatsQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerStatsQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 

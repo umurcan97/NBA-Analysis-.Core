@@ -48,11 +48,10 @@ namespace NBA.StatScraper
                 Thread.Sleep(3000);
                 driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
                 Thread.Sleep(3000);
-                var gamesplayed = _gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8)).Data;
+                var result = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8));
+                var gamesplayed = result.Data;
                 foreach (var game in gamesplayed)
                 {
-                    if (game.GameNo == 249)
-                        continue;
                     var stats = _db.FullSeason.FirstOrDefault(x => x.GameNo == game.GameNo);
                     if (stats != null)
                         continue;
@@ -107,10 +106,11 @@ namespace NBA.StatScraper
 
             //Predictions
 
-            var gamesToBePlayed = _gameTimesRepository.GetGamesToBePlayedToday().Data;
+            var result2 = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesToBePlayedToday();
+            var gamesToBePlayed = result2.Data;
             foreach (var game in gamesToBePlayed)
             {
-                if (_db.GamePredictions.FirstOrDefault(x => x.GameNo == game.GameNo) != null || game.HomeTeam==Team.DetroitPistons || game.HomeTeam == Team.LosAngelesLakers || game.AwayTeam == Team.DetroitPistons || game.AwayTeam == Team.LosAngelesLakers)
+                if (_db.GamePredictions.FirstOrDefault(x => x.GameNo == game.GameNo) != null)
                     continue;
                 GamePredictions prediction = _simulator.FullMatchSimulator(game.HomeTeam, game.AwayTeam, game.GameNo);
                 List<QuarterPredictions> predictions = new List<QuarterPredictions>();

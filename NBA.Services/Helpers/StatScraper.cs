@@ -8,6 +8,7 @@
     using OpenQA.Selenium.Firefox;
     using System.Collections.Generic;
     using OpenQA.Selenium.Chrome;
+    using NBA.Services.Abstraction;
 
     public class StatScraper : IStatScraper
     {
@@ -99,7 +100,8 @@
             driver.Navigate().GoToUrl(url);
             Thread.Sleep(3000);
             FullSeason stat = new FullSeason();
-            stat.GameDate = _gameTimesRepository.GetGameTime(GameNo).Data;
+            var result = (ServiceResult<GameTime>)_gameTimesRepository.GetGameTime(GameNo);
+            stat.GameDate = result.Data;
             string AwayPITP =
                 "/html/body/div[1]/div[2]/div[4]/section[1]/div/div/table[2]/tbody/tr[1]/td[1]";
             string AwayFastBreakPoints =
@@ -454,7 +456,8 @@
             driver.Navigate().GoToUrl(url);
             Thread.Sleep(3000);
             FullSeason20_21 stat = new FullSeason20_21();
-            stat.GameDate = _gameTimesRepository.GetGameTime20_21(GameNo).Data;
+            var result = (ServiceResult<GameTime20_21>)_gameTimesRepository.GetGameTime20_21(GameNo);
+            stat.GameDate = result.Data;
             string AwayPITP =
                 "/html/body/div[1]/div[2]/div[4]/section[1]/div/div/table[2]/tbody/tr[1]/td[1]";
             string AwayFastBreakPoints =
@@ -810,7 +813,8 @@
             Thread.Sleep(3000);
             driver.Navigate().Refresh();
             FullSeason19_20 stat = new FullSeason19_20();
-            stat.GameDate = _gameTimesRepository.GetGameTime19_20(GameNo).Data;
+            var result = (ServiceResult<GameTime19_20>)_gameTimesRepository.GetGameTime19_20(GameNo);
+            stat.GameDate = result.Data;
             string AwayPITP =
                 "/html/body/div[1]/div[2]/div[4]/section[1]/div/div/table[2]/tbody/tr[1]/td[1]";
             string AwayFastBreakPoints =
@@ -1248,8 +1252,20 @@
                 "/html/body/div[1]/div[2]/div[4]/section[3]/div[2]/div[2]/div/table/tbody/tr[" + line + "]/td[18]";
             stat.GameNo = GameNo;
             stat.QuarterNo = QuarterNo;
-            stat.HomeTeam = _helpers.GetTeamEnumByTeamName(driver.FindElement(OpenQA.Selenium.By.XPath(HomeTeam)).Text.Replace(" ", "").ToUpper()
-                .Replace('İ', 'I'));
+            for (int i = 0; i < 1; i++)
+            {
+                try
+                {
+                    stat.HomeTeam = _helpers.GetTeamEnumByTeamName(driver.FindElement(OpenQA.Selenium.By.XPath(HomeTeam)).Text.Replace(" ", "").ToUpper()
+                    .Replace('İ', 'I'));
+                }
+                catch (Exception)
+                {
+                    i--;
+                    Thread.Sleep(3000);
+                    driver.Navigate().Refresh();
+                }
+            }
             stat.AwayTeam = _helpers.GetTeamEnumByTeamName(driver.FindElement(OpenQA.Selenium.By.XPath(AwayTeam)).Text.Replace(" ", "").ToUpper()
                 .Replace('İ', 'I'));
             try

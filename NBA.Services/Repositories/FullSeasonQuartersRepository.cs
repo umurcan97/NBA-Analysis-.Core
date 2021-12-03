@@ -57,34 +57,34 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success();
         }
 
-        public ServiceResult<List<FullSeasonQuarters>> GetFullSeasonQuarters()
+        public ServiceResult GetFullSeasonQuarters()
         {
             var stats = _db.FullSeasonQuarters.ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<FullSeasonQuarters>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<FullSeasonQuarters>> GetFullSeasonQuartersForTeam(Team team)
+        public ServiceResult GetFullSeasonQuartersForTeam(Team team)
         {
             var stats = _db.FullSeasonQuarters.Where(x => x.HomeTeam == team || x.AwayTeam == team).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<FullSeasonQuarters>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<FullSeasonQuarters>> GetQuartersBetween(DateTime date1, DateTime date2)
+        public ServiceResult GetQuartersBetween(DateTime date1, DateTime date2)
         {
-            var seasontimes = _gameTimesRepository.GetGamesBetween(date1, date2);
+            var seasontimes = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesBetween(date1, date2);
             if (!seasontimes.Succeeded)
-                return (ServiceResult<List<FullSeasonQuarters>>)ServiceResult.Failed(seasontimes.Error);
+                return ServiceResult.Failed(seasontimes.Error);
             List<FullSeasonQuarters> season = new List<FullSeasonQuarters>();
             foreach (var game in seasontimes.Data)
             {
                 var stats = _db.FullSeasonQuarters.Where(x => x.GameNo == game.GameNo).ToList();
                 if (stats.Count != 4)
                 {
-                    var result = (ServiceResult<List<FullSeasonQuarters>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                    var result = ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
                     result.Error.Message += " eksik maç: " + game.GameNo;
                     return result;
                 }
@@ -94,18 +94,18 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(season);
         }
 
-        public ServiceResult<List<FullSeasonQuarters>> GetQuartersSinceDate(DateTime date)
+        public ServiceResult GetQuartersSinceDate(DateTime date)
         {
-            var seasontimes = _gameTimesRepository.GetGamesSince(date);
+            var seasontimes = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesSince(date);
             if (!seasontimes.Succeeded)
-                return (ServiceResult<List<FullSeasonQuarters>>)ServiceResult.Failed(seasontimes.Error);
+                return ServiceResult.Failed(seasontimes.Error);
             List<FullSeasonQuarters> season = new List<FullSeasonQuarters>();
             foreach (var game in seasontimes.Data)
             {
                 var stats = _db.FullSeasonQuarters.Where(x => x.GameNo == game.GameNo).ToList();
                 if (stats.Count != 4)
                 {
-                    var result = (ServiceResult<List<FullSeasonQuarters>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                    var result = ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
                     result.Error.Message += " eksik maç: " + game.GameNo;
                     return result;
                 }
@@ -115,18 +115,18 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(season);
         }
 
-        public ServiceResult<List<FullSeasonQuarters>> GetQuartersTillDate(DateTime date)
+        public ServiceResult GetQuartersTillDate(DateTime date)
         {
-            var seasontimes = _gameTimesRepository.GetGamesTill(date);
+            var seasontimes = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesTill(date);
             if (!seasontimes.Succeeded)
-                return (ServiceResult<List<FullSeasonQuarters>>)ServiceResult.Failed(seasontimes.Error);
+                return ServiceResult.Failed(seasontimes.Error);
             List<FullSeasonQuarters> season = new List<FullSeasonQuarters>();
             foreach (var game in seasontimes.Data)
             {
                 var stats = _db.FullSeasonQuarters.Where(x => x.GameNo == game.GameNo).ToList();
                 if (stats.Count != 4)
                 {
-                    var result = (ServiceResult<List<FullSeasonQuarters>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                    var result = ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
                     result.Error.Message += " eksik maç: " + game.GameNo;
                     return result;
                 }
@@ -136,24 +136,24 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(season);
         }
 
-        public ServiceResult<List<FullSeasonQuarters>> GetQuartersWithGameNo(int GameNo)
+        public ServiceResult GetQuartersWithGameNo(int GameNo)
         {
             var stats = _db.FullSeasonQuarters.Where(x => x.GameNo == GameNo).ToList();
             if (stats.Count != 4)
             {
-                return (ServiceResult<List<FullSeasonQuarters>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             }
 
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<FullSeasonQuarters> GetQuartersWithGameNoAndQuarterNo(int GameNo, int QuarterNo)
+        public ServiceResult GetQuartersWithGameNoAndQuarterNo(int GameNo, int QuarterNo)
         {
             var stats = _db.FullSeasonQuarters.Where(x => x.GameNo == GameNo && x.QuarterNo == QuarterNo)
                 .FirstOrDefault();
             if (stats == null)
             {
-                return (ServiceResult<FullSeasonQuarters>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             }
 
             return ServiceResult.Success(stats);
@@ -193,34 +193,34 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success();
         }
 
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetFullSeasonQuarters20_21()
+        public ServiceResult GetFullSeasonQuarters20_21()
         {
             var stats = _db.FullSeasonQuarters20_21.ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<FullSeasonQuarters20_21>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetFullSeasonQuartersForTeam20_21(Team team)
+        public ServiceResult GetFullSeasonQuartersForTeam20_21(Team team)
         {
             var stats = _db.FullSeasonQuarters20_21.Where(x => x.HomeTeam == team || x.AwayTeam == team).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<FullSeasonQuarters20_21>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersBetween20_21(DateTime date1, DateTime date2)
+        public ServiceResult GetQuartersBetween20_21(DateTime date1, DateTime date2)
         {
-            var seasontimes = _gameTimesRepository.GetGamesBetween20_21(date1, date2);
+            var seasontimes = (ServiceResult<List<GameTime20_21>>)_gameTimesRepository.GetGamesBetween20_21(date1, date2);
             if (!seasontimes.Succeeded)
-                return (ServiceResult<List<FullSeasonQuarters20_21>>)ServiceResult.Failed(seasontimes.Error);
+                return ServiceResult.Failed(seasontimes.Error);
             List<FullSeasonQuarters20_21> season = new List<FullSeasonQuarters20_21>();
             foreach (var game in seasontimes.Data)
             {
                 var stats = _db.FullSeasonQuarters20_21.Where(x => x.GameNo == game.GameNo).ToList();
                 if (stats.Count != 4)
                 {
-                    var result = (ServiceResult<List<FullSeasonQuarters20_21>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                    var result = ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
                     result.Error.Message += " eksik maç: " + game.GameNo;
                     return result;
                 }
@@ -230,18 +230,18 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(season);
         }
 
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersSinceDate20_21(DateTime date)
+        public ServiceResult GetQuartersSinceDate20_21(DateTime date)
         {
-            var seasontimes = _gameTimesRepository.GetGamesSince20_21(date);
+            var seasontimes = (ServiceResult<List<GameTime20_21>>)_gameTimesRepository.GetGamesSince20_21(date);
             if (!seasontimes.Succeeded)
-                return (ServiceResult<List<FullSeasonQuarters20_21>>)ServiceResult.Failed(seasontimes.Error);
+                return ServiceResult.Failed(seasontimes.Error);
             List<FullSeasonQuarters20_21> season = new List<FullSeasonQuarters20_21>();
             foreach (var game in seasontimes.Data)
             {
                 var stats = _db.FullSeasonQuarters20_21.Where(x => x.GameNo == game.GameNo).ToList();
                 if (stats.Count != 4)
                 {
-                    var result = (ServiceResult<List<FullSeasonQuarters20_21>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                    var result = ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
                     result.Error.Message += " eksik maç: " + game.GameNo;
                     return result;
                 }
@@ -251,18 +251,18 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(season);
         }
 
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersTillDate20_21(DateTime date)
+        public ServiceResult GetQuartersTillDate20_21(DateTime date)
         {
-            var seasontimes = _gameTimesRepository.GetGamesTill20_21(date);
+            var seasontimes = (ServiceResult<List<GameTime20_21>>)_gameTimesRepository.GetGamesTill20_21(date);
             if (!seasontimes.Succeeded)
-                return (ServiceResult<List<FullSeasonQuarters20_21>>)ServiceResult.Failed(seasontimes.Error);
+                return ServiceResult.Failed(seasontimes.Error);
             List<FullSeasonQuarters20_21> season = new List<FullSeasonQuarters20_21>();
             foreach (var game in seasontimes.Data)
             {
                 var stats = _db.FullSeasonQuarters20_21.Where(x => x.GameNo == game.GameNo).ToList();
                 if (stats.Count != 4)
                 {
-                    var result = (ServiceResult<List<FullSeasonQuarters20_21>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                    var result = ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
                     result.Error.Message += " eksik maç: " + game.GameNo;
                     return result;
                 }
@@ -272,24 +272,24 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(season);
         }
 
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersWithGameNo20_21(int GameNo)
+        public ServiceResult GetQuartersWithGameNo20_21(int GameNo)
         {
             var stats = _db.FullSeasonQuarters20_21.Where(x => x.GameNo == GameNo).ToList();
             if (stats.Count != 4)
             {
-                return (ServiceResult<List<FullSeasonQuarters20_21>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             }
 
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<FullSeasonQuarters20_21> GetQuartersWithGameNoAndQuarterNo20_21(int GameNo, int QuarterNo)
+        public ServiceResult GetQuartersWithGameNoAndQuarterNo20_21(int GameNo, int QuarterNo)
         {
             var stats = _db.FullSeasonQuarters20_21.Where(x => x.GameNo == GameNo && x.QuarterNo == QuarterNo)
                 .FirstOrDefault();
             if (stats == null)
             {
-                return (ServiceResult<FullSeasonQuarters20_21>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             }
 
             return ServiceResult.Success(stats);
@@ -329,34 +329,34 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success();
         }
 
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetFullSeasonQuarters19_20()
+        public ServiceResult GetFullSeasonQuarters19_20()
         {
             var stats = _db.FullSeasonQuarters19_20.ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetFullSeasonQuartersForTeam19_20(Team team)
+        public ServiceResult GetFullSeasonQuartersForTeam19_20(Team team)
         {
             var stats = _db.FullSeasonQuarters19_20.Where(x => x.HomeTeam == team || x.AwayTeam == team).ToList();
             if (stats.Count == 0)
-                return (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersBetween19_20(DateTime date1, DateTime date2)
+        public ServiceResult GetQuartersBetween19_20(DateTime date1, DateTime date2)
         {
-            var seasontimes = _gameTimesRepository.GetGamesBetween19_20(date1, date2);
+            var seasontimes = (ServiceResult<List<GameTime19_20>>)_gameTimesRepository.GetGamesBetween19_20(date1, date2);
             if (!seasontimes.Succeeded)
-                return (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(seasontimes.Error);
+                return ServiceResult.Failed(seasontimes.Error);
             List<FullSeasonQuarters19_20> season = new List<FullSeasonQuarters19_20>();
             foreach (var game in seasontimes.Data)
             {
                 var stats = _db.FullSeasonQuarters19_20.Where(x => x.GameNo == game.GameNo).ToList();
                 if (stats.Count != 4)
                 {
-                    var result = (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                    var result = ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
                     result.Error.Message += " eksik maç: " + game.GameNo;
                     return result;
                 }
@@ -366,18 +366,18 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(season);
         }
 
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersSinceDate19_20(DateTime date)
+        public ServiceResult GetQuartersSinceDate19_20(DateTime date)
         {
-            var seasontimes = _gameTimesRepository.GetGamesSince19_20(date);
+            var seasontimes = (ServiceResult<List<GameTime19_20>>)_gameTimesRepository.GetGamesSince19_20(date);
             if (!seasontimes.Succeeded)
-                return (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(seasontimes.Error);
+                return ServiceResult.Failed(seasontimes.Error);
             List<FullSeasonQuarters19_20> season = new List<FullSeasonQuarters19_20>();
             foreach (var game in seasontimes.Data)
             {
                 var stats = _db.FullSeasonQuarters19_20.Where(x => x.GameNo == game.GameNo).ToList();
                 if (stats.Count != 4)
                 {
-                    var result = (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                    var result = ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
                     result.Error.Message += " eksik maç: " + game.GameNo;
                     return result;
                 }
@@ -387,18 +387,18 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(season);
         }
 
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersTillDate19_20(DateTime date)
+        public ServiceResult GetQuartersTillDate19_20(DateTime date)
         {
-            var seasontimes = _gameTimesRepository.GetGamesTill19_20(date);
+            var seasontimes = (ServiceResult<List<GameTime19_20>>)_gameTimesRepository.GetGamesTill19_20(date);
             if (!seasontimes.Succeeded)
-                return (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(seasontimes.Error);
+                return ServiceResult.Failed(seasontimes.Error);
             List<FullSeasonQuarters19_20> season = new List<FullSeasonQuarters19_20>();
             foreach (var game in seasontimes.Data)
             {
                 var stats = _db.FullSeasonQuarters19_20.Where(x => x.GameNo == game.GameNo).ToList();
                 if (stats.Count != 4)
                 {
-                    var result = (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                    var result = ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
                     result.Error.Message += " eksik maç: " + game.GameNo;
                     return result;
                 }
@@ -408,24 +408,24 @@ namespace NBA.Services.Repositories
             return ServiceResult.Success(season);
         }
 
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersWithGameNo19_20(int GameNo)
+        public ServiceResult GetQuartersWithGameNo19_20(int GameNo)
         {
             var stats = _db.FullSeasonQuarters19_20.Where(x => x.GameNo == GameNo).ToList();
             if (stats.Count != 4)
             {
-                return (ServiceResult<List<FullSeasonQuarters19_20>>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             }
 
             return ServiceResult.Success(stats);
         }
 
-        public ServiceResult<FullSeasonQuarters19_20> GetQuartersWithGameNoAndQuarterNo19_20(int GameNo, int QuarterNo)
+        public ServiceResult GetQuartersWithGameNoAndQuarterNo19_20(int GameNo, int QuarterNo)
         {
             var stats = _db.FullSeasonQuarters19_20.Where(x => x.GameNo == GameNo && x.QuarterNo == QuarterNo)
                 .FirstOrDefault();
             if (stats == null)
             {
-                return (ServiceResult<FullSeasonQuarters19_20>)ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
+                return ServiceResult.Failed(ServiceError.FullSeasonQuarterNotFound);
             }
 
             return ServiceResult.Success(stats);

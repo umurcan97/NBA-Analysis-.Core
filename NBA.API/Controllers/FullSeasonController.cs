@@ -42,7 +42,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<FullSeason>))]
         [HttpGet]
         [Route("getgame/{gameno}")]
-        ServiceResult<FullSeason> GetGameWithGameNo(int gameNo)
+        ServiceResult GetGameWithGameNo(int gameNo)
         {
             var serviceResult = _fullSeasonRepository.GetGameWithGameNo(gameNo);
             return serviceResult;
@@ -51,7 +51,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason>>))]
         [HttpGet]
         [Route("getall")]
-        public ServiceResult<List<FullSeason>> GetAll()
+        public ServiceResult GetAll()
         {
             var serviceResult = _fullSeasonRepository.GetFullSeason();
             return serviceResult;
@@ -60,7 +60,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason>>))]
         [HttpGet]
         [Route("getgamessince/{date}")]
-        public ServiceResult<List<FullSeason>> GetGamesSinceDate(DateTime date)
+        public ServiceResult GetGamesSinceDate(DateTime date)
         {
             var serviceResult = _fullSeasonRepository.GetGamesSinceDate(date);
             return serviceResult;
@@ -69,7 +69,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason>>))]
         [HttpGet]
         [Route("getgamestilldate/{date}")]
-        public ServiceResult<List<FullSeason>> GetGamesTillDate(DateTime date)
+        public ServiceResult GetGamesTillDate(DateTime date)
         {
             var serviceResult = _fullSeasonRepository.GetGamesTillDate(date);
             return serviceResult;
@@ -78,7 +78,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason>>))]
         [HttpGet]
         [Route("getgamesbetween/{date1}&&{date2}")]
-        public ServiceResult<List<FullSeason>> GetGamesBetween(DateTime date1, DateTime date2)
+        public ServiceResult GetGamesBetween(DateTime date1, DateTime date2)
         {
             var serviceResult = _fullSeasonRepository.GetGamesBetween(date1, date2);
             return serviceResult;
@@ -87,7 +87,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason>>))]
         [HttpGet]
         [Route("getseasonwithteam/{team}")]
-        public ServiceResult<List<FullSeason>> GetFullSeasonForTeam(Team team)
+        public ServiceResult GetFullSeasonForTeam(Team team)
         {
             var serviceResult = _fullSeasonRepository.GetFullSeasonForTeam(team);
             return serviceResult;
@@ -116,7 +116,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<FullSeason20_21>))]
         [HttpGet]
         [Route("getgame20_21/{gameno}")]
-        ServiceResult<FullSeason20_21> GetGameWithGameNo20_21(int gameNo)
+        ServiceResult GetGameWithGameNo20_21(int gameNo)
         {
             var serviceResult = _fullSeasonRepository.GetGameWithGameNo20_21(gameNo);
             return serviceResult;
@@ -125,7 +125,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason20_21>>))]
         [HttpGet]
         [Route("getall20_21")]
-        public ServiceResult<List<FullSeason20_21>> GetAll20_21()
+        public ServiceResult GetAll20_21()
         {
             var serviceResult = _fullSeasonRepository.GetFullSeason20_21();
             return serviceResult;
@@ -134,7 +134,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason20_21>>))]
         [HttpGet]
         [Route("getgamessince20_21/{date}")]
-        public ServiceResult<List<FullSeason20_21>> GetGamesSinceDate20_21(DateTime date)
+        public ServiceResult GetGamesSinceDate20_21(DateTime date)
         {
             var serviceResult = _fullSeasonRepository.GetGamesSinceDate20_21(date);
             return serviceResult;
@@ -143,7 +143,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason20_21>>))]
         [HttpGet]
         [Route("getgamestilldate20_21/{date}")]
-        public ServiceResult<List<FullSeason20_21>> GetGamesTillDate20_21(DateTime date)
+        public ServiceResult GetGamesTillDate20_21(DateTime date)
         {
             var serviceResult = _fullSeasonRepository.GetGamesTillDate20_21(date);
             return serviceResult;
@@ -152,7 +152,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason20_21>>))]
         [HttpGet]
         [Route("getgamesbetween20_21/{date1}&&{date2}")]
-        public ServiceResult<List<FullSeason20_21>> GetGamesBetween20_21(DateTime date1, DateTime date2)
+        public ServiceResult GetGamesBetween20_21(DateTime date1, DateTime date2)
         {
             var serviceResult = _fullSeasonRepository.GetGamesBetween20_21(date1, date2);
             return serviceResult;
@@ -161,7 +161,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason20_21>>))]
         [HttpGet]
         [Route("getseasonwithteam20_21/{team}")]
-        public ServiceResult<List<FullSeason20_21>> GetFullSeasonForTeam20_21(Team team)
+        public ServiceResult GetFullSeasonForTeam20_21(Team team)
         {
             var serviceResult = _fullSeasonRepository.GetFullSeasonForTeam20_21(team);
             return serviceResult;
@@ -190,7 +190,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<FullSeason19_20>))]
         [HttpGet]
         [Route("getgame19_20/{gameno}")]
-        ServiceResult<FullSeason19_20> GetGameWithGameNo19_20(int gameNo)
+        ServiceResult GetGameWithGameNo19_20(int gameNo)
         {
             var serviceResult = _fullSeasonRepository.GetGameWithGameNo19_20(gameNo);
             return serviceResult;
@@ -199,7 +199,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason19_20>>))]
         [HttpGet]
         [Route("getall19_20")]
-        public ServiceResult<List<FullSeason19_20>> GetAll19_20()
+        public ServiceResult GetAll19_20()
         {
             var serviceResult = _fullSeasonRepository.GetFullSeason19_20();
             return serviceResult;
@@ -208,7 +208,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason19_20>>))]
         [HttpGet]
         [Route("getgamessince19_20/{date}")]
-        public ServiceResult<List<FullSeason19_20>> GetGamesSinceDate19_20(DateTime date)
+        public ServiceResult GetGamesSinceDate19_20(DateTime date)
         {
             var serviceResult = _fullSeasonRepository.GetGamesSinceDate19_20(date);
             return serviceResult;
@@ -217,7 +217,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason19_20>>))]
         [HttpGet]
         [Route("getgamestilldate19_20/{date}")]
-        public ServiceResult<List<FullSeason19_20>> GetGamesTillDate19_20(DateTime date)
+        public ServiceResult GetGamesTillDate19_20(DateTime date)
         {
             var serviceResult = _fullSeasonRepository.GetGamesTillDate19_20(date);
             return serviceResult;
@@ -226,7 +226,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason19_20>>))]
         [HttpGet]
         [Route("getgamesbetween19_20/{date1}&&{date2}")]
-        public ServiceResult<List<FullSeason19_20>> GetGamesBetween19_20(DateTime date1, DateTime date2)
+        public ServiceResult GetGamesBetween19_20(DateTime date1, DateTime date2)
         {
             var serviceResult = _fullSeasonRepository.GetGamesBetween19_20(date1, date2);
             return serviceResult;
@@ -235,7 +235,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeason19_20>>))]
         [HttpGet]
         [Route("getseasonwithteam19_20/{team}")]
-        public ServiceResult<List<FullSeason19_20>> GetFullSeasonForTeam19_20(Team team)
+        public ServiceResult GetFullSeasonForTeam19_20(Team team)
         {
             var serviceResult = _fullSeasonRepository.GetFullSeasonForTeam19_20(team);
             return serviceResult;

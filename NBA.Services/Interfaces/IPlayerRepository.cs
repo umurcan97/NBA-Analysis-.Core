@@ -6,10 +6,10 @@
 
     public interface IPlayerRepository
     {
-        ServiceResult<List<Players>> GetAllPlayers();
-        ServiceResult<Players> GetPlayerWithId(int Id);
-        ServiceResult<Players> GetPlayerWithName(string name);
-        ServiceResult<List<Players>> GetPlayersWithTeam(Team team);
+        ServiceResult GetAllPlayers();
+        ServiceResult GetPlayerWithId(int Id);
+        ServiceResult GetPlayerWithName(string name);
+        ServiceResult GetPlayersWithTeam(Team team);
         ServiceResult AddPlayer(Players player);
         ServiceResult AddPlayerList(List<Players> players);
         ServiceResult UpdatePlayer(Players player);

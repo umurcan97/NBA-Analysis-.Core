@@ -2,6 +2,7 @@
 {
     using NBA.Models;
     using NBA.Models.Entities;
+    using NBA.Services.Abstraction;
     using NBA.Services.Interfaces;
     using System;
     using System.Collections.Generic;
@@ -97,15 +98,18 @@
         public QuarterPredictions QuarterSimulator(Team HomeTeam, Team AwayTeam, int QuarterNo, int GameNo)
         {
             //FullSeason Lists
-            List<GameTime> homeGT = _gameTimesRepository.GetFullSeasonForTeamPlayed(HomeTeam).Data.OrderByDescending(x => x.GameDate).ToList();
-            List<GameTime> awayGT = _gameTimesRepository.GetFullSeasonForTeamPlayed(AwayTeam).Data.OrderByDescending(x => x.GameDate).ToList();
+            var homeGT = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetFullSeasonForTeamPlayed(HomeTeam);
+            homeGT.Data = homeGT.Data.OrderByDescending(x => x.GameDate).ToList();
+            var awayGT = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetFullSeasonForTeamPlayed(AwayTeam);
+            awayGT.Data = awayGT.Data.OrderByDescending(x => x.GameDate).ToList();
             List<FullSeasonQuarters> homeFullSeasonQuarters = new();
             List<FullSeasonQuarters> awayFullSeasonQuarters = new();
-            foreach (var game in homeGT)
+            foreach (var game in homeGT.Data)
             {
                 try
                 {
-                    homeFullSeasonQuarters.Add(_fullSeasonQuartersRepository.GetQuartersWithGameNoAndQuarterNo(game.GameNo, QuarterNo).Data);
+                    var quarter = (ServiceResult<FullSeasonQuarters>)_fullSeasonQuartersRepository.GetQuartersWithGameNoAndQuarterNo(game.GameNo, QuarterNo);
+                    homeFullSeasonQuarters.Add(quarter.Data);
                 }
                 catch (Exception)
                 {
@@ -113,11 +117,12 @@
                 }
             }
 
-            foreach (var game in awayGT)
+            foreach (var game in awayGT.Data)
             {
                 try
                 {
-                    awayFullSeasonQuarters.Add(_fullSeasonQuartersRepository.GetQuartersWithGameNoAndQuarterNo(game.GameNo, QuarterNo).Data);
+                    var quarter = (ServiceResult<FullSeasonQuarters>)_fullSeasonQuartersRepository.GetQuartersWithGameNoAndQuarterNo(game.GameNo, QuarterNo);
+                    awayFullSeasonQuarters.Add(quarter.Data);
                 }
                 catch (Exception)
                 {
@@ -346,8 +351,10 @@
         public GamePredictions FullMatchSimulator(Team HomeTeam, Team AwayTeam, int GameNo)
         {
             //FullSeason Lists
-            List<FullSeason> homeFullSeason = _fullSeasonRepository.GetFullSeasonForTeam(HomeTeam).Data;
-            List<FullSeason> awayFullSeason = _fullSeasonRepository.GetFullSeasonForTeam(AwayTeam).Data;
+            var result = (ServiceResult<List<FullSeason>>)_fullSeasonRepository.GetFullSeasonForTeam(HomeTeam);
+            List <FullSeason> homeFullSeason = result.Data;
+            result = (ServiceResult<List<FullSeason>>)_fullSeasonRepository.GetFullSeasonForTeam(AwayTeam);
+            List<FullSeason> awayFullSeason = result.Data;
 
             //Standard Deviations
             GameModel TotalDeviation = new();

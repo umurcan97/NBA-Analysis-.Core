@@ -17,33 +17,35 @@
             this._uw = uw;
         }
 
-        public ServiceResult<List<Players>> GetAllPlayers()
+        public ServiceResult GetAllPlayers()
         {
             List<Players> players = _db.Players.ToList();
+            if (players.Count == 0)
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
             return ServiceResult.Success(players);
         }
 
-        public ServiceResult<List<Players>> GetPlayersWithTeam(Team team)
+        public ServiceResult GetPlayersWithTeam(Team team)
         {
             List<Players> players = _db.Players.Where(x => x.Team == team).ToList();
             if (players.Count == 0)
-                return (ServiceResult<List<Players>>)ServiceResult.Failed(ServiceError.PlayerNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
             return ServiceResult.Success(players);
         }
 
-        public ServiceResult<Players> GetPlayerWithId(int Id)
+        public ServiceResult GetPlayerWithId(int Id)
         {
             Players player = _db.Players.FirstOrDefault(x => x.Id == Id);
             if (player == null)
-                return (ServiceResult<Players>)ServiceResult.Failed(ServiceError.PlayerNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
             return ServiceResult.Success(player);
         }
 
-        public ServiceResult<Players> GetPlayerWithName(string name)
+        public ServiceResult GetPlayerWithName(string name)
         {
             var player = this._db.Players.FirstOrDefault(x => x.Name == name);
             if (player.Name == "")
-                return (ServiceResult<Players>) ServiceResult.Failed(ServiceError.PlayerNotFound);
+                return ServiceResult.Failed(ServiceError.PlayerNotFound);
             return ServiceResult.Success(player);
         }
 
@@ -53,6 +55,7 @@
             _uw.Commit();
             return ServiceResult.Success();
         }
+
         public ServiceResult AddPlayerList(List<Players> players)
         {
             _db.Players.AddRange(players);

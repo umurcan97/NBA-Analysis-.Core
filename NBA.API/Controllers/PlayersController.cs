@@ -29,7 +29,7 @@
         [ResponseType(typeof(ServiceResult<List<Players>>))]
         [HttpGet]
         [Route("getall")]
-        public ServiceResult<List<Players>> GetAll()
+        public ServiceResult GetAll()
         {
             var serviceResult = _playerRepository.GetAllPlayers();
             return serviceResult;
@@ -37,9 +37,9 @@
         [ResponseType(typeof(ServiceResult<Players>))]
         [HttpGet]
         [Route("getplayer/{id}")]
-        public ServiceResult<Players> GetPlayer(int id)
+        public ServiceResult GetPlayer(int id)
         {
-            ServiceResult<Players> serviceResult = _playerRepository.GetPlayerWithId(id);
+            ServiceResult serviceResult = _playerRepository.GetPlayerWithId(id);
             return serviceResult;
         }
         [ResponseType(typeof(ServiceResult))]

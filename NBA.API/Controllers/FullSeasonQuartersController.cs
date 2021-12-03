@@ -60,7 +60,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters>>))]
         [HttpGet]
         [Route("getforgame/{GameNo}")]
-        public ServiceResult<List<FullSeasonQuarters>> GetQuartersWithGameNo(int GameNo)
+        public ServiceResult GetQuartersWithGameNo(int GameNo)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersWithGameNo(GameNo);
             return serviceResult;
@@ -69,7 +69,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters>>))]
         [HttpGet]
         [Route("getall")]
-        public ServiceResult<List<FullSeasonQuarters>> GetFullSeasonQuarters()
+        public ServiceResult GetFullSeasonQuarters()
         {
             var serviceResult = _fullSeasonQuartersRepository.GetFullSeasonQuarters();
             return serviceResult;
@@ -78,7 +78,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters>>))]
         [HttpGet]
         [Route("getsince/{date}")]
-        public ServiceResult<List<FullSeasonQuarters>> GetQuartersSinceDate(DateTime date)
+        public ServiceResult GetQuartersSinceDate(DateTime date)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersSinceDate(date);
             return serviceResult;
@@ -87,7 +87,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters>>))]
         [HttpGet]
         [Route("gettill/{date}")]
-        public ServiceResult<List<FullSeasonQuarters>> GetQuartersTillDate(DateTime date)
+        public ServiceResult GetQuartersTillDate(DateTime date)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersTillDate(date);
             return serviceResult;
@@ -96,7 +96,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters>>))]
         [HttpGet]
         [Route("getbetween/{date1}&&{date2}")]
-        public ServiceResult<List<FullSeasonQuarters>> GetQuartersBetween(DateTime date1, DateTime date2)
+        public ServiceResult GetQuartersBetween(DateTime date1, DateTime date2)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersBetween(date1, date2);
             return serviceResult;
@@ -105,7 +105,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters>>))]
         [HttpGet]
         [Route("getforteam/{team}")]
-        public ServiceResult<List<FullSeasonQuarters>> GetFullSeasonQuartersForTeam(Team team)
+        public ServiceResult GetFullSeasonQuartersForTeam(Team team)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetFullSeasonQuartersForTeam(team);
             return serviceResult;
@@ -152,7 +152,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters20_21>>))]
         [HttpGet]
         [Route("getforgame20_21/{GameNo}")]
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersWithGameNo20_21(int GameNo)
+        public ServiceResult GetQuartersWithGameNo20_21(int GameNo)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersWithGameNo20_21(GameNo);
             return serviceResult;
@@ -161,7 +161,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters20_21>>))]
         [HttpGet]
         [Route("getall20_21")]
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetFullSeasonQuarters20_21()
+        public ServiceResult GetFullSeasonQuarters20_21()
         {
             var serviceResult = _fullSeasonQuartersRepository.GetFullSeasonQuarters20_21();
             return serviceResult;
@@ -170,7 +170,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters20_21>>))]
         [HttpGet]
         [Route("getsince20_21/{date}")]
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersSinceDate20_21(DateTime date)
+        public ServiceResult GetQuartersSinceDate20_21(DateTime date)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersSinceDate20_21(date);
             return serviceResult;
@@ -179,7 +179,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters20_21>>))]
         [HttpGet]
         [Route("gettill20_21/{date}")]
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersTillDate20_21(DateTime date)
+        public ServiceResult GetQuartersTillDate20_21(DateTime date)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersTillDate20_21(date);
             return serviceResult;
@@ -188,7 +188,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters20_21>>))]
         [HttpGet]
         [Route("getbetween20_21/{date1}&&{date2}")]
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetQuartersBetween20_21(DateTime date1, DateTime date2)
+        public ServiceResult GetQuartersBetween20_21(DateTime date1, DateTime date2)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersBetween20_21(date1, date2);
             return serviceResult;
@@ -197,7 +197,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters20_21>>))]
         [HttpGet]
         [Route("getforteam20_21/{team}")]
-        public ServiceResult<List<FullSeasonQuarters20_21>> GetFullSeasonQuartersForTeam20_21(Team team)
+        public ServiceResult GetFullSeasonQuartersForTeam20_21(Team team)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetFullSeasonQuartersForTeam20_21(team);
             return serviceResult;
@@ -244,7 +244,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters19_20>>))]
         [HttpGet]
         [Route("getforgame19_20/{GameNo}")]
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersWithGameNo19_20(int GameNo)
+        public ServiceResult GetQuartersWithGameNo19_20(int GameNo)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersWithGameNo19_20(GameNo);
             return serviceResult;
@@ -253,7 +253,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters19_20>>))]
         [HttpGet]
         [Route("getall19_20")]
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetFullSeasonQuarters19_20()
+        public ServiceResult GetFullSeasonQuarters19_20()
         {
             var serviceResult = _fullSeasonQuartersRepository.GetFullSeasonQuarters19_20();
             return serviceResult;
@@ -262,7 +262,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters19_20>>))]
         [HttpGet]
         [Route("getsince19_20/{date}")]
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersSinceDate19_20(DateTime date)
+        public ServiceResult GetQuartersSinceDate19_20(DateTime date)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersSinceDate19_20(date);
             return serviceResult;
@@ -271,7 +271,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters19_20>>))]
         [HttpGet]
         [Route("gettill19_20/{date}")]
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersTillDate19_20(DateTime date)
+        public ServiceResult GetQuartersTillDate19_20(DateTime date)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersTillDate19_20(date);
             return serviceResult;
@@ -280,7 +280,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters19_20>>))]
         [HttpGet]
         [Route("getbetween19_20/{date1}&&{date2}")]
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetQuartersBetween19_20(DateTime date1, DateTime date2)
+        public ServiceResult GetQuartersBetween19_20(DateTime date1, DateTime date2)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetQuartersBetween19_20(date1, date2);
             return serviceResult;
@@ -289,7 +289,7 @@ namespace NBA.API.Controllers
         [ResponseType(typeof(ServiceResult<List<FullSeasonQuarters19_20>>))]
         [HttpGet]
         [Route("getforteam19_20/{team}")]
-        public ServiceResult<List<FullSeasonQuarters19_20>> GetFullSeasonQuartersForTeam19_20(Team team)
+        public ServiceResult GetFullSeasonQuartersForTeam19_20(Team team)
         {
             var serviceResult = _fullSeasonQuartersRepository.GetFullSeasonQuartersForTeam19_20(team);
             return serviceResult;
