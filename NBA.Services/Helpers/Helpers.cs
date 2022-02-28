@@ -57,36 +57,36 @@
         {
             switch (TeamID)
             {
-                case 0: return Team.AtlantaHawks;
-                case 1: return Team.BostonCeltics;
-                case 2: return Team.BrooklynNets;
-                case 3: return Team.CharlotteHornets;
-                case 4: return Team.ChicagoBulls;
-                case 5: return Team.ClevelandCavaliers;
-                case 6: return Team.DallasMavericks;
-                case 7: return Team.DenverNuggets;
-                case 8: return Team.DetroitPistons;
-                case 9: return Team.GoldenStateWarriors;
-                case 10: return Team.HoustonRockets;
-                case 11: return Team.IndianaPacers;
-                case 12: return Team.LosAngelesClippers;
-                case 13: return Team.LosAngelesLakers;
-                case 14: return Team.MemphisGrizzlies;
-                case 15: return Team.MiamiHeat;
-                case 16: return Team.MilwaukeeBucks;
-                case 17: return Team.MinnesotaTimberwolves;
-                case 18: return Team.NewOrleansPelicans;
-                case 19: return Team.NewYorkKnicks;
-                case 20: return Team.OklahomaCityThunder;
-                case 21: return Team.OrlandoMagic;
-                case 22: return Team.Philadelphia76ers;
-                case 23: return Team.PhoenixSuns;
-                case 24: return Team.PortlandTrailBlazers;
-                case 25: return Team.SacramentoKings;
-                case 26: return Team.SanAntonioSpurs;
-                case 27: return Team.TorontoRaptors;
-                case 28: return Team.UtahJazz;
-                case 29: return Team.WashingtonWizards;
+                case 1: return Team.AtlantaHawks;
+                case 2: return Team.BostonCeltics;
+                case 3: return Team.BrooklynNets;
+                case 4: return Team.CharlotteHornets;
+                case 5: return Team.ChicagoBulls;
+                case 6: return Team.ClevelandCavaliers;
+                case 7: return Team.DallasMavericks;
+                case 8: return Team.DenverNuggets;
+                case 9: return Team.DetroitPistons;
+                case 10: return Team.GoldenStateWarriors;
+                case 11: return Team.HoustonRockets;
+                case 12: return Team.IndianaPacers;
+                case 13: return Team.LosAngelesClippers;
+                case 14: return Team.LosAngelesLakers;
+                case 15: return Team.MemphisGrizzlies;
+                case 16: return Team.MiamiHeat;
+                case 17: return Team.MilwaukeeBucks;
+                case 18: return Team.MinnesotaTimberwolves;
+                case 19: return Team.NewOrleansPelicans;
+                case 20: return Team.NewYorkKnicks;
+                case 21: return Team.OklahomaCityThunder;
+                case 22: return Team.OrlandoMagic;
+                case 23: return Team.Philadelphia76ers;
+                case 24: return Team.PhoenixSuns;
+                case 25: return Team.PortlandTrailBlazers;
+                case 26: return Team.SacramentoKings;
+                case 27: return Team.SanAntonioSpurs;
+                case 28: return Team.TorontoRaptors;
+                case 29: return Team.UtahJazz;
+                case 30: return Team.WashingtonWizards;
                 default: return Team.Error;
             }
         }

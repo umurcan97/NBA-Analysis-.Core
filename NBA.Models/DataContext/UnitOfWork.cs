@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace NBA.Models.DataContext
+﻿namespace NBA.Models.DataContext
 {
+    using Microsoft.EntityFrameworkCore;
     public class UnitOfWork : IUnitOfWork
     {
         private readonly INBAContext _db;

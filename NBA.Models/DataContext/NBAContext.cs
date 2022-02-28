@@ -31,7 +31,7 @@
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source = DESKTOP-I3CJ53H; Initial Catalog = NBA; Integrated Security=True;");
+            optionsBuilder.UseSqlServer(@"Data Source = LAPTOP-IGSRU4M0; Initial Catalog = NBA; Integrated Security=True;");
         }
     }
 }

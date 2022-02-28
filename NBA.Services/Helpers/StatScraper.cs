@@ -34,8 +34,8 @@
         {
             List<Players> players = new List<Players>();
             driver.Navigate().GoToUrl("https://www.nba.com/players");
-            Thread.Sleep(5000);
-            driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
+            //Thread.Sleep(5000);
+            //driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
             Thread.Sleep(500);
             driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[1]/div[2]/div[3]/section/div/div[2]/div[1]/div[7]/div/div[3]/div/label/div/select/option[1]")).Click();
             string asd = driver
@@ -98,7 +98,7 @@
         public FullSeason GameScraper(ChromeDriver driver, int GameNo, string url)
         {
             driver.Navigate().GoToUrl(url);
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             FullSeason stat = new FullSeason();
             var result = (ServiceResult<GameTime>)_gameTimesRepository.GetGameTime(GameNo);
             stat.GameDate = result.Data;
@@ -139,8 +139,8 @@
             int hometeamto = int.Parse(driver.FindElement(OpenQA.Selenium.By.XPath(HomeTeamTurnovers)).Text);
             stat.HomePointsofTO = int.Parse(driver.FindElement(OpenQA.Selenium.By.XPath(HomePointsofTO)).Text);
             driver.Navigate().GoToUrl(url + "/box-score?range=0-28800");
-            Thread.Sleep(3000);
-            int line = 20;
+            Thread.Sleep(1000);
+            int line = 25;
             for (; line >= 5; line--)
             {
                 try
@@ -182,7 +182,7 @@
                 "/html/body/div[1]/div[2]/div[4]/section[2]/div[2]/div[2]/div/table/tbody/tr[" + line + "]/td[17]";
             string AwayTurnovers =
                 "/html/body/div[1]/div[2]/div[4]/section[2]/div[2]/div[2]/div/table/tbody/tr[" + line + "]/td[18]";
-            line = 20;
+            line = 25;
             for (; line >= 5; line--)
             {
                 try
@@ -1167,7 +1167,7 @@
         public FullSeasonQuarters QuarterScraper(ChromeDriver driver, int GameNo, int QuarterNo)
         {
             FullSeasonQuarters stat = new FullSeasonQuarters();
-            int line = 16;
+            int line = 25;
             for (; line >= 5; line--)
             {
                 try
@@ -1209,7 +1209,7 @@
                 "/html/body/div[1]/div[2]/div[4]/section[2]/div[2]/div[2]/div/table/tbody/tr[" + line + "]/td[17]";
             string AwayTurnovers =
                 "/html/body/div[1]/div[2]/div[4]/section[2]/div[2]/div[2]/div/table/tbody/tr[" + line + "]/td[18]";
-            line = 16;
+            line = 25;
             for (; line >= 5; line--)
             {
                 try
@@ -2125,7 +2125,7 @@
                 .Replace('İ', 'I'));
             Team Away = _helpers.GetTeamEnumByTeamName(driver.FindElement(OpenQA.Selenium.By.XPath(AwayTeam)).Text.Replace(" ", "").ToUpper()
                 .Replace('İ', 'I'));
-            int line = 16;
+            int line = 25;
             for (; line >= 1; line--)
             {
                 try
@@ -2147,7 +2147,7 @@
                 }
             }
 
-            line = 16;
+            line = 25;
             for (; line >= 1; line--)
             {
                 try
@@ -3223,7 +3223,7 @@
                 .Replace('İ', 'I'));
             Team Away = _helpers.GetTeamEnumByTeamName(driver.FindElement(OpenQA.Selenium.By.XPath(AwayTeam)).Text.Replace(" ", "").ToUpper()
                 .Replace('İ', 'I'));
-            int line = 16;
+            int line = 25;
             for (; line >= 1; line--)
             {
                 try
@@ -3245,7 +3245,7 @@
                 }
             }
 
-            line = 16;
+            line = 25;
             for (; line >= 1; line--)
             {
                 try

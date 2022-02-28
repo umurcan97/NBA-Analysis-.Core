@@ -436,15 +436,15 @@
             else if ( isFirstGame && !isCommonNull)
             {
                 GameModel homelast5games = _mathOperations.AverageCalculator(homeFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), HomeTeam);
-                _mathOperations.GameModelDivision(homelast5games, 5.25);
+                _mathOperations.GameModelDivision(homelast5games, 4.5);
                 GameModel homeathomegames = _mathOperations.AverageCalculator(homeFullSeason.Where(x => x.HomeTeam == HomeTeam).ToList(), HomeTeam);
-                _mathOperations.GameModelDivision(homeathomegames, 2.625);
+                _mathOperations.GameModelDivision(homeathomegames, 2.25);
                 GameModel homeCommon = _mathOperations.AverageCalculator(homePlayedCommon, HomeTeam);
                 _mathOperations.GameModelDivision(homeCommon, 3);
                 GameModel awaylast5games = _mathOperations.AverageCalculator(awayFullSeason.OrderByDescending(x => x.GameDate.GameDate).Take(5).ToList(), AwayTeam);
-                _mathOperations.GameModelDivision(awaylast5games, 5.25);
+                _mathOperations.GameModelDivision(awaylast5games, 4.5);
                 GameModel awayatawaygames = _mathOperations.AverageCalculator(awayFullSeason.Where(x => x.AwayTeam == AwayTeam).ToList(), AwayTeam);
-                _mathOperations.GameModelDivision(awayatawaygames, 2.625);
+                _mathOperations.GameModelDivision(awayatawaygames, 2.25);
                 GameModel awayCommon = _mathOperations.AverageCalculator(awayPlayedCommon, AwayTeam);
                 _mathOperations.GameModelDivision(awayCommon, 3);
 

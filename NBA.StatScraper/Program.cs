@@ -40,29 +40,39 @@ namespace NBA.StatScraper
 
             //FullScraper
 
-            using (var driver = new ChromeDriver())
+            var result = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8));
+            var gamesplayed = result.Data;
+            var driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+            Thread.Sleep(3000);
+            driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            Thread.Sleep(3000);
+            for (int i = 0; i < gamesplayed.Count; i++)
             {
-                driver.Manage().Window.Maximize();
-                Thread.Sleep(3000);
-                driver.Navigate().GoToUrl("https://www.nba.com/schedule");
-                Thread.Sleep(3000);
-                driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
-                Thread.Sleep(3000);
-                var result = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8));
-                var gamesplayed = result.Data;
-                foreach (var game in gamesplayed)
+                try
                 {
-                    var stats = _db.FullSeason.FirstOrDefault(x => x.GameNo == game.GameNo);
+                    int gameNo = gamesplayed[i].GameNo;
+                    var stats = _db.FullSeason.FirstOrDefault(x => x.GameNo == gameNo);
                     if (stats != null)
                         continue;
-                    var fullseason = _statScraper.GameScraper(driver, game.GameNo,
-                        "https://www.nba.com/game/002210" + game.GameNo.ToString("0000"));
-                    Thread.Sleep(3000);
-                    var playerstats = _statScraper.PlayerStatScraper(driver, game.GameNo);
+                    if (i % 20 == 0)
+                    {
+                        driver.Dispose();
+                        driver = new ChromeDriver();
+                        driver.Manage().Window.Maximize();
+                        Thread.Sleep(1000);
+                        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+                        Thread.Sleep(1000);
+                    }
+                    driver.Navigate().GoToUrl("https://www.nba.com/game/002210" + gameNo.ToString("0000") + "/box-score");
+                    var fullseason = _statScraper.GameScraper(driver, gameNo,
+                        "https://www.nba.com/game/002210" + gameNo.ToString("0000"));
+                    Thread.Sleep(1000);
+                    var playerstats = _statScraper.PlayerStatScraper(driver, gameNo);
                     var quarterstats = new List<FullSeasonQuarters>();
-                    var playerstatsquarter = new List<PlayerStatsQuarter>();
-                    int TotalQuarters = 0;
                     string period = driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select")).Text;
+                    var playerstatsquarter = new List<PlayerStatsQuarter>();
+                    int TotalQuarters;
                     switch (period.Length)
                     {
                         case 47:
@@ -75,13 +85,13 @@ namespace NBA.StatScraper
                             TotalQuarters = (period.Length - 55) / 5 + 4;
                             break;
                     }
-                    for (int i = 1; i <= TotalQuarters; i++)
+                    for (int k = 1; k <= TotalQuarters; k++)
                     {
                         driver.Navigate().GoToUrl("https://www.nba.com/game/002210" +
-                                                  (game.GameNo).ToString("0000") + GetTimeSpan(i));
-                        quarterstats.Add(_statScraper.QuarterScraper(driver, game.GameNo, i));
-                        Thread.Sleep(3000);
-                        playerstatsquarter.AddRange(_statScraper.PlayerStatQuarterScraper(driver, game.GameNo, i));
+                                                  gameNo.ToString("0000") + GetTimeSpan(k));
+                        quarterstats.Add(_statScraper.QuarterScraper(driver, gameNo, k));
+                        Thread.Sleep(1000);
+                        playerstatsquarter.AddRange(_statScraper.PlayerStatQuarterScraper(driver, gameNo, k));
                     }
 
                     _fullSeasonRepository.AddGame(fullseason);
@@ -100,7 +110,14 @@ namespace NBA.StatScraper
                         _playerStatQuarterRepository.AddPlayerStatsQuarter(stat);
                     }
                 }
+                catch (Exception)
+                {
+                    i--;
+                    Thread.Sleep(1000);
+                    driver.Navigate().Refresh();
+                }
             }
+            driver.Dispose();
 
 
 
@@ -123,6 +140,14 @@ namespace NBA.StatScraper
                 _uw.Commit();
             }
 
+            //List<FullSeason> games = _db.FullSeason.ToList();
+            //foreach (var game in games)
+            //{
+            //    FullSeason match = _db.FullSeason.Find(game.Id);
+            //    GameTime date = _db.GameTime.First(x => x.GameNo == game.GameNo);
+            //    match.GameDate = date;
+            //    _uw.Commit();
+            //}
 
             ////PlayerInfoScraper
             //using (var driver = new ChromeDriver())
@@ -133,9 +158,9 @@ namespace NBA.StatScraper
             //    {
             //        try
             //        {
-            //            var asd = _playerRepository.GetPlayerWithName(player.Name);
+            //            var asd = (ServiceResult<Players>)_playerRepository.GetPlayerWithName(player.Name);
             //            if (asd.Data.Number != player.Number || asd.Data.Team == player.Team)
-            //                _playerRepository.UpdatePlayer(player);
+            //                _playerRepository.UpdatePlayer(asd.Data);
             //        }
             //        catch (Exception)
             //        {
@@ -147,6 +172,7 @@ namespace NBA.StatScraper
             ////GameTime Scraper
             //int i = 0;
             //int k = 1;
+            //var games = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetFullSeason();
             //for (; i < 14; i++)
             //{
             //    using (var driver = new ChromeDriver())
@@ -154,23 +180,38 @@ namespace NBA.StatScraper
             //        driver.Manage().Window.Maximize();
             //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
             //        Thread.Sleep(1000);
-            //        driver.FindElementByXPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button").Click();
+            //        //driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
             //        for (; k < 100; k++)
             //        {
-            //            if (_helpers.DoesGameExist(i * 100 + k) && i * 100 + k < 1212)
-            //                continue;
             //            try
             //            {
-            //                GameTime game = _statScraper.DateScraper(driver, i * 100 + k,
-            //                    "https://www.nba.com/game/002210" + (i * 100 + k).ToString("0000"));
-            //                string teams = driver
-            //                    .FindElementByXPath("/html/body/div[1]/div[2]/section/div[1]/div[5]/div/div[2]/h1")
-            //                    .Text;
-            //                string away = teams.Substring(0, teams.IndexOf('@') - 1).ToUpper().Replace('İ', 'I');
-            //                string home = teams.Substring(teams.IndexOf('@') + 2).ToUpper().Replace('İ', 'I');
-            //                game.AwayTeam = _helpers.GetTeamEnumByTeamMascotName(away);
-            //                game.HomeTeam = _helpers.GetTeamEnumByTeamMascotName(home);
-            //                _gameTimesRepository.AddGameTime(game);
+            //                driver.Navigate().GoToUrl("https://www.nba.com/game/002210" + (i * 100 + k).ToString("0000"));
+            //                GameTime game = new GameTime();
+            //                game.GameNo = i * 100 + k;
+            //                string source = driver.PageSource;
+            //                int index1 = source.IndexOf("NBA Game - ");
+            //                source = source.Substring(index1 + 11);
+            //                index1 = source.IndexOf(' ');
+            //                game.AwayTeam = _helpers.GetTeamEnumByTeamMascotName(source.Substring(0, index1).ToUpper().Replace('İ', 'I'));
+            //                source = source.Substring(index1 + 5);
+            //                if (game.AwayTeam == Team.Error)
+            //                {
+            //                    game.AwayTeam = Team.PortlandTrailBlazers;
+            //                    source = source.Substring(8);
+            //                }
+            //                index1 = source.IndexOf(',');
+            //                game.HomeTeam = _helpers.GetTeamEnumByTeamMascotName(source.Substring(0, index1 - 1).ToUpper().Replace('İ', 'I'));
+            //                int index2 = source.IndexOf("startDate");
+            //                string date = source.Substring(index2 + 12, 10);
+            //                string hour = source.Substring(index2 + 23, 8);
+            //                game.GameDate = DateTime.Parse(date + " " + hour);
+            //                var old = games.Data.FirstOrDefault(x => x.GameNo == game.GameNo);
+            //                if (old == null)
+            //                    _gameTimesRepository.AddGameTime(game);
+            //                else if (old.GameDate == game.GameDate)
+            //                    continue;
+            //                _gameTimesRepository.UpdateGameTime(game);
+
             //            }
             //            catch (Exception)
             //            {
@@ -180,6 +221,34 @@ namespace NBA.StatScraper
             //    }
             //    k = 0;
             //}
+
+            //// gametime away portland update
+
+            //var gametimes = _db.GameTime.Where(x=>x.HomeTeam == Team.Error).ToList();
+            //using (var driver = new ChromeDriver())
+            //{
+            //    foreach (var gametime in gametimes)
+            //    {
+            //        driver.Navigate().GoToUrl("https://www.nba.com/game/002210" + gametime.GameNo.ToString("0000"));
+            //        string source = driver.PageSource;
+            //        int index1 = source.IndexOf("NBA Game - ");
+            //        source = source.Substring(index1 + 11);
+            //        index1 = source.IndexOf(' ');
+            //        gametime.AwayTeam = _helpers.GetTeamEnumByTeamMascotName(source.Substring(0, index1).ToUpper().Replace('İ', 'I'));
+            //        source = source.Substring(index1 + 5);
+            //        if (gametime.AwayTeam == Team.Error)
+            //        {
+            //            gametime.AwayTeam = Team.PortlandTrailBlazers;
+            //            source = source.Substring(8);
+            //        }
+            //        index1 = source.IndexOf(',');
+            //        gametime.HomeTeam = _helpers.GetTeamEnumByTeamMascotName(source.Substring(0, index1 - 1).ToUpper().Replace('İ', 'I'));
+            //        int index2 = source.IndexOf("startDate");
+            //        string date = source.Substring(index2 + 12, 10);
+            //        string hour = source.Substring(index2 + 23, 8);
+            //    }
+            //}
+            //_uw.Commit();
 
             ////GameTime20_21 Scraper
 
@@ -1249,8 +1318,8 @@ namespace NBA.StatScraper
         static string GetTimeSpan(int quarterNo)
         {
             if (quarterNo > 4)
-                return "/box-score?range=" + ((quarterNo - 5) * 3000 + 28800) + "-" + ((quarterNo - 4) * 3000 + 28800);
-            return "/box-score?range=" + (quarterNo - 1) * 7200 + "-" + quarterNo * 7200;
+                return "/box-score?range=" + ((quarterNo - 5) * 3000 + 28801) + "-" + ((quarterNo - 4) * 3000 + 28800);
+            return "/box-score?range=" + ((quarterNo - 1) * 7200 + 1) + "-" + quarterNo * 7200;
         }
     }
 }

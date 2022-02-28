@@ -44,7 +44,7 @@
         public ServiceResult GetPlayerWithName(string name)
         {
             var player = this._db.Players.FirstOrDefault(x => x.Name == name);
-            if (player.Name == "")
+            if (player == null)
                 return ServiceResult.Failed(ServiceError.PlayerNotFound);
             return ServiceResult.Success(player);
         }
