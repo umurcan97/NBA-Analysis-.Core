@@ -58,7 +58,7 @@
                 }
                 catch (Exception)
                 {
-                    player.Team = Team.Error;
+                    player.Team = Team.FreeAgent;
                 }
                 try
                 {
@@ -79,14 +79,22 @@
                 string height = driver.FindElement(OpenQA.Selenium.By.XPath(
                     "/html/body/div[1]/div[2]/div[3]/section/div/div[2]/div[2]/div/div/div/table/tbody/tr[" + i +
                     "]/td[5]")).Text;
-                int feet = int.Parse(height.Substring(0, 1));
-                int inches = int.Parse(height.Remove(0, 2));
-                player.Height = Convert.ToInt16(Math.Round(30.48 * feet + 2.54 * inches));
+                if(height != "")
+                {
+                    int feet = int.Parse(height.Substring(0, 1));
+                    int inches = int.Parse(height.Remove(0, 2));
+                    player.Height = Convert.ToInt16(Math.Round(30.48 * feet + 2.54 * inches));
+                }
+                else { player.Height = 0; }
                 string weight = driver
                     .FindElement(OpenQA.Selenium.By.XPath(
                         "/html/body/div[1]/div[2]/div[3]/section/div/div[2]/div[2]/div/div/div/table/tbody/tr[" + i +
                         "]/td[6]")).Text;
-                player.Weight = Convert.ToInt16(Math.Round(int.Parse(weight.Substring(0, 3)) / 2.2));
+                if (weight != "")
+                {
+                    player.Weight = Convert.ToInt16(Math.Round(int.Parse(weight.Substring(0, 3)) / 2.2));
+                }
+                else { player.Weight = 0; }
                 player.Country = driver
                     .FindElement(OpenQA.Selenium.By.XPath(
                         "/html/body/div[1]/div[2]/div[3]/section/div/div[2]/div[2]/div/div/div/table/tbody/tr[" + i +
@@ -98,7 +106,7 @@
         public FullSeason GameScraper(ChromeDriver driver, int GameNo, string url)
         {
             driver.Navigate().GoToUrl(url);
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             FullSeason stat = new FullSeason();
             var result = (ServiceResult<GameTime>)_gameTimesRepository.GetGameTime(GameNo);
             stat.GameDate = result.Data;
@@ -139,7 +147,7 @@
             int hometeamto = int.Parse(driver.FindElement(OpenQA.Selenium.By.XPath(HomeTeamTurnovers)).Text);
             stat.HomePointsofTO = int.Parse(driver.FindElement(OpenQA.Selenium.By.XPath(HomePointsofTO)).Text);
             driver.Navigate().GoToUrl(url + "/box-score?range=0-28800");
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             int line = 25;
             for (; line >= 5; line--)
             {
@@ -2114,7 +2122,7 @@
         }
         public List<PlayerStats> PlayerStatScraper(ChromeDriver driver, int GameNo)
         {
-            Thread.Sleep(1500);
+            //Thread.Sleep(1500);
             string AwayTeam =
                 "/html/body/div[1]/div[2]/div[4]/section[2]/div[1]/h1/span";
             string HomeTeam =
@@ -3212,7 +3220,7 @@
         }
         public List<PlayerStatsQuarter> PlayerStatQuarterScraper(ChromeDriver driver, int GameNo, int QuarterNo)
         {
-            Thread.Sleep(1500);
+            //Thread.Sleep(1500);
             string AwayTeam =
                 "/html/body/div[1]/div[2]/div[4]/section[2]/div[1]/h1/span";
             string HomeTeam =

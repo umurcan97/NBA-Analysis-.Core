@@ -42,32 +42,36 @@ namespace NBA.StatScraper
 
             var result = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8));
             var gamesplayed = result.Data;
-            var driver = new ChromeDriver();
+            var driverOptions = new ChromeOptions();
+            driverOptions.AddArguments(new List<string>() { "headless", "disable-gpu" });
+            var driver = new ChromeDriver(driverOptions);
             driver.Manage().Window.Maximize();
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
             driver.Navigate().GoToUrl("https://www.nba.com/schedule");
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
+            int pageNo = 0;
             for (int i = 0; i < gamesplayed.Count; i++)
             {
+                pageNo++;
                 try
                 {
                     int gameNo = gamesplayed[i].GameNo;
                     var stats = _db.FullSeason.FirstOrDefault(x => x.GameNo == gameNo);
                     if (stats != null)
                         continue;
-                    if (i % 20 == 0)
+                    if (pageNo % 20 == 0)
                     {
                         driver.Dispose();
-                        driver = new ChromeDriver();
-                        driver.Manage().Window.Maximize();
-                        Thread.Sleep(1000);
-                        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
-                        Thread.Sleep(1000);
+                        driver = new ChromeDriver(driverOptions);
+                        //driver.Manage().Window.Maximize();
+                        //Thread.Sleep(1000);
+                        //driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+                        //Thread.Sleep(1000);
                     }
                     driver.Navigate().GoToUrl("https://www.nba.com/game/002210" + gameNo.ToString("0000") + "/box-score");
                     var fullseason = _statScraper.GameScraper(driver, gameNo,
                         "https://www.nba.com/game/002210" + gameNo.ToString("0000"));
-                    Thread.Sleep(1000);
+                    //Thread.Sleep(1000);
                     var playerstats = _statScraper.PlayerStatScraper(driver, gameNo);
                     var quarterstats = new List<FullSeasonQuarters>();
                     string period = driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select")).Text;
@@ -90,7 +94,7 @@ namespace NBA.StatScraper
                         driver.Navigate().GoToUrl("https://www.nba.com/game/002210" +
                                                   gameNo.ToString("0000") + GetTimeSpan(k));
                         quarterstats.Add(_statScraper.QuarterScraper(driver, gameNo, k));
-                        Thread.Sleep(1000);
+                        //Thread.Sleep(1000);
                         playerstatsquarter.AddRange(_statScraper.PlayerStatQuarterScraper(driver, gameNo, k));
                     }
 
@@ -114,7 +118,7 @@ namespace NBA.StatScraper
                 {
                     i--;
                     Thread.Sleep(1000);
-                    driver.Navigate().Refresh();
+                    //driver.Navigate().Refresh();
                 }
             }
             driver.Dispose();
@@ -140,6 +144,8 @@ namespace NBA.StatScraper
                 _uw.Commit();
             }
 
+
+
             //List<FullSeason> games = _db.FullSeason.ToList();
             //foreach (var game in games)
             //{
@@ -150,7 +156,10 @@ namespace NBA.StatScraper
             //}
 
             ////PlayerInfoScraper
-            //using (var driver = new ChromeDriver())
+
+            //var driverOptions = new ChromeOptions();
+            //driverOptions.AddArguments(new List<string>() { "headless", "disable-gpu" });
+            //using (var driver = new ChromeDriver(driverOptions))
             //{
             //    driver.Manage().Window.Maximize();
             //    List<Players> players = _statScraper.PlayerInfoScraper(driver, 1);
@@ -172,14 +181,16 @@ namespace NBA.StatScraper
             ////GameTime Scraper
             //int i = 0;
             //int k = 1;
-            //var games = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetFullSeason();
+            ////var games = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetFullSeason();
             //for (; i < 14; i++)
             //{
-            //    using (var driver = new ChromeDriver())
+            //    var driverOptions = new ChromeOptions();
+            //    driverOptions.AddArguments(new List<string>() { "headless", "disable-gpu" });
+            //    using (var driver = new ChromeDriver(driverOptions))
             //    {
-            //        driver.Manage().Window.Maximize();
-            //        driver.Navigate().GoToUrl("https://www.nba.com/schedule");
-            //        Thread.Sleep(1000);
+            //        //driver.Manage().Window.Maximize();
+            //        //driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        //Thread.Sleep(1000);
             //        //driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
             //        for (; k < 100; k++)
             //        {
@@ -205,12 +216,12 @@ namespace NBA.StatScraper
             //                string date = source.Substring(index2 + 12, 10);
             //                string hour = source.Substring(index2 + 23, 8);
             //                game.GameDate = DateTime.Parse(date + " " + hour);
-            //                var old = games.Data.FirstOrDefault(x => x.GameNo == game.GameNo);
-            //                if (old == null)
+            //                //var old = games.Data.FirstOrDefault(x => x.GameNo == game.GameNo);
+            //                //if (old == null)
             //                    _gameTimesRepository.AddGameTime(game);
-            //                else if (old.GameDate == game.GameDate)
-            //                    continue;
-            //                _gameTimesRepository.UpdateGameTime(game);
+            //                //else if (old.GameDate == game.GameDate)
+            //                //    continue;
+            //                //_gameTimesRepository.UpdateGameTime(game);
 
             //            }
             //            catch (Exception)
