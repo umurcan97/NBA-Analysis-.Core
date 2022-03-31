@@ -16,6 +16,7 @@ namespace NBA.StatScraper
     using System.Linq;
     using NBA.Services.Repositories;
     using System.Net.Http;
+    using System.IO;
 
     public class Program
     {
@@ -92,7 +93,7 @@ namespace NBA.StatScraper
                     for (int k = 1; k <= TotalQuarters; k++)
                     {
                         driver.Navigate().GoToUrl("https://www.nba.com/game/002210" +
-                                                  gameNo.ToString("0000") + GetTimeSpan(k));
+                                                  gameNo.ToString("0000") + GetQuarter(k));
                         quarterstats.Add(_statScraper.QuarterScraper(driver, gameNo, k));
                         //Thread.Sleep(1000);
                         playerstatsquarter.AddRange(_statScraper.PlayerStatQuarterScraper(driver, gameNo, k));
@@ -145,15 +146,37 @@ namespace NBA.StatScraper
             }
 
 
+            //Predictions To Text File
 
-            //List<FullSeason> games = _db.FullSeason.ToList();
-            //foreach (var game in games)
-            //{
-            //    FullSeason match = _db.FullSeason.Find(game.Id);
-            //    GameTime date = _db.GameTime.First(x => x.GameNo == game.GameNo);
-            //    match.GameDate = date;
-            //    _uw.Commit();
-            //}
+            string date = DateTime.Now.ToLongDateString();
+            string fileName = $@"C:\Users\caner\Desktop\NBA\{date}.txt";
+            var quarters = new List<QuarterPredictions>();
+            foreach (var game in gamesToBePlayed)
+            {
+                quarters.AddRange(_db.QuarterPredictions.Where(x => x.GameNo == game.GameNo));
+            }
+            using (StreamWriter sw = File.CreateText(fileName))
+            {
+                foreach(var quarter in quarters)
+                {
+                    sw.WriteLine("Maç Kodu : " + quarter.GameNo + "\tQ" + quarter.QuarterNo + "\tTarih : " + gamesToBePlayed.First(x => x.GameNo == quarter.GameNo).GameDate.ToShortTimeString() + "\n");
+                    sw.WriteLine(_helpers.GetTeamNameByEnum(quarter.HomeTeam) + $"\t{quarter.HomePoints} - {quarter.AwayPoints} \t" + _helpers.GetTeamNameByEnum(quarter.AwayTeam) + "\n");
+                    sw.WriteLine($"\tFGA\t {quarter.HomeFGA} - {quarter.AwayFGA}");
+                    sw.WriteLine($"\tFGM\t {quarter.HomeFGM} - {quarter.AwayFGM}");
+                    sw.WriteLine($"\t3PA\t {quarter.Home3PA} - {quarter.Away3PA}");
+                    sw.WriteLine($"\t3PM\t {quarter.Home3PM} - {quarter.Away3PM}");
+                    sw.WriteLine($"\tFTA\t {quarter.HomeFTA} - {quarter.AwayFTA}");
+                    sw.WriteLine($"\tFTM\t {quarter.HomeFTM} - {quarter.AwayFTM}");
+                    sw.WriteLine($"\tAST\t {quarter.HomeAssists} - {quarter.AwayAssists}");
+                    sw.WriteLine($"\tOREB\t {quarter.HomeOffensiveRebounds} - {quarter.AwayOffensiveRebounds}");
+                    sw.WriteLine($"\tDREB\t {quarter.HomeDefensiveRebounds} - {quarter.AwayDefensiveRebounds}");
+                    sw.WriteLine($"\tSTL\t {quarter.HomeSteals} - {quarter.AwaySteals}");
+                    sw.WriteLine($"\tBLK\t {quarter.HomeBlocks} - {quarter.AwayBlocks}");
+                    sw.WriteLine($"\tTO\t {quarter.HomeTurnovers} - {quarter.AwayTurnovers}\n\n");
+                }
+            }
+
+
 
             ////PlayerInfoScraper
 
@@ -181,8 +204,8 @@ namespace NBA.StatScraper
             ////GameTime Scraper
             //int i = 0;
             //int k = 1;
-            ////var games = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetFullSeason();
-            //for (; i < 14; i++)
+            //var games = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetFullSeason();
+            //for (; i < 13; i++)
             //{
             //    var driverOptions = new ChromeOptions();
             //    driverOptions.AddArguments(new List<string>() { "headless", "disable-gpu" });
@@ -194,6 +217,8 @@ namespace NBA.StatScraper
             //        //driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
             //        for (; k < 100; k++)
             //        {
+            //            if (i * 100 + k > 1230)
+            //                return;
             //            try
             //            {
             //                driver.Navigate().GoToUrl("https://www.nba.com/game/002210" + (i * 100 + k).ToString("0000"));
@@ -216,12 +241,12 @@ namespace NBA.StatScraper
             //                string date = source.Substring(index2 + 12, 10);
             //                string hour = source.Substring(index2 + 23, 8);
             //                game.GameDate = DateTime.Parse(date + " " + hour);
-            //                //var old = games.Data.FirstOrDefault(x => x.GameNo == game.GameNo);
-            //                //if (old == null)
+            //                var old = games.Data.FirstOrDefault(x => x.GameNo == game.GameNo);
+            //                if (old == null)
             //                    _gameTimesRepository.AddGameTime(game);
-            //                //else if (old.GameDate == game.GameDate)
-            //                //    continue;
-            //                //_gameTimesRepository.UpdateGameTime(game);
+            //                else if (old.GameDate == game.GameDate)
+            //                    continue;
+            //                _gameTimesRepository.UpdateGameTime(game);
 
             //            }
             //            catch (Exception)
@@ -1331,6 +1356,12 @@ namespace NBA.StatScraper
             if (quarterNo > 4)
                 return "/box-score?range=" + ((quarterNo - 5) * 3000 + 28801) + "-" + ((quarterNo - 4) * 3000 + 28800);
             return "/box-score?range=" + ((quarterNo - 1) * 7200 + 1) + "-" + quarterNo * 7200;
+        }
+        static string GetQuarter(int quarterNo)
+        {
+            if (quarterNo > 4)
+                return "/box-score?period=OT" + (quarterNo - 4);
+            return "/box-score?period=Q" + quarterNo;
         }
     }
 }

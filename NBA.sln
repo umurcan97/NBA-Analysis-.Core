@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA.API", "NBA.API\NBA.API.csproj", "{58DAC902-8BB6-43ED-83EA-BB724114D595}"
 EndProject
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA.Services", "NBA.Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA.StatScraper", "NBA.StatScraper\NBA.StatScraper.csproj", "{7CC2727F-942D-464A-8121-5868647797D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBA.Web", "NBA.Web\NBA.Web.csproj", "{44401F8F-2478-42D7-8AAB-B7449739B28E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA.Web", "NBA.Web\NBA.Web.csproj", "{44401F8F-2478-42D7-8AAB-B7449739B28E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

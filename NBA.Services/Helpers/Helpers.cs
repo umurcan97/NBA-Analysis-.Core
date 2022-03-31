@@ -164,6 +164,44 @@
                 default: return Team.Error;
             }
         }
+        public string GetTeamNameByEnum(Team team)
+        {
+            switch (team)
+            {
+                case Team.FreeAgent: return "Free Agent";
+                case Team.AtlantaHawks: return "Atlanta Hawks";
+                case Team.BostonCeltics: return "Boston Celtics";
+                case Team.BrooklynNets: return "Brooklyn Nets";
+                case Team.CharlotteHornets: return "CharlotteHornets";
+                case Team.ChicagoBulls: return "Chicago Bulls";
+                case Team.ClevelandCavaliers: return "Cleveland Cavaliers";
+                case Team.DallasMavericks: return "Dallas Mavericks";
+                case Team.DenverNuggets: return "DenverNuggets";
+                case Team.DetroitPistons: return "Detroit Pistons";
+                case Team.GoldenStateWarriors: return "Golden State Warriors";
+                case Team.HoustonRockets: return "Houston Rockets";
+                case Team.IndianaPacers: return "Indiana Pacers";
+                case Team.LosAngelesClippers: return "Los Angeles Clippers";
+                case Team.LosAngelesLakers: return "Los Angeles Lakers";
+                case Team.MemphisGrizzlies: return "Memphis Grizzlies";
+                case Team.MiamiHeat: return "Miami Heat";
+                case Team.MilwaukeeBucks: return "Milwaukee Bucks";
+                case Team.MinnesotaTimberwolves: return "Minnesota Timberwolves";
+                case Team.NewOrleansPelicans: return "New Orleans Pelicans";
+                case Team.NewYorkKnicks: return "New York Knicks";
+                case Team.OklahomaCityThunder: return "Oklahoma City Thunder";
+                case Team.OrlandoMagic: return "Orlando Magic";
+                case Team.Philadelphia76ers: return "Philadelphia 76ers";
+                case Team.PhoenixSuns: return "Phoenix Suns";
+                case Team.PortlandTrailBlazers: return "Portland Trail Blazers";
+                case Team.SacramentoKings: return "Sacramento Kings";
+                case Team.SanAntonioSpurs: return "San Antonio Spurs";
+                case Team.TorontoRaptors: return "Toronto Raptors";
+                case Team.UtahJazz: return "Utah Jazz";
+                case Team.WashingtonWizards: return "Washington Wizards";
+                default: return "Error";
+            }
+        }
         public Players GetPlayerWithName(string name)
         {
             return this._db.Players.First(x => x.Name == name);

@@ -8,6 +8,7 @@
         Team GetTeamEnumByTeamId(int TeamID);
         Team GetTeamEnumByTeamShortName(string TeamShortName);
         Team GetTeamEnumByTeamMascotName(string TeamMascotName);
+        string GetTeamNameByEnum(Team team);
         Players GetPlayerWithName(string name);
         bool DoesGameExist(int GameNo);
         bool DoesQuarterExist(int GameNo, int QuarterNo);

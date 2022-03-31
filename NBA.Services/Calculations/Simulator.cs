@@ -98,10 +98,11 @@
         public QuarterPredictions QuarterSimulator(Team HomeTeam, Team AwayTeam, int QuarterNo, int GameNo)
         {
             //FullSeason Lists
+            DateTime dt = new DateTime(2022, 2, 20);
             var homeGT = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetFullSeasonForTeamPlayed(HomeTeam);
-            homeGT.Data = homeGT.Data.OrderByDescending(x => x.GameDate).ToList();
+            homeGT.Data = homeGT.Data.Where(q => q.GameDate.Date > dt).OrderByDescending(x => x.GameDate).ToList();
             var awayGT = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetFullSeasonForTeamPlayed(AwayTeam);
-            awayGT.Data = awayGT.Data.OrderByDescending(x => x.GameDate).ToList();
+            awayGT.Data = awayGT.Data.Where(q => q.GameDate.Date > dt).OrderByDescending(x => x.GameDate).ToList();
             List<FullSeasonQuarters> homeFullSeasonQuarters = new();
             List<FullSeasonQuarters> awayFullSeasonQuarters = new();
             foreach (var game in homeGT.Data)
@@ -352,9 +353,9 @@
         {
             //FullSeason Lists
             var result = (ServiceResult<List<FullSeason>>)_fullSeasonRepository.GetFullSeasonForTeam(HomeTeam);
-            List <FullSeason> homeFullSeason = result.Data;
+            List<FullSeason> homeFullSeason = result.Data.Where(x => x.GameDate.GameDate > new DateTime(2022, 2, 20)).ToList();
             result = (ServiceResult<List<FullSeason>>)_fullSeasonRepository.GetFullSeasonForTeam(AwayTeam);
-            List<FullSeason> awayFullSeason = result.Data;
+            List<FullSeason> awayFullSeason = result.Data.Where(x => x.GameDate.GameDate > new DateTime(2022, 2, 20)).ToList();
 
             //Standard Deviations
             GameModel TotalDeviation = new();

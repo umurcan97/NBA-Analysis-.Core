@@ -5,5 +5,5 @@ qp.HomeTeam,
 qp.AwayTeam,
 qp.HomePoints,
 qp.AwayPoints
-from QuarterPredictions qp inner join GameTime gt on qp.GameNo=gt.GameNo where gt.GameDate>'2022-03-05 01:00:00.0000000'
+from QuarterPredictions qp inner join GameTime gt on qp.GameNo=gt.GameNo where gt.GameDate>'2022-03-30 01:00:00.0000000'
 order by gt.GameDate
