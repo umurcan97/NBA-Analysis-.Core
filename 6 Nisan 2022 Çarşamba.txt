@@ -1,0 +1,432 @@
+Maç Kodu : 1190	Q1	Tarih : 19:00
+
+Detroit Pistons	28 - 29 	Dallas Mavericks
+
+	FGA	 22 - 22
+	FGM	 10 - 11
+	3PA	 9 - 9
+	3PM	 4 - 3
+	FTA	 5 - 5
+	FTM	 4 - 4
+	AST	 7 - 6
+	OREB	 2 - 2
+	DREB	 8 - 8
+	STL	 2 - 2
+	BLK	 0 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1190	Q2	Tarih : 19:00
+
+Detroit Pistons	27 - 28 	Dallas Mavericks
+
+	FGA	 22 - 21
+	FGM	 10 - 9
+	3PA	 8 - 9
+	3PM	 3 - 3
+	FTA	 5 - 8
+	FTM	 4 - 7
+	AST	 6 - 5
+	OREB	 2 - 2
+	DREB	 8 - 8
+	STL	 2 - 1
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1190	Q3	Tarih : 19:00
+
+Detroit Pistons	25 - 24 	Dallas Mavericks
+
+	FGA	 20 - 19
+	FGM	 9 - 8
+	3PA	 8 - 9
+	3PM	 3 - 3
+	FTA	 5 - 5
+	FTM	 4 - 5
+	AST	 7 - 6
+	OREB	 2 - 2
+	DREB	 8 - 8
+	STL	 2 - 2
+	BLK	 1 - 2
+	TO	 3 - 4
+
+
+Maç Kodu : 1190	Q4	Tarih : 19:00
+
+Detroit Pistons	24 - 25 	Dallas Mavericks
+
+	FGA	 20 - 21
+	FGM	 9 - 9
+	3PA	 8 - 8
+	3PM	 2 - 2
+	FTA	 5 - 6
+	FTM	 4 - 5
+	AST	 6 - 4
+	OREB	 2 - 3
+	DREB	 8 - 8
+	STL	 2 - 2
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1191	Q1	Tarih : 19:30
+
+New York Knicks	32 - 31 	Brooklyn Nets
+
+	FGA	 23 - 23
+	FGM	 12 - 12
+	3PA	 10 - 8
+	3PM	 4 - 4
+	FTA	 6 - 5
+	FTM	 4 - 3
+	AST	 6 - 7
+	OREB	 3 - 3
+	DREB	 8 - 9
+	STL	 2 - 1
+	BLK	 2 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1191	Q2	Tarih : 19:30
+
+New York Knicks	26 - 25 	Brooklyn Nets
+
+	FGA	 22 - 22
+	FGM	 9 - 9
+	3PA	 8 - 8
+	3PM	 2 - 2
+	FTA	 8 - 6
+	FTM	 6 - 5
+	AST	 6 - 6
+	OREB	 3 - 2
+	DREB	 9 - 8
+	STL	 2 - 2
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1191	Q3	Tarih : 19:30
+
+New York Knicks	25 - 26 	Brooklyn Nets
+
+	FGA	 21 - 20
+	FGM	 8 - 9
+	3PA	 9 - 8
+	3PM	 3 - 3
+	FTA	 7 - 6
+	FTM	 6 - 5
+	AST	 6 - 7
+	OREB	 3 - 2
+	DREB	 8 - 9
+	STL	 2 - 3
+	BLK	 1 - 2
+	TO	 4 - 4
+
+
+Maç Kodu : 1191	Q4	Tarih : 19:30
+
+New York Knicks	29 - 25 	Brooklyn Nets
+
+	FGA	 21 - 20
+	FGM	 10 - 8
+	3PA	 9 - 9
+	3PM	 4 - 3
+	FTA	 7 - 7
+	FTM	 5 - 6
+	AST	 4 - 5
+	OREB	 3 - 2
+	DREB	 8 - 9
+	STL	 2 - 1
+	BLK	 1 - 2
+	TO	 3 - 3
+
+
+Maç Kodu : 1192	Q1	Tarih : 20:00
+
+Atlanta Hawks	34 - 28 	Washington Wizards
+
+	FGA	 24 - 22
+	FGM	 13 - 11
+	3PA	 9 - 8
+	3PM	 4 - 3
+	FTA	 5 - 4
+	FTM	 4 - 3
+	AST	 7 - 7
+	OREB	 2 - 1
+	DREB	 8 - 8
+	STL	 2 - 2
+	BLK	 1 - 0
+	TO	 2 - 3
+
+
+Maç Kodu : 1192	Q2	Tarih : 20:00
+
+Atlanta Hawks	31 - 24 	Washington Wizards
+
+	FGA	 23 - 22
+	FGM	 11 - 9
+	3PA	 9 - 7
+	3PM	 3 - 2
+	FTA	 7 - 5
+	FTM	 6 - 4
+	AST	 6 - 6
+	OREB	 3 - 3
+	DREB	 9 - 8
+	STL	 2 - 1
+	BLK	 2 - 1
+	TO	 2 - 4
+
+
+Maç Kodu : 1192	Q3	Tarih : 20:00
+
+Atlanta Hawks	30 - 26 	Washington Wizards
+
+	FGA	 22 - 22
+	FGM	 11 - 10
+	3PA	 9 - 7
+	3PM	 4 - 2
+	FTA	 5 - 5
+	FTM	 4 - 4
+	AST	 6 - 6
+	OREB	 2 - 3
+	DREB	 8 - 8
+	STL	 2 - 1
+	BLK	 1 - 1
+	TO	 3 - 4
+
+
+Maç Kodu : 1192	Q4	Tarih : 20:00
+
+Atlanta Hawks	28 - 29 	Washington Wizards
+
+	FGA	 20 - 22
+	FGM	 9 - 11
+	3PA	 9 - 8
+	3PM	 3 - 3
+	FTA	 8 - 5
+	FTM	 7 - 4
+	AST	 6 - 6
+	OREB	 2 - 3
+	DREB	 8 - 8
+	STL	 2 - 1
+	BLK	 1 - 1
+	TO	 2 - 3
+
+
+Maç Kodu : 1193	Q1	Tarih : 20:00
+
+Chicago Bulls	24 - 25 	Boston Celtics
+
+	FGA	 24 - 22
+	FGM	 10 - 10
+	3PA	 8 - 9
+	3PM	 2 - 3
+	FTA	 3 - 3
+	FTM	 2 - 2
+	AST	 6 - 7
+	OREB	 3 - 2
+	DREB	 8 - 9
+	STL	 2 - 2
+	BLK	 1 - 1
+	TO	 3 - 4
+
+
+Maç Kodu : 1193	Q2	Tarih : 20:00
+
+Chicago Bulls	27 - 32 	Boston Celtics
+
+	FGA	 23 - 21
+	FGM	 10 - 12
+	3PA	 8 - 8
+	3PM	 3 - 3
+	FTA	 5 - 6
+	FTM	 4 - 5
+	AST	 6 - 7
+	OREB	 3 - 2
+	DREB	 7 - 8
+	STL	 2 - 1
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1193	Q3	Tarih : 20:00
+
+Chicago Bulls	30 - 30 	Boston Celtics
+
+	FGA	 22 - 22
+	FGM	 11 - 11
+	3PA	 7 - 8
+	3PM	 3 - 3
+	FTA	 7 - 6
+	FTM	 5 - 5
+	AST	 5 - 6
+	OREB	 2 - 2
+	DREB	 8 - 9
+	STL	 1 - 1
+	BLK	 1 - 1
+	TO	 2 - 3
+
+
+Maç Kodu : 1193	Q4	Tarih : 20:00
+
+Chicago Bulls	24 - 29 	Boston Celtics
+
+	FGA	 20 - 21
+	FGM	 8 - 10
+	3PA	 7 - 10
+	3PM	 2 - 4
+	FTA	 7 - 7
+	FTM	 6 - 5
+	AST	 5 - 6
+	OREB	 2 - 3
+	DREB	 8 - 8
+	STL	 2 - 1
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1194	Q1	Tarih : 21:00
+
+Utah Jazz	32 - 25 	Oklahoma City Thunder
+
+	FGA	 22 - 21
+	FGM	 12 - 9
+	3PA	 11 - 8
+	3PM	 5 - 3
+	FTA	 4 - 5
+	FTM	 3 - 4
+	AST	 7 - 6
+	OREB	 2 - 2
+	DREB	 9 - 9
+	STL	 2 - 2
+	BLK	 2 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1194	Q2	Tarih : 21:00
+
+Utah Jazz	29 - 29 	Oklahoma City Thunder
+
+	FGA	 23 - 22
+	FGM	 10 - 11
+	3PA	 10 - 9
+	3PM	 4 - 3
+	FTA	 6 - 5
+	FTM	 5 - 4
+	AST	 6 - 6
+	OREB	 3 - 3
+	DREB	 9 - 8
+	STL	 3 - 2
+	BLK	 2 - 1
+	TO	 3 - 4
+
+
+Maç Kodu : 1194	Q3	Tarih : 21:00
+
+Utah Jazz	29 - 27 	Oklahoma City Thunder
+
+	FGA	 22 - 22
+	FGM	 11 - 10
+	3PA	 11 - 8
+	3PM	 4 - 2
+	FTA	 5 - 6
+	FTM	 3 - 5
+	AST	 7 - 6
+	OREB	 2 - 3
+	DREB	 9 - 9
+	STL	 3 - 2
+	BLK	 0 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1194	Q4	Tarih : 21:00
+
+Utah Jazz	24 - 33 	Oklahoma City Thunder
+
+	FGA	 20 - 23
+	FGM	 9 - 12
+	3PA	 9 - 9
+	3PM	 2 - 4
+	FTA	 6 - 7
+	FTM	 4 - 5
+	AST	 5 - 7
+	OREB	 2 - 3
+	DREB	 8 - 8
+	STL	 2 - 1
+	BLK	 1 - 2
+	TO	 4 - 2
+
+
+Maç Kodu : 1195	Q1	Tarih : 22:00
+
+Los Angeles Clippers	29 - 29 	Phoenix Suns
+
+	FGA	 23 - 24
+	FGM	 11 - 11
+	3PA	 8 - 9
+	3PM	 4 - 3
+	FTA	 4 - 5
+	FTM	 3 - 4
+	AST	 7 - 7
+	OREB	 2 - 3
+	DREB	 8 - 9
+	STL	 1 - 2
+	BLK	 1 - 1
+	TO	 3 - 2
+
+
+Maç Kodu : 1195	Q2	Tarih : 22:00
+
+Los Angeles Clippers	29 - 25 	Phoenix Suns
+
+	FGA	 23 - 23
+	FGM	 11 - 9
+	3PA	 10 - 8
+	3PM	 4 - 2
+	FTA	 4 - 6
+	FTM	 3 - 5
+	AST	 7 - 6
+	OREB	 3 - 3
+	DREB	 8 - 9
+	STL	 2 - 2
+	BLK	 2 - 1
+	TO	 4 - 3
+
+
+Maç Kodu : 1195	Q3	Tarih : 22:00
+
+Los Angeles Clippers	28 - 29 	Phoenix Suns
+
+	FGA	 21 - 21
+	FGM	 9 - 11
+	3PA	 9 - 7
+	3PM	 4 - 3
+	FTA	 7 - 6
+	FTM	 6 - 4
+	AST	 7 - 6
+	OREB	 2 - 2
+	DREB	 8 - 7
+	STL	 2 - 1
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1195	Q4	Tarih : 22:00
+
+Los Angeles Clippers	29 - 30 	Phoenix Suns
+
+	FGA	 21 - 22
+	FGM	 10 - 12
+	3PA	 9 - 8
+	3PM	 3 - 3
+	FTA	 7 - 4
+	FTM	 6 - 3
+	AST	 7 - 6
+	OREB	 2 - 3
+	DREB	 7 - 8
+	STL	 2 - 2
+	BLK	 1 - 0
+	TO	 3 - 4
+
+

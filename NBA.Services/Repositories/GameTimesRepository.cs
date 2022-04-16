@@ -30,9 +30,9 @@
             GameTime game = _db.GameTime.FirstOrDefault(x => x.GameNo == gameTime.GameNo);
             if (game == null)
                 return ServiceResult.Failed(ServiceError.GameTimeNotFound);
-            game.GameDate = game.GameDate;
-            game.HomeTeam = game.HomeTeam;
-            game.AwayTeam = game.AwayTeam;
+            game.GameDate = gameTime.GameDate;
+            game.HomeTeam = gameTime.HomeTeam;
+            game.AwayTeam = gameTime.AwayTeam;
             _uw.Commit();
             return ServiceResult.Success();
         }

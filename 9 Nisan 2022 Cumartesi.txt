@@ -1,0 +1,288 @@
+Maç Kodu : 1212	Q1	Tarih : 21:30
+
+Los Angeles Clippers	32 - 28 	Sacramento Kings
+
+	FGA	 23 - 23
+	FGM	 12 - 11
+	3PA	 8 - 8
+	3PM	 4 - 3
+	FTA	 5 - 4
+	FTM	 4 - 3
+	AST	 7 - 6
+	OREB	 2 - 2
+	DREB	 8 - 8
+	STL	 2 - 1
+	BLK	 1 - 1
+	TO	 2 - 2
+
+
+Maç Kodu : 1212	Q2	Tarih : 21:30
+
+Los Angeles Clippers	31 - 26 	Sacramento Kings
+
+	FGA	 23 - 22
+	FGM	 11 - 9
+	3PA	 9 - 7
+	3PM	 4 - 2
+	FTA	 6 - 8
+	FTM	 5 - 6
+	AST	 7 - 6
+	OREB	 3 - 3
+	DREB	 9 - 8
+	STL	 2 - 2
+	BLK	 2 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1212	Q3	Tarih : 21:30
+
+Los Angeles Clippers	31 - 27 	Sacramento Kings
+
+	FGA	 21 - 22
+	FGM	 11 - 10
+	3PA	 9 - 7
+	3PM	 4 - 2
+	FTA	 6 - 7
+	FTM	 5 - 5
+	AST	 7 - 6
+	OREB	 2 - 3
+	DREB	 8 - 8
+	STL	 2 - 1
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1212	Q4	Tarih : 21:30
+
+Los Angeles Clippers	29 - 32 	Sacramento Kings
+
+	FGA	 21 - 22
+	FGM	 10 - 12
+	3PA	 9 - 8
+	3PM	 4 - 3
+	FTA	 6 - 6
+	FTM	 5 - 5
+	AST	 6 - 6
+	OREB	 2 - 3
+	DREB	 8 - 8
+	STL	 2 - 2
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1213	Q1	Tarih : 18:00
+
+Memphis Grizzlies	32 - 29 	New Orleans Pelicans
+
+	FGA	 23 - 23
+	FGM	 12 - 11
+	3PA	 8 - 8
+	3PM	 4 - 4
+	FTA	 5 - 5
+	FTM	 4 - 3
+	AST	 7 - 6
+	OREB	 3 - 3
+	DREB	 8 - 8
+	STL	 2 - 2
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1213	Q2	Tarih : 18:00
+
+Memphis Grizzlies	31 - 25 	New Orleans Pelicans
+
+	FGA	 23 - 23
+	FGM	 11 - 9
+	3PA	 8 - 8
+	3PM	 4 - 3
+	FTA	 6 - 6
+	FTM	 5 - 4
+	AST	 6 - 5
+	OREB	 3 - 3
+	DREB	 9 - 8
+	STL	 2 - 2
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1213	Q3	Tarih : 18:00
+
+Memphis Grizzlies	25 - 32 	New Orleans Pelicans
+
+	FGA	 22 - 21
+	FGM	 9 - 12
+	3PA	 9 - 7
+	3PM	 3 - 3
+	FTA	 6 - 6
+	FTM	 4 - 5
+	AST	 6 - 7
+	OREB	 3 - 2
+	DREB	 7 - 8
+	STL	 2 - 2
+	BLK	 1 - 1
+	TO	 4 - 4
+
+
+Maç Kodu : 1213	Q4	Tarih : 18:00
+
+Memphis Grizzlies	27 - 30 	New Orleans Pelicans
+
+	FGA	 21 - 22
+	FGM	 9 - 11
+	3PA	 8 - 7
+	3PM	 3 - 2
+	FTA	 7 - 8
+	FTM	 6 - 6
+	AST	 7 - 5
+	OREB	 3 - 4
+	DREB	 9 - 9
+	STL	 2 - 2
+	BLK	 1 - 1
+	TO	 3 - 3
+
+
+Maç Kodu : 1214	Q1	Tarih : 13:00
+
+Philadelphia 76ers	31 - 27 	Indiana Pacers
+
+	FGA	 22 - 23
+	FGM	 11 - 10
+	3PA	 11 - 9
+	3PM	 5 - 3
+	FTA	 5 - 4
+	FTM	 4 - 4
+	AST	 8 - 7
+	OREB	 1 - 2
+	DREB	 8 - 8
+	STL	 3 - 2
+	BLK	 1 - 1
+	TO	 3 - 4
+
+
+Maç Kodu : 1214	Q2	Tarih : 13:00
+
+Philadelphia 76ers	33 - 28 	Indiana Pacers
+
+	FGA	 22 - 22
+	FGM	 12 - 10
+	3PA	 8 - 10
+	3PM	 4 - 4
+	FTA	 6 - 5
+	FTM	 5 - 4
+	AST	 7 - 7
+	OREB	 3 - 3
+	DREB	 8 - 8
+	STL	 2 - 2
+	BLK	 1 - 2
+	TO	 4 - 4
+
+
+Maç Kodu : 1214	Q3	Tarih : 13:00
+
+Philadelphia 76ers	33 - 30 	Indiana Pacers
+
+	FGA	 20 - 21
+	FGM	 12 - 11
+	3PA	 8 - 9
+	3PM	 4 - 3
+	FTA	 6 - 6
+	FTM	 5 - 5
+	AST	 7 - 6
+	OREB	 2 - 2
+	DREB	 8 - 8
+	STL	 1 - 2
+	BLK	 2 - 1
+	TO	 4 - 3
+
+
+Maç Kodu : 1214	Q4	Tarih : 13:00
+
+Philadelphia 76ers	29 - 28 	Indiana Pacers
+
+	FGA	 21 - 20
+	FGM	 10 - 10
+	3PA	 8 - 8
+	3PM	 3 - 4
+	FTA	 7 - 6
+	FTM	 6 - 4
+	AST	 6 - 6
+	OREB	 3 - 2
+	DREB	 7 - 7
+	STL	 2 - 2
+	BLK	 1 - 2
+	TO	 3 - 3
+
+
+Maç Kodu : 1215	Q1	Tarih : 20:30
+
+San Antonio Spurs	31 - 28 	Golden State Warriors
+
+	FGA	 23 - 22
+	FGM	 11 - 11
+	3PA	 9 - 9
+	3PM	 4 - 3
+	FTA	 6 - 4
+	FTM	 5 - 3
+	AST	 7 - 7
+	OREB	 3 - 2
+	DREB	 9 - 8
+	STL	 3 - 3
+	BLK	 1 - 1
+	TO	 3 - 4
+
+
+Maç Kodu : 1215	Q2	Tarih : 20:30
+
+San Antonio Spurs	30 - 25 	Golden State Warriors
+
+	FGA	 23 - 22
+	FGM	 11 - 9
+	3PA	 9 - 9
+	3PM	 3 - 3
+	FTA	 7 - 6
+	FTM	 5 - 4
+	AST	 7 - 7
+	OREB	 3 - 3
+	DREB	 8 - 9
+	STL	 2 - 1
+	BLK	 1 - 1
+	TO	 3 - 4
+
+
+Maç Kodu : 1215	Q3	Tarih : 20:30
+
+San Antonio Spurs	26 - 31 	Golden State Warriors
+
+	FGA	 21 - 23
+	FGM	 9 - 12
+	3PA	 9 - 9
+	3PM	 3 - 3
+	FTA	 7 - 5
+	FTM	 5 - 4
+	AST	 6 - 7
+	OREB	 2 - 3
+	DREB	 8 - 8
+	STL	 2 - 2
+	BLK	 1 - 2
+	TO	 3 - 3
+
+
+Maç Kodu : 1215	Q4	Tarih : 20:30
+
+San Antonio Spurs	29 - 26 	Golden State Warriors
+
+	FGA	 20 - 21
+	FGM	 10 - 9
+	3PA	 7 - 10
+	3PM	 3 - 3
+	FTA	 8 - 6
+	FTM	 6 - 5
+	AST	 5 - 5
+	OREB	 2 - 3
+	DREB	 9 - 8
+	STL	 2 - 2
+	BLK	 1 - 0
+	TO	 3 - 4
+
+

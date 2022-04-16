@@ -39,142 +39,142 @@ namespace NBA.StatScraper
                 _fullSeasonQuartersRepository);
 
 
-            //FullScraper
+            ////FullScraper
 
-            var result = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8));
-            var gamesplayed = result.Data;
-            var driverOptions = new ChromeOptions();
-            driverOptions.AddArguments(new List<string>() { "headless", "disable-gpu" });
-            var driver = new ChromeDriver(driverOptions);
-            driver.Manage().Window.Maximize();
-            //Thread.Sleep(3000);
-            driver.Navigate().GoToUrl("https://www.nba.com/schedule");
-            //Thread.Sleep(3000);
-            int pageNo = 0;
-            for (int i = 0; i < gamesplayed.Count; i++)
-            {
-                pageNo++;
-                try
-                {
-                    int gameNo = gamesplayed[i].GameNo;
-                    var stats = _db.FullSeason.FirstOrDefault(x => x.GameNo == gameNo);
-                    if (stats != null)
-                        continue;
-                    if (pageNo % 20 == 0)
-                    {
-                        driver.Dispose();
-                        driver = new ChromeDriver(driverOptions);
-                        //driver.Manage().Window.Maximize();
-                        //Thread.Sleep(1000);
-                        //driver.Navigate().GoToUrl("https://www.nba.com/schedule");
-                        //Thread.Sleep(1000);
-                    }
-                    driver.Navigate().GoToUrl("https://www.nba.com/game/002210" + gameNo.ToString("0000") + "/box-score");
-                    var fullseason = _statScraper.GameScraper(driver, gameNo,
-                        "https://www.nba.com/game/002210" + gameNo.ToString("0000"));
-                    //Thread.Sleep(1000);
-                    var playerstats = _statScraper.PlayerStatScraper(driver, gameNo);
-                    var quarterstats = new List<FullSeasonQuarters>();
-                    string period = driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select")).Text;
-                    var playerstatsquarter = new List<PlayerStatsQuarter>();
-                    int TotalQuarters;
-                    switch (period.Length)
-                    {
-                        case 47:
-                            TotalQuarters = 4;
-                            break;
-                        case 52:
-                            TotalQuarters = 5;
-                            break;
-                        default:
-                            TotalQuarters = (period.Length - 55) / 5 + 4;
-                            break;
-                    }
-                    for (int k = 1; k <= TotalQuarters; k++)
-                    {
-                        driver.Navigate().GoToUrl("https://www.nba.com/game/002210" +
-                                                  gameNo.ToString("0000") + GetQuarter(k));
-                        quarterstats.Add(_statScraper.QuarterScraper(driver, gameNo, k));
-                        //Thread.Sleep(1000);
-                        playerstatsquarter.AddRange(_statScraper.PlayerStatQuarterScraper(driver, gameNo, k));
-                    }
+            //var result = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesTill(DateTime.Now.AddHours(-8));
+            //var gamesplayed = result.Data;
+            //var driverOptions = new ChromeOptions();
+            //driverOptions.AddArguments(new List<string>() { "headless", "disable-gpu" });
+            //var driver = new ChromeDriver(driverOptions);
+            //driver.Manage().Window.Maximize();
+            ////Thread.Sleep(3000);
+            //driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            ////Thread.Sleep(3000);
+            //int pageNo = 0;
+            //for (int i = 0; i < gamesplayed.Count; i++)
+            //{
+            //    pageNo++;
+            //    try
+            //    {
+            //        int gameNo = gamesplayed[i].GameNo;
+            //        var stats = _db.FullSeason.FirstOrDefault(x => x.GameNo == gameNo);
+            //        if (stats != null)
+            //            continue;
+            //        if (pageNo % 20 == 0)
+            //        {
+            //            driver.Dispose();
+            //            driver = new ChromeDriver(driverOptions);
+            //            //driver.Manage().Window.Maximize();
+            //            //Thread.Sleep(1000);
+            //            //driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //            //Thread.Sleep(1000);
+            //        }
+            //        driver.Navigate().GoToUrl("https://www.nba.com/game/002210" + gameNo.ToString("0000") + "/box-score");
+            //        var fullseason = _statScraper.GameScraper(driver, gameNo,
+            //            "https://www.nba.com/game/002210" + gameNo.ToString("0000"));
+            //        //Thread.Sleep(1000);
+            //        var playerstats = _statScraper.PlayerStatScraper(driver, gameNo);
+            //        var quarterstats = new List<FullSeasonQuarters>();
+            //        string period = driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[1]/div[2]/div[4]/section[1]/div/form/div[2]/label/div/select")).Text;
+            //        var playerstatsquarter = new List<PlayerStatsQuarter>();
+            //        int TotalQuarters;
+            //        switch (period.Length)
+            //        {
+            //            case 47:
+            //                TotalQuarters = 4;
+            //                break;
+            //            case 52:
+            //                TotalQuarters = 5;
+            //                break;
+            //            default:
+            //                TotalQuarters = (period.Length - 55) / 5 + 4;
+            //                break;
+            //        }
+            //        for (int k = 1; k <= TotalQuarters; k++)
+            //        {
+            //            driver.Navigate().GoToUrl("https://www.nba.com/game/002210" +
+            //                                      gameNo.ToString("0000") + GetQuarter(k));
+            //            quarterstats.Add(_statScraper.QuarterScraper(driver, gameNo, k));
+            //            //Thread.Sleep(1000);
+            //            playerstatsquarter.AddRange(_statScraper.PlayerStatQuarterScraper(driver, gameNo, k));
+            //        }
 
-                    _fullSeasonRepository.AddGame(fullseason);
-                    foreach (var stat in playerstats)
-                    {
-                        _playerStatRepository.AddPlayerStat(stat);
-                    }
+            //        _fullSeasonRepository.AddGame(fullseason);
+            //        foreach (var stat in playerstats)
+            //        {
+            //            _playerStatRepository.AddPlayerStat(stat);
+            //        }
 
-                    foreach (var stat in quarterstats)
-                    {
-                        _fullSeasonQuartersRepository.AddQuarter(stat);
-                    }
+            //        foreach (var stat in quarterstats)
+            //        {
+            //            _fullSeasonQuartersRepository.AddQuarter(stat);
+            //        }
 
-                    foreach (var stat in playerstatsquarter)
-                    {
-                        _playerStatQuarterRepository.AddPlayerStatsQuarter(stat);
-                    }
-                }
-                catch (Exception)
-                {
-                    i--;
-                    Thread.Sleep(1000);
-                    //driver.Navigate().Refresh();
-                }
-            }
-            driver.Dispose();
-
-
-
-            //Predictions
-
-            var result2 = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesToBePlayedToday();
-            var gamesToBePlayed = result2.Data;
-            foreach (var game in gamesToBePlayed)
-            {
-                if (_db.GamePredictions.FirstOrDefault(x => x.GameNo == game.GameNo) != null)
-                    continue;
-                GamePredictions prediction = _simulator.FullMatchSimulator(game.HomeTeam, game.AwayTeam, game.GameNo);
-                List<QuarterPredictions> predictions = new List<QuarterPredictions>();
-                for (int i = 1; i <= 4; i++)
-                {
-                    predictions.Add(_simulator.QuarterSimulator(game.HomeTeam, game.AwayTeam, i, game.GameNo));
-                }
-                _db.GamePredictions.Add(prediction);
-                _db.QuarterPredictions.AddRange(predictions);
-                _uw.Commit();
-            }
+            //        foreach (var stat in playerstatsquarter)
+            //        {
+            //            _playerStatQuarterRepository.AddPlayerStatsQuarter(stat);
+            //        }
+            //    }
+            //    catch (Exception)
+            //    {
+            //        i--;
+            //        Thread.Sleep(1000);
+            //        //driver.Navigate().Refresh();
+            //    }
+            //}
+            //driver.Dispose();
 
 
-            //Predictions To Text File
 
-            string date = DateTime.Now.ToLongDateString();
-            string fileName = $@"C:\Users\caner\Desktop\NBA\{date}.txt";
-            var quarters = new List<QuarterPredictions>();
-            foreach (var game in gamesToBePlayed)
-            {
-                quarters.AddRange(_db.QuarterPredictions.Where(x => x.GameNo == game.GameNo));
-            }
-            using (StreamWriter sw = File.CreateText(fileName))
-            {
-                foreach(var quarter in quarters)
-                {
-                    sw.WriteLine("Maç Kodu : " + quarter.GameNo + "\tQ" + quarter.QuarterNo + "\tTarih : " + gamesToBePlayed.First(x => x.GameNo == quarter.GameNo).GameDate.ToShortTimeString() + "\n");
-                    sw.WriteLine(_helpers.GetTeamNameByEnum(quarter.HomeTeam) + $"\t{quarter.HomePoints} - {quarter.AwayPoints} \t" + _helpers.GetTeamNameByEnum(quarter.AwayTeam) + "\n");
-                    sw.WriteLine($"\tFGA\t {quarter.HomeFGA} - {quarter.AwayFGA}");
-                    sw.WriteLine($"\tFGM\t {quarter.HomeFGM} - {quarter.AwayFGM}");
-                    sw.WriteLine($"\t3PA\t {quarter.Home3PA} - {quarter.Away3PA}");
-                    sw.WriteLine($"\t3PM\t {quarter.Home3PM} - {quarter.Away3PM}");
-                    sw.WriteLine($"\tFTA\t {quarter.HomeFTA} - {quarter.AwayFTA}");
-                    sw.WriteLine($"\tFTM\t {quarter.HomeFTM} - {quarter.AwayFTM}");
-                    sw.WriteLine($"\tAST\t {quarter.HomeAssists} - {quarter.AwayAssists}");
-                    sw.WriteLine($"\tOREB\t {quarter.HomeOffensiveRebounds} - {quarter.AwayOffensiveRebounds}");
-                    sw.WriteLine($"\tDREB\t {quarter.HomeDefensiveRebounds} - {quarter.AwayDefensiveRebounds}");
-                    sw.WriteLine($"\tSTL\t {quarter.HomeSteals} - {quarter.AwaySteals}");
-                    sw.WriteLine($"\tBLK\t {quarter.HomeBlocks} - {quarter.AwayBlocks}");
-                    sw.WriteLine($"\tTO\t {quarter.HomeTurnovers} - {quarter.AwayTurnovers}\n\n");
-                }
-            }
+            ////Predictions
+
+            //var result2 = (ServiceResult<List<GameTime>>)_gameTimesRepository.GetGamesToBePlayedToday();
+            //var gamesToBePlayed = result2.Data;
+            //foreach (var game in gamesToBePlayed)
+            //{
+            //    if (_db.GamePredictions.FirstOrDefault(x => x.GameNo == game.GameNo) != null)
+            //        continue;
+            //    GamePredictions prediction = _simulator.FullMatchSimulator(game.HomeTeam, game.AwayTeam, game.GameNo);
+            //    List<QuarterPredictions> predictions = new List<QuarterPredictions>();
+            //    for (int i = 1; i <= 4; i++)
+            //    {
+            //        predictions.Add(_simulator.QuarterSimulator(game.HomeTeam, game.AwayTeam, i, game.GameNo));
+            //    }
+            //    _db.GamePredictions.Add(prediction);
+            //    _db.QuarterPredictions.AddRange(predictions);
+            //    _uw.Commit();
+            //}
+
+
+            ////Predictions To Text File
+
+            //string date = DateTime.Now.ToLongDateString();
+            //string fileName = $@"C:\Users\caner\Desktop\NBA\{date}.txt";
+            //var quarters = new List<QuarterPredictions>();
+            //foreach (var game in gamesToBePlayed)
+            //{
+            //    quarters.AddRange(_db.QuarterPredictions.Where(x => x.GameNo == game.GameNo));
+            //}
+            //using (StreamWriter sw = File.CreateText(fileName))
+            //{
+            //    foreach(var quarter in quarters)
+            //    {
+            //        sw.WriteLine("Maç Kodu : " + quarter.GameNo + "\tQ" + quarter.QuarterNo + "\tTarih : " + gamesToBePlayed.First(x => x.GameNo == quarter.GameNo).GameDate.ToShortTimeString() + "\n");
+            //        sw.WriteLine(_helpers.GetTeamNameByEnum(quarter.HomeTeam) + $"\t{quarter.HomePoints} - {quarter.AwayPoints} \t" + _helpers.GetTeamNameByEnum(quarter.AwayTeam) + "\n");
+            //        sw.WriteLine($"\tFGA\t {quarter.HomeFGA} - {quarter.AwayFGA}");
+            //        sw.WriteLine($"\tFGM\t {quarter.HomeFGM} - {quarter.AwayFGM}");
+            //        sw.WriteLine($"\t3PA\t {quarter.Home3PA} - {quarter.Away3PA}");
+            //        sw.WriteLine($"\t3PM\t {quarter.Home3PM} - {quarter.Away3PM}");
+            //        sw.WriteLine($"\tFTA\t {quarter.HomeFTA} - {quarter.AwayFTA}");
+            //        sw.WriteLine($"\tFTM\t {quarter.HomeFTM} - {quarter.AwayFTM}");
+            //        sw.WriteLine($"\tAST\t {quarter.HomeAssists} - {quarter.AwayAssists}");
+            //        sw.WriteLine($"\tOREB\t {quarter.HomeOffensiveRebounds} - {quarter.AwayOffensiveRebounds}");
+            //        sw.WriteLine($"\tDREB\t {quarter.HomeDefensiveRebounds} - {quarter.AwayDefensiveRebounds}");
+            //        sw.WriteLine($"\tSTL\t {quarter.HomeSteals} - {quarter.AwaySteals}");
+            //        sw.WriteLine($"\tBLK\t {quarter.HomeBlocks} - {quarter.AwayBlocks}");
+            //        sw.WriteLine($"\tTO\t {quarter.HomeTurnovers} - {quarter.AwayTurnovers}\n\n");
+            //    }
+            //}
 
 
 
@@ -257,6 +257,108 @@ namespace NBA.StatScraper
             //    }
             //    k = 0;
             //}
+
+            ////GameTime Scraper 20-21
+            //int i = 0;
+            //int k = 1;
+            //for (; i < 11; i++)
+            //{
+            //    var driverOptions = new ChromeOptions();
+            //    driverOptions.AddArguments(new List<string>() { "headless", "disable-gpu" });
+            //    using (var client = new HttpClient())
+            //    {
+            //        //driver.Manage().Window.Maximize();
+            //        //driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+            //        //Thread.Sleep(1000);
+            //        //driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
+            //        for (; k < 100; k++)
+            //        {
+            //            if (i * 100 + k > 1080)
+            //                return;
+            //            try
+            //            {
+            //                var httpResult = client.GetAsync("https://www.nba.com/game/002200" + (i * 100 + k).ToString("0000"));
+            //                var result = httpResult.Result;
+            //                string source = result.Content.ReadAsStringAsync().Result;
+            //                GameTime20_21 game = new GameTime20_21();
+            //                game.GameNo = i * 100 + k;
+            //                int index1 = source.IndexOf("NBA Game - ");
+            //                source = source.Substring(index1 + 11);
+            //                index1 = source.IndexOf(' ');
+            //                game.AwayTeam = _helpers.GetTeamEnumByTeamMascotName(source.Substring(0, index1).ToUpper().Replace('İ', 'I'));
+            //                source = source.Substring(index1 + 5);
+            //                if (game.AwayTeam == Team.Error)
+            //                {
+            //                    game.AwayTeam = Team.PortlandTrailBlazers;
+            //                    source = source.Substring(8);
+            //                }
+            //                index1 = source.IndexOf(',');
+            //                game.HomeTeam = _helpers.GetTeamEnumByTeamMascotName(source.Substring(0, index1 - 1).ToUpper().Replace('İ', 'I'));
+            //                int index2 = source.IndexOf("startDate");
+            //                string date = source.Substring(index2 + 12, 10);
+            //                string hour = source.Substring(index2 + 23, 8);
+            //                game.GameDate = DateTime.Parse(date + " " + hour);
+            //                _gameTimesRepository.AddGameTime20_21(game);
+            //            }
+            //            catch (Exception)
+            //            {
+            //                k--;
+            //            }
+            //        }
+            //    }
+            //    k = 0;
+            //}
+
+            //GameTime Scraper 18-19
+            int i = 0;
+            int k = 1;
+            for (; i < 13; i++)
+            {
+                var driverOptions = new ChromeOptions();
+                driverOptions.AddArguments(new List<string>() { "headless", "disable-gpu" });
+                using (var client = new HttpClient())
+                {
+                    //driver.Manage().Window.Maximize();
+                    //driver.Navigate().GoToUrl("https://www.nba.com/schedule");
+                    //Thread.Sleep(1000);
+                    //driver.FindElement(OpenQA.Selenium.By.XPath("/html/body/div[2]/div[3]/div/div/div[2]/div/div/button")).Click();
+                    for (; k < 100; k++)
+                    {
+                        if (i * 100 + k > 1230)
+                            return;
+                        try
+                        {
+                            var httpResult = client.GetAsync("https://www.nba.com/game/002180" + (i * 100 + k).ToString("0000"));
+                            var result = httpResult.Result;
+                            string source = result.Content.ReadAsStringAsync().Result;
+                            GameTime19_20 game = new GameTime19_20();
+                            game.GameNo = i * 100 + k;
+                            int index1 = source.IndexOf("NBA Game - ");
+                            source = source.Substring(index1 + 11);
+                            index1 = source.IndexOf(' ');
+                            game.AwayTeam = _helpers.GetTeamEnumByTeamMascotName(source.Substring(0, index1).ToUpper().Replace('İ', 'I'));
+                            source = source.Substring(index1 + 5);
+                            if (game.AwayTeam == Team.Error)
+                            {
+                                game.AwayTeam = Team.PortlandTrailBlazers;
+                                source = source.Substring(8);
+                            }
+                            index1 = source.IndexOf(',');
+                            game.HomeTeam = _helpers.GetTeamEnumByTeamMascotName(source.Substring(0, index1 - 1).ToUpper().Replace('İ', 'I'));
+                            int index2 = source.IndexOf("startDate");
+                            string date = source.Substring(index2 + 12, 10);
+                            string hour = source.Substring(index2 + 23, 8);
+                            game.GameDate = DateTime.Parse(date + " " + hour);
+                            _gameTimesRepository.AddGameTime19_20(game);
+                        }
+                        catch (Exception)
+                        {
+                            k--;
+                        }
+                    }
+                }
+                k = 0;
+            }
 
             //// gametime away portland update
 

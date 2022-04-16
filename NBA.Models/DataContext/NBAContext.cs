@@ -22,6 +22,7 @@
         public DbSet<GameTime19_20> GameTime19_20 { get; set; }
         public DbSet<PlayerStats19_20> PlayerStats19_20 { get; set; }
         public DbSet<PlayerStatsQuarter19_20> PlayerStatsQuarter19_20 { get; set; }
+        public DbSet<GameTime18_19> GameTime18_19 { get; set; }
         public DbSet<GamePredictions> GamePredictions { get; set; }
         public DbSet<QuarterPredictions> QuarterPredictions { get; set; }
 
